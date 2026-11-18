@@ -362,6 +362,8 @@
     @layer base {
       html {
         font-family: var(--font-sans);
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
         font-variant-ligatures: no-contextual;
         background-color: var(--bg-shell);
         color: var(--text-primary);
@@ -439,6 +441,7 @@
         max-inline-size: var(--page-max-w);
         margin-inline: auto;
         padding-inline: var(--page-pad-x);
+        padding-block: 0.5rem;
         min-block-size: 56px;
         display: flex;
         flex-wrap: wrap;
@@ -509,6 +512,7 @@
 
       .search-box {
         flex: 1 1 260px;
+        min-inline-size: 0;
       }
 
       .view-sort-group {
@@ -529,7 +533,6 @@
       .group-pills {
         display: flex;
         flex-wrap: wrap;
-        flex-wrap: balance;
         align-items: center;
         gap: 0.35rem;
       }
@@ -996,7 +999,7 @@
         font-weight: 600;
         color: var(--text-primary);
         line-height: 1.25;
-        overflow-wrap: break-word;
+        overflow-wrap: anywhere;
       }
 
       .pin-indicator {
@@ -1006,6 +1009,8 @@
       }
 
       .demo-tag {
+        flex-shrink: 0;
+        white-space: nowrap;
         font-size: 0.67rem;
         font-weight: 550;
         padding: 0.04rem 0.4rem;
@@ -1205,6 +1210,7 @@
         flex-wrap: wrap;
         align-items: center;
         gap: 0.32rem;
+        min-inline-size: 0;
       }
 
       .tag-chip {
@@ -1217,6 +1223,7 @@
         font-size: 0.72rem;
         font-weight: 500;
         color: var(--text-secondary);
+        overflow-wrap: anywhere;
         cursor: pointer;
         transition: border-color 120ms ease, color 120ms ease;
       }
@@ -1238,6 +1245,7 @@
 
       .reorder-controls {
         display: inline-flex;
+        flex-shrink: 0;
         align-items: center;
         gap: 0.05rem;
         transition: opacity 140ms ease;
@@ -1306,6 +1314,7 @@
         font-variant-numeric: tabular-nums;
         letter-spacing: 0.05em;
         line-height: 1.15;
+        white-space: nowrap;
         color: var(--text-primary);
         transition: color 180ms ease;
       }
@@ -1380,6 +1389,7 @@
         font-weight: 600;
         letter-spacing: 0.03em;
         color: var(--text-secondary);
+        white-space: nowrap;
       }
 
       .next-preview-btn.is-expiring .next-preview-code {
@@ -1455,73 +1465,6 @@
         }
       }
 
-      @container cards (inline-size < 430px) {
-        .cards-list:not([data-view="list"]) .account-card {
-          grid-template-columns: 1fr;
-          gap: 0.75rem;
-        }
-        .cards-list:not([data-view="list"]) .code-zone {
-          border-inline-start: none;
-          border-block-start: 1px solid var(--border);
-          padding-inline-start: 0;
-          padding-block-start: 0.7rem;
-          flex-direction: row;
-          flex-wrap: wrap;
-          align-items: center;
-          justify-content: space-between;
-        }
-        .cards-list:not([data-view="list"]) .code-hero {
-          inline-size: auto;
-          order: 1;
-        }
-        .cards-list:not([data-view="list"]) .code-copy-btn {
-          text-align: start;
-          align-items: flex-start;
-        }
-        .cards-list:not([data-view="list"]) .code-subline {
-          order: 2;
-        }
-        .cards-list:not([data-view="list"]) .card-actions {
-          order: 3;
-          inline-size: 100%;
-          justify-content: flex-end;
-        }
-      }
-
-      /* Mobile Card Responsive Fallback */
-      @media (max-width: 560px) {
-        .account-card {
-          grid-template-columns: 1fr;
-          gap: 0.75rem;
-        }
-        .code-zone {
-          border-inline-start: none;
-          border-block-start: 1px solid var(--border);
-          padding-inline-start: 0;
-          padding-block-start: 0.7rem;
-          flex-direction: row;
-          flex-wrap: wrap;
-          align-items: center;
-          justify-content: space-between;
-        }
-        .code-hero {
-          inline-size: auto;
-          order: 1;
-        }
-        .code-copy-btn {
-          text-align: start;
-          align-items: flex-start;
-        }
-        .code-subline {
-          order: 2;
-        }
-        .card-actions {
-          order: 3;
-          inline-size: 100%;
-          justify-content: flex-end;
-        }
-      }
-
       /* ==================== COMPACT DENSE LIST VIEW ==================== */
       .cards-list[data-view="list"] .account-card {
         border: none;
@@ -1539,8 +1482,8 @@
         border-block-end: 1px solid var(--border);
       }
 
-      .cards-list[data-view="list"] .account-card:hover {
-        background-color: var(--surface-subtle);
+      @media (hover: hover) {
+        .cards-list[data-view="list"] .account-card:hover { background-color: var(--surface-subtle); }
       }
 
       .cards-list[data-view="list"] .card-main {
@@ -1639,7 +1582,7 @@
         order: 3;
       }
 
-      @media (max-width: 820px) {
+      @media (max-width: 1100px) {
         .cards-list[data-view="list"] .account-card {
           grid-template-columns: minmax(0, 1fr) auto;
           row-gap: 0.4rem;
@@ -1650,6 +1593,7 @@
         .cards-list[data-view="list"] .code-zone {
           grid-column: 2;
           gap: 0.5rem;
+          flex-wrap: nowrap;
         }
         .cards-list[data-view="list"] .code-subline {
           display: none;
@@ -2119,6 +2063,292 @@
         border-color: color-mix(in srgb, var(--warn) 34%, var(--border));
         color: var(--warn);
       }
+
+      /* Narrow lists keep identity, code and actions on separate rows. */
+      @media (max-width: 700px) {
+        .cards-list[data-view="list"] .account-card {
+          grid-template-columns: minmax(0, 1fr);
+          padding: 0.8rem 0.9rem;
+          gap: 0.4rem;
+        }
+
+        .cards-list[data-view="list"] .identity-block,
+        .cards-list[data-view="list"] .code-zone {
+          grid-column: 1;
+        }
+
+        .cards-list[data-view="list"] .code-zone {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr);
+          border: none;
+          padding: 0;
+          gap: 0.2rem;
+        }
+
+        .cards-list[data-view="list"] .code-hero {
+          inline-size: 100%;
+          justify-content: space-between;
+        }
+
+        .cards-list[data-view="list"] .code-copy-btn {
+          align-items: flex-start;
+          text-align: start;
+          min-block-size: 40px;
+          justify-content: center;
+        }
+
+        .cards-list[data-view="list"] .otp-digits {
+          font-size: 1.5rem;
+        }
+
+        .cards-list[data-view="list"] .card-actions {
+          justify-content: flex-end;
+          gap: 0.25rem;
+        }
+      }
+
+      @media (max-width: 640px) {
+        :root {
+          --page-pad-x: 0.875rem;
+        }
+
+        .topbar-inner {
+          gap: 0.45rem;
+          padding-block: 0.6rem;
+        }
+
+        .brand { gap: 0.4rem; }
+        .brand-mark { inline-size: 24px; block-size: 24px; }
+        .brand-text { flex-direction: column; align-items: flex-start; gap: 0.15rem; }
+        .brand-text h1 { font-size: 1rem; white-space: nowrap; }
+
+        .topbar-actions {
+          flex-wrap: nowrap;
+          gap: 0.25rem;
+          margin-inline-start: auto;
+        }
+
+        .topbar-actions .btn {
+          inline-size: 40px;
+          block-size: 40px;
+          min-block-size: 40px;
+          padding: 0;
+        }
+
+        .topbar-actions .btn svg { inline-size: 17px; block-size: 17px; }
+        .topbar-actions .btn > span { display: none; }
+        .topbar-actions #openAddBtn { inline-size: auto; padding-inline: 0.85rem; }
+        .topbar-actions #openAddBtn > span { display: inline; }
+
+        .app-main {
+          padding-block: 1rem max(1.5rem, env(safe-area-inset-bottom));
+          gap: 0.8rem;
+        }
+
+        .search-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.6rem; }
+        .search-input { min-block-size: 44px; padding-inline-end: 2.75rem; font-size: 16px; }
+        .search-kbd { display: none; }
+        .view-sort-group { flex-wrap: nowrap; justify-content: space-between; gap: 0.5rem; }
+        .view-sort-group .select-wrap { flex: 1 1 0; min-inline-size: 0; max-inline-size: 240px; }
+        .view-sort-group .select-control { inline-size: 100%; min-inline-size: 0; min-block-size: 44px; font-size: 16px; }
+        .segmented { flex-shrink: 0; }
+        .segmented button { min-block-size: 36px; padding-inline: 0.5rem; }
+
+        .filter-row { min-inline-size: 0; }
+        .group-pills {
+          max-inline-size: 100%;
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          overscroll-behavior-inline: contain;
+          scrollbar-width: thin;
+          padding: 0.2rem 0.15rem 0.4rem;
+        }
+        .group-pills > * { flex-shrink: 0; }
+        .pill-btn { min-block-size: 38px; white-space: nowrap; }
+
+        .demo-banner { flex-wrap: nowrap; padding: 0.65rem 0.75rem; gap: 0.5rem; }
+        .demo-banner-msg { flex: 1 1 auto; font-size: 0.75rem; align-items: flex-start; }
+        .demo-banner-msg svg { margin-block-start: 0.15rem; }
+        .demo-banner .chip-btn { flex-shrink: 0; min-block-size: 36px; padding-inline: 0.55rem; }
+        .desktop-import-hint { display: none; }
+
+        .cards-list:not([data-view="list"]) .account-card {
+          grid-template-columns: minmax(0, 1fr);
+          padding: 0.9rem;
+          gap: 0.7rem;
+        }
+
+        .cards-list:not([data-view="list"]) .code-zone {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) auto;
+          align-items: center;
+          border-inline-start: none;
+          border-block-start: 1px solid var(--border);
+          padding-inline-start: 0;
+          padding-block-start: 0.6rem;
+          gap: 0.4rem 0.5rem;
+        }
+
+        .cards-list:not([data-view="list"]) .code-hero {
+          grid-column: 1 / -1;
+          order: 1;
+          justify-content: space-between;
+        }
+
+        .cards-list:not([data-view="list"]) .code-copy-btn {
+          align-items: flex-start;
+          text-align: start;
+          min-block-size: 48px;
+          justify-content: center;
+        }
+
+        .cards-list:not([data-view="list"]) .otp-digits { font-size: 1.8rem; }
+        .cards-list:not([data-view="list"]) .code-subline { order: 2; justify-content: flex-start; }
+        .cards-list:not([data-view="list"]) .card-actions { order: 3; justify-content: flex-end; }
+        .next-preview-btn { min-block-size: 36px; }
+        .card-actions { gap: 0.15rem; }
+        .icon-btn { min-inline-size: 36px; min-block-size: 40px; }
+        .account-copy-btn { min-block-size: 28px; }
+        .note-expand-btn { min-block-size: 32px; }
+        .tag-chip { min-block-size: 28px; }
+        .param-badge { overflow-wrap: anywhere; }
+        .note-text { overflow-wrap: anywhere; }
+
+        dialog, dialog.dialog-wide, dialog.dialog-narrow {
+          inline-size: calc(100% - 1.5rem);
+          max-inline-size: 560px;
+          max-block-size: calc(100dvh - 1.5rem);
+        }
+        .dialog-header { padding: 0.75rem 1rem; flex-shrink: 0; }
+        .dialog-body { padding: 1rem; min-block-size: 0; }
+        .dialog-footer { padding: 0.75rem 1rem; flex-shrink: 0; }
+        .field, .field-row > * { min-inline-size: 0; }
+        .field-row { grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); }
+        .input-control, .input-control.is-mono, .textarea-control, .field .select-control { font-size: 16px; }
+        .toast { max-inline-size: calc(100vw - 2rem); inline-size: max-content; border-radius: var(--radius-md); }
+      }
+
+      @media (max-width: 479px) {
+        .topbar-actions #openAddBtn { inline-size: 40px; padding: 0; }
+        .topbar-actions #openAddBtn > span { display: none; }
+      }
+
+      @media (max-width: 359px) {
+        :root { --page-pad-x: 0.75rem; }
+        .brand-text h1 { font-size: 0.9375rem; }
+        .brand { gap: 0.25rem; }
+        .brand-mark { inline-size: 22px; }
+        .segmented button { padding-inline: 0.4rem; }
+        .cards-list:not([data-view="list"]) .card-actions { grid-column: 1 / -1; }
+      }
+    }
+
+    @layer tokens {
+      :root { --text-muted-light: #62626d; --text-muted-dark: #a4a5b0; }
+    }
+    @layer components {
+      .btn, .icon-btn, .chip-btn, .pill-btn, .menu-item { min-block-size: 44px; }
+      .icon-btn, .btn-icon-pill { min-inline-size: 44px; }
+      .account-label, .account-copy-btn, .field-hint { font-size: 0.875rem; }
+      .account-copy-btn { min-block-size: 32px; }
+      .topbar-actions { flex-wrap: nowrap; }
+      .topbar-actions #openAddBtn { inline-size: auto; min-block-size: 44px; block-size: 44px; padding-inline: 0.85rem; }
+      .topbar-actions #openAddBtn > span, .topbar-actions #openMoreBtn > span { display: inline; }
+      .topbar-actions #openMoreBtn { inline-size: 44px; block-size: 44px; padding: 0; letter-spacing: 1px; }
+      .brand-text { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
+      .status-pill { font-size: 0.6875rem; padding: 0; border: 0; background: transparent; box-shadow: none; }
+      .search-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+      .search-input { min-block-size: 46px; }
+      .filter-button { padding-inline: 1rem; }
+      .workspace-status { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.35rem 1rem; color: var(--text-muted); font-size: 0.8125rem; }
+      .status-link { color: var(--text-secondary); background: none; border: none; cursor: pointer; padding: 0.2rem 0; min-block-size: 32px; font-size: 0.8125rem; text-align: start; }
+      .status-link:hover { color: var(--accent-text); }
+      .state-banner { display: flex; flex-wrap: wrap; gap: 0.7rem 1rem; justify-content: space-between; border: 1px solid color-mix(in srgb, var(--warn) 35%, var(--border)); background: var(--warn-soft); padding: 0.9rem 1rem; border-radius: var(--radius-md); }
+      .state-banner strong { font-size: 0.9375rem; }
+      .state-banner p { font-size: 0.8125rem; color: var(--text-secondary); margin-block-start: 0.25rem; }
+      .banner-actions, .empty-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+      .empty-actions { justify-content: center; }
+      .menu-list { gap: 0.25rem; }
+      .menu-item { display: flex; align-items: center; gap: 0.7rem; inline-size: 100%; padding: 0.65rem 0.75rem; font: inherit; font-size: 0.9375rem; color: var(--text-primary); background: transparent; border: none; border-radius: var(--radius-sm); cursor: pointer; text-align: start; }
+      .menu-item:hover { background: var(--surface-hover); }
+      .menu-item:disabled { opacity: 0.45; cursor: not-allowed; }
+      .menu-item.is-danger { color: var(--danger); border-block-start: 1px solid var(--border); border-radius: 0 0 var(--radius-sm) var(--radius-sm); }
+      .account-card { position: relative; padding-inline-end: 3.8rem; }
+      .card-more { position: absolute; inset-inline-end: 0.5rem; inset-block-start: 0.65rem; color: var(--text-secondary); font-size: 1.2rem; }
+      .card-main { gap: 0.5rem; }
+      .card-actions, .code-subline { display: none; }
+      .code-zone { justify-content: center; min-inline-size: 0; }
+      .code-hero { justify-content: flex-end; }
+      .copy-hint { min-block-size: 18px; }
+      .expiry-label { color: var(--warn); font-size: 0.75rem; white-space: nowrap; }
+      .ring-progress { transition: stroke-dashoffset 1s linear, stroke 180ms ease; }
+      .cards-list[data-view="list"] .account-card { grid-template-columns: minmax(180px, 0.9fr) minmax(0, 1fr) auto; padding: 0.75rem 3.8rem 0.75rem 1rem; gap: 1rem; }
+      .cards-list[data-view="list"] .code-zone { grid-column: 3; display: flex; justify-content: flex-end; }
+      .cards-list[data-view="list"] .card-more { inset-block-start: calc(50% - 22px); }
+      .cards-list[data-view="list"] .copy-hint { display: block; font-size: 0.6875rem; }
+      .cards-list[data-view="list"] .otp-digits { font-size: 1.6rem; }
+      .pin-indicator { font-size: 0.8rem; }
+      .setup-progress { display: flex; gap: 1rem; border-block-end: 1px solid var(--border); padding-block-end: 0.65rem; font-size: 0.8125rem; color: var(--text-muted); }
+      .setup-progress .active { font-weight: 600; color: var(--text-primary); }
+      #accountConfirmFields, .optional-fields { display: flex; flex-direction: column; gap: 0.9rem; }
+      .optional-fields { padding-block-start: 0.8rem; }
+      #accountConfirmFields > .field:has(#platformQuickChips) { display: none; }
+      .adv-details > summary { min-block-size: 44px; padding-block: 0.65rem; }
+      .import-preview { border: 1px solid var(--border); padding: 0.75rem; border-radius: var(--radius-sm); font-size: 0.8125rem; }
+      #importRows { max-block-size: 240px; overflow-y: auto; margin-block: 0.6rem; }
+      #importRows li { padding: 0.4rem 0; border-block-end: 1px solid var(--border); overflow-wrap: anywhere; }
+      .undo-bar { position: fixed; z-index: 40; inset-block-end: max(1rem, env(safe-area-inset-bottom)); inset-inline: 50% auto; transform: translateX(-50%); display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5rem; max-inline-size: calc(100vw - 1.5rem); inline-size: max-content; padding: 0.5rem 0.8rem; border: 1px solid var(--card-edge); border-radius: var(--radius-md); background: var(--surface); box-shadow: var(--glass-shadow); font-size: 0.8125rem; }
+      body:has(#undoBar:not([hidden])) .toast { inset-block-end: 6rem; }
+      .view-sort-group { flex-wrap: wrap; align-items: stretch; gap: 0.75rem; }
+      .view-sort-group .select-wrap, .view-sort-group .select-control { inline-size: 100%; max-inline-size: none; }
+      #displayDialog .segmented { inline-size: 100%; }
+      #displayDialog .segmented button { flex: 1; justify-content: center; min-block-size: 44px; }
+      #manualCopyText { user-select: text; min-block-size: 72px; font-size: 1.1rem; }
+      .empty-state { min-block-size: 280px; justify-content: center; }
+      @media (max-width: 1100px) {
+        .cards-list[data-view="list"] .account-card { grid-template-columns: minmax(0, 1fr) auto; }
+        .cards-list[data-view="list"] .code-zone { grid-column: 2; }
+      }
+      @media (max-width: 700px) {
+        .cards-list[data-view="list"] .account-card { grid-template-columns: minmax(0, 1fr); padding: 0.85rem 1rem; gap: 0.4rem; }
+        .cards-list[data-view="list"] .identity-block { padding-inline-end: 2.5rem; }
+        .cards-list[data-view="list"] .code-zone { grid-column: 1; padding: 0; border: none; }
+        .cards-list[data-view="list"] .code-hero { inline-size: 100%; justify-content: space-between; }
+        .cards-list[data-view="list"] .card-more { inset-block-start: 0.6rem; }
+        .cards-list[data-view="list"] .otp-digits { font-size: 1.8rem; }
+        .cards-list[data-view="list"] .code-copy-btn { min-block-size: 52px; }
+        .cards-list[data-view="list"] .copy-hint { display: block; }
+      }
+      @media (max-width: 640px) {
+        .topbar-inner { flex-wrap: nowrap; gap: 0.5rem; min-block-size: 72px; }
+        .brand-text h1 { font-size: 1rem; }
+        .topbar-actions .btn { min-inline-size: 44px; min-block-size: 44px; }
+        .topbar-actions #openAddBtn > span { display: inline; }
+        .cards-list:not([data-view="list"]) .account-card { padding: 0.9rem; }
+        .cards-list:not([data-view="list"]) .identity-block { padding-inline-end: 2.4rem; }
+        .cards-list:not([data-view="list"]) .code-zone { display: flex; }
+        .cards-list:not([data-view="list"]) .code-hero { inline-size: 100%; }
+        .account-label, .account-copy-btn { font-size: 0.875rem; }
+        .search-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+        .search-input { padding-inline: 2.25rem 2.5rem; }
+        .workspace-status { font-size: 0.75rem; }
+        .pill-btn { min-block-size: 44px; }
+        .dialog-header h2 { overflow-wrap: anywhere; }
+        #accountActionsSubtitle { max-inline-size: 230px; overflow-wrap: anywhere; }
+      }
+    }
+    @layer components {
+      .form-save-error { margin: 0.5rem 1rem; padding: 0.5rem; }
+    }
+    @layer components {
+      @media (max-width: 640px) {
+        .account-copy-btn, .tag-chip, .note-expand-btn, .status-link { min-block-size: 44px; }
+      }
+    }
+    @layer components {
+      #qrTargetInfo { overflow-wrap: anywhere; min-inline-size: 0; }
+      .qr-frame { max-inline-size: 100%; }
+      .qr-frame svg { max-inline-size: 100%; block-size: auto; aspect-ratio: 1; }
     }
 
     @layer utilities {
@@ -2175,31 +2405,15 @@
           </div>
         </div>
 
-        <div class="topbar-actions">
-          <button id="lockNowBtn" type="button" class="btn" hidden>
-            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>锁定</span>
-          </button>
-          <button id="quickThemeBtn" type="button" class="btn btn-icon-pill" aria-label="切换外观主题" title="切换外观主题">
-            <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-          </button>
-          <button id="openBackupBtn" type="button" class="btn">
-            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <span>备份</span>
-          </button>
-          <button id="openSettingsBtn" type="button" class="btn">
-            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            <span>设置</span>
-          </button>
-          <button id="openAddBtn" type="button" class="btn btn-primary">
+        <div class="topbar-actions"><button id="openAddBtn" type="button" class="btn btn-primary" aria-label="添加账号" title="添加账号">
             <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             <span>添加账号</span>
-          </button>
-        </div>
+          </button><button id="openMoreBtn" type="button" class="btn btn-icon-pill" aria-label="更多功能" title="更多功能"><span aria-hidden="true">•••</span></button></div>
       </div>
     </header>
 
     <main id="mainContent" class="app-main">
+      <section id="storageBanner" class="state-banner" role="status" hidden><div><strong id="storageTitle"></strong><p id="storageDesc"></p></div><div class="banner-actions"><button id="retrySaveBtn" class="btn" type="button">重试保存</button><button id="exportPendingBtn" class="btn" type="button">导出当前内容</button><button id="downloadRawBtn" class="btn" type="button">导出原始数据</button><button id="reloadVaultBtn" class="btn" type="button">重新加载</button></div></section>
       <section class="controls-bar" aria-label="筛选与视图控制">
         <div class="search-row">
           <search class="search-box">
@@ -2211,7 +2425,7 @@
                   id="searchInput"
                   class="search-input"
                   type="search"
-                  placeholder="搜索平台、账号、备注或分组…"
+                  placeholder="搜索账号或平台"
                   autocorrect="off"
                   autocapitalize="none"
                   spellcheck="false"
@@ -2224,7 +2438,56 @@
             </form>
           </search>
 
-          <div class="view-sort-group">
+          <button id="openDisplayBtn" type="button" class="btn filter-button" aria-label="筛选、显示与排序">筛选</button>
+        </div>
+
+        <div class="filter-row">
+          <div id="groupPills" class="group-pills" role="group" aria-label="分组筛选"></div>
+        </div>
+      </section>
+
+      <div id="demoBanner" class="demo-banner" hidden>
+        <div class="demo-banner-msg">
+          <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.28 1.28L21 12l-5.82 1.92a2 2 0 0 0-1.28 1.28L12 21l-1.9-5.8a2 2 0 0 0-1.28-1.28L3 12l5.82-1.92a2 2 0 0 0 1.28-1.28L12 3z"/></svg>
+          <span>当前为示例账号，可上传二维码导入。<span class="desktop-import-hint">也可按 <kbd>Cmd+V / Ctrl+V</kbd> 粘贴截图。</span></span>
+        </div>
+        <button id="clearDemoBtn" type="button" class="chip-btn">清空示例</button>
+      </div>
+
+      <div class="workspace-status"><span id="saveStatus" role="status"></span><button id="backupStatusBtn" class="status-link" type="button"></button></div>
+      <ul id="accountsList" class="cards-list" role="list" data-view="grid"></ul>
+      <div id="emptyState" class="empty-state" hidden>
+        <div class="empty-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h2 id="emptyTitle">还没有保存任何 2FA 账号</h2>
+        <p id="emptyDesc" class="field-hint">点击右上角“+”添加账号，支持上传或粘贴二维码截图导入。</p>
+        <div class="empty-actions"><button id="emptyAddBtn" type="button" class="btn btn-primary">添加第一个账号</button><button id="emptyRestoreBtn" class="btn" type="button">从备份恢复</button><button id="emptyDemoBtn" class="btn btn-ghost" type="button">体验示例</button></div>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="moreDialog" class="dialog-narrow" aria-labelledby="moreTitle">
+    <div class="dialog-header"><h2 id="moreTitle">更多</h2><button class="icon-btn" type="button" data-dialog-close="moreDialog" aria-label="关闭更多">×</button></div>
+    <div class="dialog-body menu-list"><button id="openBackupBtn" type="button" class="menu-item" aria-label="备份与导入" title="备份与导入">
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>备份</span>
+          </button>
+<button id="openSettingsBtn" type="button" class="menu-item" aria-label="设置" title="设置">
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>设置</span>
+          </button>
+<button id="quickThemeBtn" type="button" class="menu-item" aria-label="切换外观主题" title="切换外观主题">
+            <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          <span>切换外观</span></button>
+<button id="lockNowBtn" type="button" class="menu-item" aria-label="锁定保险库" title="锁定保险库" hidden>
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>锁定</span>
+          </button>
+<p class="field-hint">账号保存在当前浏览器中。复制 HTML 文件不会复制账号，请使用加密备份迁移。</p></div></dialog>
+  <dialog id="displayDialog" class="dialog-narrow" aria-labelledby="displayTitle">
+    <div class="dialog-header"><h2 id="displayTitle">筛选与显示</h2><button type="button" class="icon-btn" data-dialog-close="displayDialog" aria-label="关闭筛选">×</button></div>
+    <div class="dialog-body"><div class="field"><label for="platformFilter">平台</label><select id="platformFilter" class="input-control"><option value="all">全部平台</option></select></div><p class="field-hint">平台筛选可与分组、搜索一起使用。</p>          <div class="view-sort-group">
             <label for="sortSelect" class="visually-hidden">排序方式</label>
             <div class="select-wrap">
               <select id="sortSelect" class="select-control">
@@ -2245,33 +2508,12 @@
                 <span>列表</span>
               </button>
             </div>
-          </div>
-        </div>
-
-        <div class="filter-row">
-          <div id="groupPills" class="group-pills" role="group" aria-label="分组筛选"></div>
-        </div>
-      </section>
-
-      <div id="demoBanner" class="demo-banner" hidden>
-        <div class="demo-banner-msg">
-          <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.28 1.28L21 12l-5.82 1.92a2 2 0 0 0-1.28 1.28L12 21l-1.9-5.8a2 2 0 0 0-1.28-1.28L3 12l5.82-1.92a2 2 0 0 0 1.28-1.28L12 3z"/></svg>
-          <span>当前展示示例账号（RFC 测试密钥），可直接按 <kbd>Cmd+V</kbd> 粘贴二维码截图导入。</span>
-        </div>
-        <button id="clearDemoBtn" type="button" class="chip-btn">清空示例</button>
-      </div>
-
-      <ul id="accountsList" class="cards-list" role="list" data-view="grid"></ul>
-      <div id="emptyState" class="empty-state" hidden>
-        <div class="empty-icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </div>
-        <h2 id="emptyTitle">还没有保存任何 2FA 账号</h2>
-        <p id="emptyDesc" class="field-hint">点击右上角“添加账号”，或直接按 Cmd+V / Ctrl+V 粘贴二维码截图即可导入。</p>
-        <button id="emptyAddBtn" type="button" class="btn btn-primary">立即添加第一个账号</button>
-      </div>
-    </main>
-  </div>
+          </div><button id="resetFiltersBtn" class="btn" type="button">重置筛选</button></div>
+    <div class="dialog-footer"><button class="btn btn-primary" type="button" data-dialog-close="displayDialog">完成</button></div>
+  </dialog>
+  <dialog id="accountActionsDialog" class="dialog-narrow" aria-labelledby="accountActionsTitle"><div class="dialog-header"><div><h2 id="accountActionsTitle"></h2><p id="accountActionsSubtitle" class="field-hint"></p></div><button type="button" class="icon-btn" data-dialog-close="accountActionsDialog" aria-label="关闭账号操作">×</button></div><div id="accountActions" class="dialog-body menu-list"></div></dialog>
+  <dialog id="manualCopyDialog" class="dialog-narrow" aria-labelledby="manualCopyTitle"><div class="dialog-header"><h2 id="manualCopyTitle">手动复制</h2><button class="icon-btn" type="button" data-dialog-close="manualCopyDialog" aria-label="关闭手动复制">×</button></div><div class="dialog-body"><p id="manualCopyDesc" class="field-hint"></p><textarea id="manualCopyText" class="textarea-control is-mono" readonly aria-label="待复制内容"></textarea><button id="selectCopyTextBtn" class="btn" type="button">选中全部文本</button></div></dialog>
+  <div id="undoBar" class="undo-bar" role="status" hidden><span id="undoMessage"></span><button id="undoDeleteBtn" class="btn" type="button">撤销删除</button><span id="undoCountdown" class="field-hint"></span></div>
 
   <!-- Add / Edit Account Dialog -->
   <dialog id="accountDialog" closedby="closerequest" aria-labelledby="accountDialogTitle">
@@ -2283,8 +2525,9 @@
     </div>
     <form id="accountForm" novalidate>
       <div class="dialog-body">
+        <div class="setup-progress" aria-label="添加步骤"><span id="stepImportLabel" class="active">1 导入</span><span id="stepConfirmLabel">2 确认账号</span></div>
         <div id="quickImportBlock" class="field">
-          <label for="smartImportInput">快速解析：密钥 / otpauth:// / Google 迁移链接</label>
+          <label for="smartImportInput">粘贴密钥或认证链接</label>
           <span id="smartImportHint" class="field-hint">支持直接粘贴密钥、otpauth:// 链接、otpauth-migration:// 批量迁移码，或在下方上传/粘贴二维码截图。</span>
           <input
             id="smartImportInput"
@@ -2298,12 +2541,14 @@
           >
           <div id="qrDropzone" class="dropzone" tabindex="0" role="button" aria-label="点击选择二维码图片，或拖拽、粘贴截图到此处">
             <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM17 17h4v4h-4zM14 20h1M20 14h1"/></svg>
-            <strong style="font-size:0.875rem;">上传 / 拖拽二维码图片，或直接按 Cmd+V 粘贴截图</strong>
-            <span class="field-hint">图片仅在本地浏览器 Canvas 中离线解码，绝不上传网络</span>
+            <strong style="font-size:0.875rem;">选择二维码图片，或拖拽 / 粘贴截图</strong>
+            <span class="field-hint">图片仅在当前设备中识别，不会上传。</span>
             <input id="qrFileInput" type="file" accept="image/*" class="visually-hidden">
           </div>
           <div id="qrParseMsg" class="error-msg" role="status"></div>
+          <button id="continueImportBtn" type="button" class="btn btn-primary">确认导入内容</button>
         </div>
+        <div id="accountConfirmFields"><button id="backToImportBtn" class="btn btn-ghost" type="button">← 更换导入内容</button>
 
         <div class="field">
           <label>常用平台预设（点击快速填入并匹配图标）</label>
@@ -2346,22 +2591,6 @@
         </div>
 
         <div class="field">
-          <label for="accPassword">登录密码（可选，随账号安全保存）</label>
-          <div class="input-with-action">
-            <input
-              id="accPassword"
-              name="password"
-              class="input-control is-mono"
-              type="password"
-              maxlength="256"
-              autocomplete="new-password"
-              placeholder="可选：保存此账号对应的登录密码"
-            >
-            <button id="toggleAccPwdBtn" type="button" class="btn" aria-pressed="false" aria-label="显示登录密码">显示</button>
-          </div>
-        </div>
-
-        <div class="field">
           <label for="accSecret">Base32 密钥 *</label>
           <span id="accSecretHint" class="field-hint">自动去除空格与短横线并转为大写（至少 2 位 A-Z 或 2-7）。</span>
           <div class="input-with-action">
@@ -2389,6 +2618,22 @@
             <div id="livePreviewCode" class="live-preview-code">000 000</div>
           </div>
           <span id="livePreviewMeta" class="param-badge">30s · 6位 · SHA1</span>
+        </div>
+
+        <details id="supplementDetails" class="adv-details"><summary>补充信息 · 备注、分组和登录密码</summary><div class="optional-fields">        <div class="field">
+          <label for="accPassword">登录密码（可选，随保险库保存）</label>
+          <div class="input-with-action">
+            <input
+              id="accPassword"
+              name="password"
+              class="input-control is-mono"
+              type="password"
+              maxlength="256"
+              autocomplete="new-password"
+              placeholder="可选：保存此账号对应的登录密码"
+            >
+            <button id="toggleAccPwdBtn" type="button" class="btn" aria-pressed="false" aria-label="显示登录密码">显示</button>
+          </div>
         </div>
 
         <div class="field">
@@ -2420,6 +2665,7 @@
           <span>置顶此账号（始终显示在列表最前方）</span>
         </label>
 
+        </div></details>
         <details class="adv-details">
           <summary>高级 TOTP 参数（算法 / 位数 / 刷新周期）</summary>
           <div class="field-row">
@@ -2451,6 +2697,8 @@
           </div>
         </details>
       </div>
+      </div>
+      <p id="accountSaveError" class="error-msg form-save-error" role="status"></p>
       <div class="dialog-footer">
         <button type="button" class="btn" data-dialog-close="accountDialog">取消</button>
         <button id="saveAccountBtn" type="submit" class="btn btn-primary">保存账号</button>
@@ -2530,10 +2778,10 @@
     </div>
     <div class="dialog-body">
       <fieldset class="settings-group">
-        <legend>导出备份文件</legend>
-        <p class="field-hint">包含你的全部账号、密钥、分组和备注信息。建议定期导出保存到安全位置（如加密网盘或 U 盘），防止清理浏览器缓存导致丢失。</p>
+        <legend>导出备份文件</legend><p id="backupSummary" class="field-hint"></p>
+        <p class="field-hint">包含全部验证码密钥、已保存的登录密码、分组和备注。建议定期导出保存到安全位置（如加密网盘或 U 盘），防止清理浏览器缓存导致丢失。</p>
         <div class="field">
-          <label for="exportPwdInput">备份加密密码（推荐填写；留空则导出明文 JSON）</label>
+          <label for="exportPwdInput">备份加密密码（至少八位）</label>
           <input id="exportPwdInput" class="input-control" type="password" autocomplete="new-password" placeholder="输入加密密码以生成 AES-256-GCM 加密备份">
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
@@ -2560,6 +2808,7 @@
           </div>
         </div>
         <div id="importErrorBox" class="error-msg"></div>
+        <button id="previewImportBtn" class="btn" type="button" disabled>校验并预览</button><div id="importPreview" class="import-preview" hidden><strong id="importSummary"></strong><ul id="importRows"></ul><label class="checkbox-row" id="allowPartialWrap" hidden><input id="allowPartialImport" type="checkbox"><span>已查看无效记录，仅导入有效项</span></label></div>
         <button id="runImportBtn" type="button" class="btn btn-primary" disabled>开始恢复导入</button>
       </fieldset>
     </div>
@@ -2604,12 +2853,12 @@
             <input id="currentMasterPwd" class="input-control" type="password" autocomplete="current-password">
           </div>
           <div id="newPwdWrap" class="field">
-            <label for="newMasterPwd" id="newMasterPwdLabel">设置主密码（至少 4 位）</label>
-            <input id="newMasterPwd" class="input-control" type="password" minlength="4" autocomplete="new-password" placeholder="设置解锁密码">
+            <label for="newMasterPwd" id="newMasterPwdLabel">设置主密码（至少 8 位）</label>
+            <input id="newMasterPwd" class="input-control" type="password" minlength="8" autocomplete="new-password" placeholder="设置解锁密码">
           </div>
           <div id="confirmPwdWrap" class="field">
             <label for="confirmMasterPwd">确认主密码</label>
-            <input id="confirmMasterPwd" class="input-control" type="password" minlength="4" autocomplete="new-password" placeholder="再次输入主密码">
+            <input id="confirmMasterPwd" class="input-control" type="password" minlength="8" autocomplete="new-password" placeholder="再次输入主密码">
           </div>
           <div id="masterPwdError" class="error-msg"></div>
           <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
@@ -2635,7 +2884,7 @@
         <legend>数据管理</legend>
         <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
           <button id="restoreDemoBtn" type="button" class="btn">添加示例演示账号</button>
-          <button id="wipeAllBtn" type="button" class="btn btn-danger">清空全部本地数据</button>
+          <button id="wipeAllBtn" type="button" class="btn btn-danger">清空账号数据</button>
         </div>
       </fieldset>
     </div>
@@ -2690,6 +2939,7 @@
           <div id="unlockErr" class="error-msg"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span id="unlockErrText">密码错误，请重试。</span></div>
         </div>
       </div>
+      <div id="lockedDraftActions" class="dialog-body" hidden><p class="field-hint">还有未保存的内容，已临时加密保留。可先导出，再处理当前保险库。</p><button id="exportLockedDraftBtn" class="btn" type="button">导出未保存内容</button><button id="discardLockedDraftBtn" class="btn btn-ghost" type="button">放弃未保存内容</button></div>
       <div class="dialog-footer" style="justify-content:space-between;">
         <button id="forgotResetBtn" type="button" class="btn btn-ghost" style="font-size:0.8rem;color:var(--danger);">忘记密码并重置</button>
         <button type="submit" class="btn btn-primary">解锁</button>
@@ -15140,6 +15390,14 @@ var qrcode = function() {
         SORT: 'vault2fa_v1_sort',
         AUTOLOCK: 'vault2fa_v1_autolock_min',
       };
+      let startupStorageError = null;
+      const preferences = {};
+      try {
+        for (const name of ['THEME', 'VIEW', 'SORT', 'AUTOLOCK']) preferences[name] = localStorage.getItem(KEYS[name]);
+      } catch (error) {
+        if (!(error instanceof DOMException) || !['SecurityError', 'InvalidStateError'].includes(error.name)) throw error;
+        startupStorageError = error;
+      }
       const DEFAULT_GROUPS = ['工作', '个人', '金融', '服务器', '开发'];
       const AUTO_PALETTE = ['#3f3f46', '#2f75c3', '#6366f1', '#3d7a2a', '#b45309', '#0369a1', '#6b629f', '#52525b'];
       const PLATFORM_PRESETS = [
@@ -15833,10 +16091,13 @@ var qrcode = function() {
         if (!isValidBase32(secret)) throw new Error('otpauth 链接中未包含有效的 Base32 密钥');
         const issuer = (params.get('issuer') || labelIssuer || '').trim();
         const algoRaw = (params.get('algorithm') || 'SHA1').toUpperCase().replace(/[^A-Z0-9]/g, '');
-        const algorithm = ['SHA1', 'SHA256', 'SHA512'].includes(algoRaw) ? algoRaw : 'SHA1';
-        const digits = Number(params.get('digits')) === 8 ? 8 : 6;
+        if (!['SHA1', 'SHA256', 'SHA512'].includes(algoRaw)) throw new VaultDataError('认证链接中的算法不受支持');
+        const algorithm = algoRaw;
+        const digits = params.has('digits') ? Number(params.get('digits')) : 6;
+        if (![6, 8].includes(digits)) throw new VaultDataError('认证链接的验证码位数必须为 6 或 8');
         const periodNum = Number(params.get('period') || 30);
-        const period = Number.isInteger(periodNum) && periodNum >= 5 && periodNum <= 300 ? periodNum : 30;
+        if (!Number.isInteger(periodNum) || periodNum < 5 || periodNum > 300) throw new VaultDataError('认证链接中的刷新周期无效');
+        const period = periodNum;
         return { issuer, account: labelAccount.trim(), secret, algorithm, digits, period };
       }
 
@@ -16057,9 +16318,24 @@ var qrcode = function() {
         sessionIterations: 100000,
         searchQuery: '',
         activeFilter: 'all', // 'all' | 'pinned' | 'group:<name>'
-        sortBy: localStorage.getItem(KEYS.SORT) || 'custom',
-        viewMode: localStorage.getItem(KEYS.VIEW) === 'list' ? 'list' : 'grid',
-        autoLockMin: Number(localStorage.getItem(KEYS.AUTOLOCK) || 0),
+        sortBy: ['custom', 'name', 'recent'].includes(preferences.SORT) ? preferences.SORT : 'custom',
+        viewMode: ['list', 'grid'].includes(preferences.VIEW) ? preferences.VIEW : (matchMedia('(max-width: 700px)').matches ? 'list' : 'grid'),
+        autoLockMin: preferences.AUTOLOCK === null || preferences.AUTOLOCK === undefined ? 5 : Number(preferences.AUTOLOCK),
+        platformFilter: 'all',
+        storageState: startupStorageError ? 'unavailable' : 'ready',
+        storageMessage: '',
+        baseRaw: null,
+        rawRecovery: null,
+        dirty: false,
+        contentRevision: null,
+        savedContent: null,
+        lastExport: null,
+        saveGeneration: 0,
+        saveQueue: Promise.resolve(),
+        importPreview: null,
+        undoDeletion: null,
+        lockedDraft: null,
+        importStage: false,
         lastActivityAt: Date.now(),
         editingId: null,
         selectedIcon: 'auto',
@@ -16070,7 +16346,7 @@ var qrcode = function() {
         pendingImportData: null,
         currentQrUri: '',
         qrUriRevealed: false,
-        cardNodes: new Map(), // id -> { li, codeBtn, digitsEl, copyHintEl, nextBtn, nextDigitsEl, zoneEl, ringCircle, ringText, lastStep }
+        cardNodes: new Map(), // Mounted account controls and countdown state.
       };
 
       // ================= HELPERS =================
@@ -16214,19 +16490,24 @@ var qrcode = function() {
       const metaScheme = document.querySelector('meta[name="color-scheme"]');
       const darkMedia = window.matchMedia('(prefers-color-scheme: dark)');
 
-      function getStoredTheme() {
-        const val = localStorage.getItem(KEYS.THEME);
-        return val === 'light' || val === 'dark' ? val : 'system';
-      }
-
-      function applyTheme(choice) {
-        if (choice === 'light' || choice === 'dark') {
-          localStorage.setItem(KEYS.THEME, choice);
-          metaScheme.setAttribute('content', choice);
-        } else {
-          localStorage.removeItem(KEYS.THEME);
-          metaScheme.setAttribute('content', 'light dark');
+      function readPreference(name) { return preferences[name] ?? null; }
+      function writePreference(name, value) {
+        preferences[name] = value;
+        try {
+          if (value === null) localStorage.removeItem(KEYS[name]);
+          else localStorage.setItem(KEYS[name], value);
+        } catch (error) {
+          if (!isStorageError(error)) throw error;
+          showToast('偏好仅在本次打开期间生效：浏览器未能保存设置');
         }
+      }
+      function getStoredTheme() {
+        const value = readPreference('THEME');
+        return ['light', 'dark'].includes(value) ? value : 'system';
+      }
+      function applyTheme(choice) {
+        writePreference('THEME', choice === 'system' ? null : choice);
+        metaScheme.setAttribute('content', choice === 'system' ? 'light dark' : choice);
         syncThemeControls();
       }
 
@@ -16255,7 +16536,9 @@ var qrcode = function() {
                   { tag: 'circle', attrs: { cx: '12', cy: '12', r: '4' } },
                   { tag: 'path', attrs: { d: 'M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41' } },
                 ], 15);
-          qBtn.replaceChildren(icon);
+          const label = document.createElement('span');
+          label.textContent = labels[stored];
+          qBtn.replaceChildren(icon, label);
         }
       }
 
@@ -16289,13 +16572,6 @@ var qrcode = function() {
         });
       });
 
-      document.querySelectorAll('dialog').forEach((dlg) => {
-        dlg.addEventListener('close', () => {
-          // Reset returnValue on every close to avoid stale values across browsers
-          dlg.returnValue = '';
-        });
-      });
-
       function showConfirm({ title, message, okText = '确认', isDanger = true }) {
         return new Promise((resolve) => {
           const dlg = $('confirmDialog');
@@ -16311,6 +16587,7 @@ var qrcode = function() {
             resolve(val === 'confirm');
           };
           dlg.addEventListener('close', onClose);
+          dlg.returnValue = '';
           dlg.showModal();
         });
       }
@@ -16390,7 +16667,7 @@ var qrcode = function() {
             issuer: 'GitHub',
             account: 'demo-dev@example.com',
             secret: 'JBSWY3DPEHPK3PXP',
-            note: '示例账号（RFC 测试密钥）：点击右侧验证码可直接复制；支持记录多行备注、恢复提示或账号用途。',
+            note: '示例账号（测试密钥）：点击验证码可复制；可在详情中记录备注、恢复提示或账号用途。',
             group: '开发',
             pinned: true,
             algorithm: 'SHA1',
@@ -16407,7 +16684,7 @@ var qrcode = function() {
             issuer: 'Cloudflare',
             account: 'ops@example.com',
             secret: 'GEZDGNBVGY3TQOJQ',
-            note: '示例账号：当剩余时间少于 5 秒时平滑变色提醒，并可直接点击下期预览验证码复制。',
+            note: '示例账号：剩余时间少于 5 秒时提示即将更新；可从更多菜单复制下一周期验证码。',
             group: '服务器',
             pinned: false,
             algorithm: 'SHA1',
@@ -16422,74 +16699,242 @@ var qrcode = function() {
         ];
       }
 
-      async function saveVault() {
-        const payload = {
-          version: 1,
-          accounts: appState.accounts,
-          demoDismissed: appState.demoDismissed,
-        };
-        if (appState.encryptedMode && appState.sessionKeyBytes && appState.sessionSalt) {
-          const envelope = await encryptWithExistingKey(
-            payload,
-            appState.sessionKeyBytes,
-            appState.sessionSalt,
-            appState.sessionIterations,
-          );
-          localStorage.setItem(KEYS.VAULT, JSON.stringify(envelope));
-        } else {
-          localStorage.setItem(KEYS.VAULT, JSON.stringify({ ...payload, encrypted: false }));
-        }
-        updateHeaderStatus();
+      class VaultDataError extends Error {}
+      class VaultConflictError extends Error {}
+      function isStorageError(error) {
+        return error instanceof DOMException && ['SecurityError', 'QuotaExceededError', 'InvalidStateError', 'NS_ERROR_DOM_QUOTA_REACHED'].includes(error.name);
       }
-
+      function validateAccount(value, index) {
+        if (!value || typeof value !== 'object' || Array.isArray(value)) throw new VaultDataError('账号记录必须是对象');
+        if (typeof value.secret !== 'string' || !isValidBase32(value.secret)) throw new VaultDataError('密钥不是有效的 Base32 文本');
+        for (const field of ['issuer', 'account', 'password', 'note', 'group', 'icon', 'color', 'id']) {
+          if (value[field] !== undefined && typeof value[field] !== 'string') throw new VaultDataError(`${field} 必须是文本`);
+        }
+        const algorithm = value.algorithm === undefined ? 'SHA1' : value.algorithm;
+        const digits = value.digits === undefined ? 6 : value.digits;
+        const period = value.period === undefined ? 30 : value.period;
+        if (!['SHA1', 'SHA256', 'SHA512'].includes(algorithm)) throw new VaultDataError('不支持的验证码算法');
+        if (![6, 8].includes(digits)) throw new VaultDataError('验证码位数必须为 6 或 8');
+        if (!Number.isInteger(period) || period < 5 || period > 300) throw new VaultDataError('刷新周期必须为 5–300 秒');
+        for (const field of ['order', 'createdAt', 'updatedAt']) {
+          if (value[field] !== undefined && (typeof value[field] !== 'number' || !Number.isFinite(value[field]))) throw new VaultDataError(`${field} 必须是有限数字`);
+        }
+        for (const field of ['pinned', 'isDemo']) {
+          if (value[field] !== undefined && typeof value[field] !== 'boolean') throw new VaultDataError(`${field} 必须是布尔值`);
+        }
+        return { ...value, id: value.id || uid(), secret: normalizeBase32(value.secret), algorithm, digits, period,
+          issuer: value.issuer === undefined ? '未命名平台' : value.issuer,
+          account: value.account === undefined ? '' : value.account, note: value.note === undefined ? '' : value.note,
+          group: value.group === undefined ? '' : value.group, order: value.order === undefined ? index : value.order };
+      }
+      function validateEnvelope(value) {
+        if (!value || value.version !== 1 || value.encrypted !== true || value.kdf !== 'PBKDF2-SHA256') throw new VaultDataError('不支持的加密备份格式');
+        // A backup controls this cost; reject oversized values before a local PBKDF2 job can freeze the page.
+        if (!Number.isInteger(value.iterations) || value.iterations < 1 || value.iterations > 2_000_000) throw new VaultDataError('备份的密码派生参数无效或超出支持范围');
+        for (const field of ['salt', 'iv', 'ciphertext']) {
+          if (typeof value[field] !== 'string' || !/^[A-Za-z0-9+/]+={0,2}$/.test(value[field])) throw new VaultDataError('加密数据结构不完整');
+        }
+        if (b64ToBytes(value.salt).length !== 16 || b64ToBytes(value.iv).length !== 12 || b64ToBytes(value.ciphertext).length < 16) throw new VaultDataError('加密数据长度无效');
+        return value;
+      }
+      function validatePayload(value) {
+        if (!value || typeof value !== 'object' || !Array.isArray(value.accounts)) throw new VaultDataError('数据中缺少账号列表');
+        if (value.version !== undefined && value.version !== 1) throw new VaultDataError('不支持此备份版本');
+        const accounts = value.accounts.map(validateAccount);
+        if (new Set(accounts.map(a => a.id)).size !== accounts.length) throw new VaultDataError('账号标识重复，请从备份恢复');
+        return { ...value, accounts };
+      }
+      function applyPayload(payload) {
+        appState.accounts = payload.accounts;
+        appState.demoDismissed = payload.demoDismissed === true;
+        appState.contentRevision = typeof payload.contentRevision === 'string' ? payload.contentRevision : null;
+        appState.lastExport = payload.lastExport && typeof payload.lastExport.at === 'string' && typeof payload.lastExport.contentRevision === 'string' ? payload.lastExport : null;
+        appState.savedContent = JSON.stringify({ accounts: payload.accounts, demoDismissed: appState.demoDismissed });
+      }
+      function backupDescription() {
+        if (!appState.accounts.some(a => !a.isDemo)) return '使用加密备份迁移账号';
+        if (!appState.lastExport) return '尚未导出备份 · 建议现在导出';
+        const when = new Date(appState.lastExport.at).toLocaleString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        const changed = appState.dirty || appState.contentRevision !== appState.lastExport.contentRevision;
+        return `上次导出 ${when}${changed ? ' · 此后有改动' : ' · 当前内容已导出'}`;
+      }
+      function renderStorageStatus() {
+        const state = appState.storageState;
+        const descriptions = {
+          'read-error': ['未能读取已保存的数据', '原始数据仍然保留。请先导出原始数据，或选择备份进行覆盖恢复。'],
+          unavailable: ['浏览器无法使用本地存储', '当前内容只在这次打开期间保留。请导出备份，或更换允许保存数据的浏览器。'],
+          'write-error': ['当前改动尚未保存', '输入内容仍在页面中。可以重试保存，或先导出当前内容。'],
+          conflict: ['另一个页面已更新保险库', '已暂停此页面写入，避免覆盖新数据。请先导出待保存内容，再重新加载最新数据。'],
+        };
+        $('storageBanner').hidden = !descriptions[state];
+        if (descriptions[state]) {
+          $('storageTitle').textContent = descriptions[state][0];
+          $('storageDesc').textContent = descriptions[state][1];
+        }
+        $('retrySaveBtn').hidden = !['write-error', 'unavailable'].includes(state);
+        $('exportPendingBtn').hidden = state === 'read-error' || appState.locked;
+        $('downloadRawBtn').hidden = appState.rawRecovery === null;
+        $('reloadVaultBtn').hidden = !['read-error', 'conflict', 'unavailable', 'write-error'].includes(state);
+        $('saveStatus').textContent = appState.locked ? '保险库已锁定' : appState.dirty ? '有未保存的改动' : state === 'ready' ? `${appState.accounts.length} 个账号 · 保存在当前浏览器` : '本地保存需要处理';
+        $('backupStatusBtn').textContent = backupDescription();
+        $('openAddBtn').disabled = state === 'read-error' || state === 'conflict';
+        $('emptyAddBtn').disabled = $('openAddBtn').disabled;
+        $('emptyDemoBtn').disabled = $('openAddBtn').disabled;
+        $('backupSummary').textContent = backupDescription();
+      }
+      async function writeSnapshot(raw, expectedRaw) {
+        const write = () => {
+          if (localStorage.getItem(KEYS.VAULT) !== expectedRaw) throw new VaultConflictError('其他页面已修改保险库');
+          if (raw === null) localStorage.removeItem(KEYS.VAULT);
+          else localStorage.setItem(KEYS.VAULT, raw);
+        };
+        if (navigator.locks) await navigator.locks.request('2fa-vault-write', write);
+        else write();
+      }
+      async function saveVault(options = {}) {
+        if (appState.locked) return false;
+        appState.dirty = true;
+        renderStorageStatus();
+        const generation = ++appState.saveGeneration;
+        const accounts = structuredClone(appState.accounts);
+        const demoDismissed = appState.demoDismissed;
+        const encryption = options.encryption === undefined
+          ? (appState.encryptedMode ? { keyBytes: appState.sessionKeyBytes, salt: appState.sessionSalt, iterations: appState.sessionIterations } : null)
+          : options.encryption;
+        const run = async () => {
+          if ((appState.storageState === 'read-error' && !options.recovery) || appState.storageState === 'conflict') return false;
+          const expectedRaw = appState.baseRaw;
+          const content = JSON.stringify({ accounts, demoDismissed });
+          const contentRevision = content === appState.savedContent && appState.contentRevision ? appState.contentRevision : uid();
+          const lastExport = options.exportAt ? { at: options.exportAt, contentRevision } : appState.lastExport;
+          const payload = { version: 1, accounts, demoDismissed, contentRevision, lastExport };
+          const stored = encryption
+            ? await encryptWithExistingKey(payload, encryption.keyBytes, encryption.salt, encryption.iterations)
+            : { ...payload, encrypted: false };
+          stored.revision = uid();
+          const raw = JSON.stringify(stored);
+          try {
+            await writeSnapshot(raw, expectedRaw);
+          } catch (error) {
+            if (error instanceof VaultConflictError) appState.storageState = 'conflict';
+            else if (isStorageError(error)) appState.storageState = error.name === 'SecurityError' ? 'unavailable' : 'write-error';
+            else throw error;
+            renderStorageStatus();
+            return false;
+          }
+          appState.baseRaw = raw;
+          appState.rawRecovery = null;
+          appState.storageState = 'ready';
+          appState.savedContent = content;
+          appState.contentRevision = contentRevision;
+          appState.lastExport = lastExport;
+          appState.dirty = generation !== appState.saveGeneration;
+          appState.encryptedMode = Boolean(encryption);
+          appState.sessionKeyBytes = encryption ? encryption.keyBytes : null;
+          appState.sessionSalt = encryption ? encryption.salt : null;
+          if (encryption) appState.sessionIterations = encryption.iterations;
+          updateHeaderStatus();
+          renderStorageStatus();
+          return true;
+        };
+        const pending = appState.saveQueue.then(run);
+        appState.saveQueue = pending;
+        return pending;
+      }
       async function loadVaultOnBoot() {
-        const raw = localStorage.getItem(KEYS.VAULT);
-        if (!raw) {
-          appState.accounts = createDemoAccounts();
-          appState.demoDismissed = false;
-          appState.encryptedMode = false;
-          appState.locked = false;
-          await saveVault();
+        let raw;
+        try { raw = localStorage.getItem(KEYS.VAULT); }
+        catch (error) {
+          if (!isStorageError(error)) throw error;
+          appState.storageState = 'unavailable';
           renderAll();
           return;
         }
+        appState.baseRaw = raw;
+        appState.storageState = 'ready';
+        appState.dirty = false;
+        appState.rawRecovery = null;
+        if (raw === null) {
+          applyPayload({ accounts: [], demoDismissed: true });
+          appState.encryptedMode = false;
+          appState.locked = false;
+          renderAll();
+          return;
+        }
+        let parsed;
         try {
-          const parsed = JSON.parse(raw);
-          if (parsed && parsed.encrypted) {
-            appState.encryptedMode = true;
-            appState.locked = true;
-            appState.accounts = [];
-            renderAll();
-            openLockScreen();
-          } else {
-            appState.encryptedMode = false;
-            appState.locked = false;
-            appState.accounts = Array.isArray(parsed?.accounts) ? parsed.accounts : [];
-            appState.demoDismissed = Boolean(parsed?.demoDismissed);
-            renderAll();
-          }
-        } catch {
+          parsed = JSON.parse(raw);
+          if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new VaultDataError('保险库结构无效');
+          if (parsed.encrypted === true) validateEnvelope(parsed);
+          else parsed = validatePayload(parsed);
+        } catch (error) {
+          if (!(error instanceof SyntaxError || error instanceof VaultDataError || (error instanceof DOMException && error.name === 'InvalidCharacterError'))) throw error;
           appState.accounts = [];
-          appState.demoDismissed = true;
+          appState.rawRecovery = raw;
+          appState.storageState = 'read-error';
+          renderAll();
+          return;
+        }
+        if (parsed.encrypted) {
+          appState.encryptedMode = true;
+          await openLockScreen();
+        } else {
+          appState.encryptedMode = false;
+          appState.locked = false;
+          applyPayload(parsed);
           renderAll();
         }
       }
-
-      function openLockScreen() {
+      function clearUndo() {
+        if (appState.undoDeletion) clearInterval(appState.undoDeletion.timer);
+        appState.undoDeletion = null;
+        $('undoBar').hidden = true;
+      }
+      async function openLockScreen() {
+        if (appState.locked || appState.locking) return;
+        appState.locking = true;
+        await appState.saveQueue;
+        if (appState.dirty && appState.encryptedMode) {
+          appState.lockedDraft = await encryptWithExistingKey({ version: 1, accounts: appState.accounts, demoDismissed: appState.demoDismissed, contentRevision: appState.contentRevision, lastExport: appState.lastExport }, appState.sessionKeyBytes, appState.sessionSalt, appState.sessionIterations);
+        }
+        clearUndo();
+        for (const timer of appState.copiedStates.values()) clearTimeout(timer);
+        appState.copiedStates.clear();
+        appState.savedContent = null;
+        appState.pendingMigrationItems = [];
+        $('accountActions').replaceChildren();
+        $('migrationList').replaceChildren();
+        $('importRows').replaceChildren();
+        $('importFileInput').value = '';
+        for (const dialog of document.querySelectorAll('dialog[open]')) dialog.close();
+        $('manualCopyText').value = '';
+        $('qrFrame').replaceChildren();
+        $('qrUriText').textContent = '';
+        appState.currentQrUri = '';
+        appState.pendingImportData = null;
+        appState.importPreview = null;
+        $('accountForm').reset();
         appState.locked = true;
         appState.accounts = [];
         appState.sessionKeyBytes = null;
         appState.revealedPasswords.clear();
         $('appRoot').setAttribute('inert', '');
         renderAll();
-        const form = $('unlockForm');
-        form.reset();
-        $('unlockPwdInput').setCustomValidity('');
+        $('unlockForm').reset();
         $('unlockErr').classList.remove('is-visible');
+        $('unlockPwdInput').setCustomValidity('');
         syncAria($('unlockPwdInput'));
-        if (!$('lockDialog').open) $('lockDialog').showModal();
+        $('lockedDraftActions').hidden = !appState.lockedDraft;
+        $('lockDialog').showModal();
         $('unlockPwdInput').focus();
+        appState.locking = false;
       }
+      window.addEventListener('storage', event => {
+        if ((event.key === KEYS.VAULT || event.key === null) && event.storageArea === localStorage && event.newValue !== appState.baseRaw) {
+          appState.storageState = 'conflict';
+          renderStorageStatus();
+        }
+      });
 
       // ================= RENDERING =================
       function getAccountPlatformInfo(acc) {
@@ -16523,6 +16968,7 @@ var qrcode = function() {
       function getFilteredSortedAccounts() {
         const q = appState.searchQuery.trim().toLowerCase();
         const filtered = appState.accounts.filter((acc) => {
+          if (appState.platformFilter !== 'all' && getAccountPlatformInfo(acc).key !== appState.platformFilter) return false;
           if (appState.activeFilter === 'pinned' && !acc.pinned) return false;
           if (appState.activeFilter.startsWith('platform:') && getAccountPlatformInfo(acc).key !== appState.activeFilter) return false;
           if (appState.activeFilter.startsWith('group:')) {
@@ -16556,84 +17002,40 @@ var qrcode = function() {
           lockBtn.hidden = appState.locked;
         } else {
           pill.hidden = true;
+          text.textContent = '';
           lockBtn.hidden = true;
         }
       }
 
       function renderGroupPills() {
-        const container = $('groupPills');
+        const focusKey = document.activeElement?.dataset.filterKey;
+        const groups = getAvailableGroups();
+        const pills = [{ key: 'all', label: '全部', count: appState.accounts.length }];
+        if (appState.accounts.some(a => a.pinned)) pills.push({ key: 'pinned', label: '★ 已置顶', count: appState.accounts.filter(a => a.pinned).length });
+        for (const [group, count] of groups) pills.push({ key: `group:${group}`, label: `# ${group}`, count });
+        if (!pills.some(p => p.key === appState.activeFilter)) appState.activeFilter = 'all';
+        const buttons = pills.map(pill => {
+          const button = document.createElement('button'); button.type = 'button'; button.className = 'pill-btn';
+          button.dataset.filterKey = pill.key; button.setAttribute('aria-pressed', String(appState.activeFilter === pill.key));
+          const label = document.createElement('span'); label.textContent = pill.label;
+          const count = document.createElement('span'); count.className = 'pill-count'; count.textContent = String(pill.count);
+          button.append(label, count);
+          button.addEventListener('click', () => { appState.activeFilter = pill.key; renderAll(); $('groupPills').querySelector(`[data-filter-key="${CSS.escape(pill.key)}"]`).focus({ preventScroll: true }); });
+          return button;
+        });
+        $('groupPills').replaceChildren(...buttons);
+        if (focusKey) $('groupPills').querySelector(`[data-filter-key="${CSS.escape(focusKey)}"]`)?.focus({ preventScroll: true });
         const platforms = getAvailablePlatforms();
-        const counts = getAvailableGroups();
-        const total = appState.accounts.length;
-        const pinnedCount = appState.accounts.filter((a) => a.pinned).length;
-
-        const corePills = [{ key: 'all', label: '全部', count: total }];
-        if (pinnedCount > 0) corePills.push({ key: 'pinned', label: '已置顶', count: pinnedCount, isStar: true });
-
-        const platformPills = platforms.map((p) => ({
-          key: p.key,
-          label: p.label,
-          count: p.count,
-          preset: p.preset,
-        }));
-
-        const groupPills = [];
-        for (const [grp, cnt] of counts.entries()) {
-          groupPills.push({ key: `group:${grp}`, label: `# ${grp}`, count: cnt });
-        }
-
-        const allKeys = new Set([...corePills, ...platformPills, ...groupPills].map((p) => p.key));
-        if (appState.activeFilter !== 'all' && !allKeys.has(appState.activeFilter)) {
-          appState.activeFilter = 'all';
-        }
-
-        const makePill = (p) => {
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'pill-btn';
-          btn.dataset.filterKey = p.key;
-          btn.setAttribute('aria-pressed', String(appState.activeFilter === p.key));
-          if (p.isStar) {
-            btn.appendChild(svgIcon([
-              { tag: 'polygon', attrs: { points: '12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2', fill: 'currentColor' } },
-            ], 12));
-          } else if (p.preset) {
-            btn.appendChild(brandSvg(p.preset.shapes, 13));
-          }
-          const lbl = document.createElement('span');
-          lbl.textContent = p.label;
-          const cnt = document.createElement('span');
-          cnt.className = 'pill-count';
-          cnt.textContent = String(p.count);
-          btn.append(lbl, cnt);
-          btn.addEventListener('click', () => {
-            appState.activeFilter = (p.key !== 'all' && appState.activeFilter === p.key) ? 'all' : p.key;
-            renderGroupPills();
-            renderAccounts();
-          });
-          return btn;
-        };
-
-        const divider = () => {
-          const d = document.createElement('span');
-          d.className = 'filter-divider';
-          d.setAttribute('aria-hidden', 'true');
-          return d;
-        };
-
-        const nodes = corePills.map(makePill);
-        if (platformPills.length) {
-          nodes.push(divider(), ...platformPills.map(makePill));
-        }
-        if (groupPills.length) {
-          nodes.push(divider(), ...groupPills.map(makePill));
-        }
-        container.replaceChildren(...nodes);
+        if (appState.platformFilter !== 'all' && !platforms.some(p => p.key === appState.platformFilter)) appState.platformFilter = 'all';
+        $('platformFilter').replaceChildren(...[{ key: 'all', label: '全部平台' }, ...platforms].map(p => { const option = document.createElement('option'); option.value = p.key; option.textContent = p.label; return option; }));
+        $('platformFilter').value = appState.platformFilter;
+        $('openDisplayBtn').textContent = appState.platformFilter === 'all' ? '筛选' : '筛选 · 1';
       }
 
       function buildAccountCard(acc, index, totalVisible) {
         const li = document.createElement('li');
         li.className = `account-card${acc.pinned ? ' is-pinned' : ''}`;
+        const more = document.createElement('button'); more.type = 'button'; more.className = 'icon-btn card-more'; more.textContent = '•••'; more.setAttribute('aria-label', `${acc.issuer || '账号'} 的更多操作`); more.addEventListener('click', () => openAccountActions(acc)); li.append(more);
 
         const displayName = acc.issuer || acc.account || '账号';
 
@@ -16661,6 +17063,7 @@ var qrcode = function() {
         title.className = 'issuer-name';
         title.textContent = acc.issuer || '未命名平台';
         issuerRow.appendChild(title);
+        if (acc.pinned) { const star = document.createElement('span'); star.className = 'pin-indicator'; star.textContent = '★'; star.setAttribute('aria-label', '已置顶'); issuerRow.append(star); }
 
         if (acc.isDemo) {
           const demoTag = document.createElement('span');
@@ -16701,7 +17104,7 @@ var qrcode = function() {
           accBtn.addEventListener('click', async () => {
             const ok = await copyText(acc.account);
             if (!ok) {
-              showToast('复制失败，请手动选中复制');
+              showManualCopy(acc.account, '浏览器未允许直接复制，请选中文本后复制。');
               return;
             }
             accBtn.classList.add('is-copied');
@@ -16722,92 +17125,6 @@ var qrcode = function() {
 
         identity.append(badge, idText);
         identityBlock.appendChild(identity);
-
-        // Optional Saved Password Strip
-        if (acc.password && acc.password.length > 0) {
-          const pwdRow = document.createElement('div');
-          pwdRow.className = 'password-row';
-
-          const pwdValBtn = document.createElement('button');
-          pwdValBtn.type = 'button';
-          pwdValBtn.className = 'pwd-value-btn';
-          pwdValBtn.setAttribute('aria-label', `复制 ${displayName} 登录密码`);
-          pwdValBtn.title = '点击复制登录密码';
-
-          const keyIco = svgIcon([
-            { tag: 'path', attrs: { d: 'M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4' } },
-          ], 12, 1.75);
-          keyIco.classList.add('pwd-key-ico');
-
-          const pwdText = document.createElement('span');
-          const syncPwdMask = () => {
-            const revealed = appState.revealedPasswords.has(acc.id);
-            pwdText.className = `pwd-mask${revealed ? ' is-revealed' : ''}`;
-            pwdText.textContent = revealed ? acc.password : '••••••••';
-            pwdValBtn.title = revealed ? acc.password : '点击复制登录密码';
-          };
-          syncPwdMask();
-          pwdValBtn.append(keyIco, pwdText);
-
-          const eyeShowSpec = () => [
-            { tag: 'path', attrs: { d: 'M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z' } },
-            { tag: 'circle', attrs: { cx: '12', cy: '12', r: '3' } },
-          ];
-          const eyeHideSpec = () => [
-            { tag: 'path', attrs: { d: 'M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24' } },
-            { tag: 'line', attrs: { x1: '1', y1: '1', x2: '23', y2: '23' } },
-          ];
-
-          const pwdToggleBtn = document.createElement('button');
-          pwdToggleBtn.type = 'button';
-          pwdToggleBtn.className = 'icon-btn pwd-toggle-btn';
-          const syncPwdToggleBtn = () => {
-            const revealed = appState.revealedPasswords.has(acc.id);
-            pwdToggleBtn.setAttribute('aria-pressed', String(revealed));
-            pwdToggleBtn.setAttribute('aria-label', revealed ? `隐藏 ${displayName} 密码` : `显示 ${displayName} 密码`);
-            pwdToggleBtn.title = revealed ? '隐藏密码' : '显示密码';
-            pwdToggleBtn.replaceChildren(svgIcon(revealed ? eyeHideSpec() : eyeShowSpec(), 13, 1.75));
-          };
-          syncPwdToggleBtn();
-          pwdToggleBtn.addEventListener('click', () => {
-            if (appState.revealedPasswords.has(acc.id)) appState.revealedPasswords.delete(acc.id);
-            else appState.revealedPasswords.add(acc.id);
-            syncPwdMask();
-            syncPwdToggleBtn();
-          });
-
-          const pwdCopyBtn = document.createElement('button');
-          pwdCopyBtn.type = 'button';
-          pwdCopyBtn.className = 'icon-btn pwd-copy-btn';
-          pwdCopyBtn.setAttribute('aria-label', `一键复制 ${displayName} 登录密码`);
-          pwdCopyBtn.title = '一键复制密码';
-          pwdCopyBtn.replaceChildren(svgIcon(copyIcoSpec(), 13, 1.75));
-
-          let pwdCopyTimer = null;
-          const doCopyPwd = async () => {
-            const ok = await copyText(acc.password);
-            if (!ok) {
-              showToast('复制失败，请手动选中复制');
-              return;
-            }
-            pwdRow.classList.add('is-copied');
-            pwdCopyBtn.replaceChildren(svgIcon(checkIcoSpec(), 13, 2));
-            showToast(`已复制 ${displayName} 登录密码`);
-            clearTimeout(pwdCopyTimer);
-            pwdCopyTimer = setTimeout(() => {
-              pwdRow.classList.remove('is-copied');
-              pwdCopyBtn.replaceChildren(svgIcon(copyIcoSpec(), 13, 1.75));
-            }, 1500);
-          };
-          pwdValBtn.addEventListener('click', doCopyPwd);
-          pwdCopyBtn.addEventListener('click', doCopyPwd);
-
-          const pwdActions = document.createElement('div');
-          pwdActions.className = 'pwd-actions';
-          pwdActions.append(pwdToggleBtn, pwdCopyBtn);
-          pwdRow.append(pwdValBtn, pwdActions);
-          identityBlock.appendChild(pwdRow);
-        }
 
         // Note Area (Only shown when acc.note is non-empty)
         let noteEl = null;
@@ -16869,83 +17186,12 @@ var qrcode = function() {
 
         footer.appendChild(tags);
 
-        if (appState.sortBy === 'custom' && !appState.searchQuery.trim() && appState.activeFilter === 'all' && totalVisible > 1) {
-          const reorder = document.createElement('div');
-          reorder.className = 'reorder-controls';
-
-          const upBtn = document.createElement('button');
-          upBtn.type = 'button';
-          upBtn.className = 'icon-btn';
-          upBtn.disabled = index === 0;
-          upBtn.setAttribute('aria-label', `上移 ${displayName}`);
-          upBtn.appendChild(svgIcon([{ tag: 'polyline', attrs: { points: '18 15 12 9 6 15' } }], 13.5));
-          upBtn.addEventListener('click', () => moveAccount(acc.id, -1));
-
-          const downBtn = document.createElement('button');
-          downBtn.type = 'button';
-          downBtn.className = 'icon-btn';
-          downBtn.disabled = index === totalVisible - 1;
-          downBtn.setAttribute('aria-label', `下移 ${displayName}`);
-          downBtn.appendChild(svgIcon([{ tag: 'polyline', attrs: { points: '6 9 12 15 18 9' } }], 13.5));
-          downBtn.addEventListener('click', () => moveAccount(acc.id, 1));
-
-          reorder.append(upBtn, downBtn);
-          footer.appendChild(reorder);
-        }
-
         if (noteEl) cardMain.append(identityBlock, noteEl, footer);
         else cardMain.append(identityBlock, footer);
 
         // Right Column: Actions + Hero Code + Countdown Ring + Next Code Preview
         const zone = document.createElement('div');
         zone.className = 'code-zone';
-
-        const actions = document.createElement('div');
-        actions.className = 'card-actions';
-
-        const pinBtn = document.createElement('button');
-        pinBtn.type = 'button';
-        pinBtn.className = 'icon-btn';
-        pinBtn.setAttribute('aria-pressed', String(Boolean(acc.pinned)));
-        pinBtn.setAttribute('aria-label', acc.pinned ? `取消置顶 ${displayName}` : `置顶 ${displayName}`);
-        pinBtn.appendChild(svgIcon([
-          { tag: 'polygon', attrs: { points: '12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2', fill: acc.pinned ? 'currentColor' : 'none' } },
-        ], 14.5));
-        pinBtn.addEventListener('click', () => togglePin(acc.id));
-
-        const qrBtn = document.createElement('button');
-        qrBtn.type = 'button';
-        qrBtn.className = 'icon-btn';
-        qrBtn.setAttribute('aria-label', `导出 ${displayName} 二维码`);
-        qrBtn.appendChild(svgIcon([
-          { tag: 'rect', attrs: { x: '3', y: '3', width: '7', height: '7' } },
-          { tag: 'rect', attrs: { x: '14', y: '3', width: '7', height: '7' } },
-          { tag: 'rect', attrs: { x: '3', y: '14', width: '7', height: '7' } },
-          { tag: 'path', attrs: { d: 'M14 14h3v3h-3zM17 17h4v4h-4z' } },
-        ], 14.5));
-        qrBtn.addEventListener('click', () => openQrDialog(acc));
-
-        const editBtn = document.createElement('button');
-        editBtn.type = 'button';
-        editBtn.className = 'icon-btn';
-        editBtn.setAttribute('aria-label', `编辑 ${displayName} 信息与备注`);
-        editBtn.appendChild(svgIcon([
-          { tag: 'path', attrs: { d: 'M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7' } },
-          { tag: 'path', attrs: { d: 'M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z' } },
-        ], 14.5));
-        editBtn.addEventListener('click', () => openAccountDialog(acc));
-
-        const delBtn = document.createElement('button');
-        delBtn.type = 'button';
-        delBtn.className = 'icon-btn';
-        delBtn.setAttribute('aria-label', `删除 ${displayName}`);
-        delBtn.appendChild(svgIcon([
-          { tag: 'polyline', attrs: { points: '3 6 5 6 21 6' } },
-          { tag: 'path', attrs: { d: 'M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2' } },
-        ], 14.5));
-        delBtn.addEventListener('click', () => deleteAccount(acc));
-
-        actions.append(pinBtn, qrBtn, editBtn, delBtn);
 
         const codeHero = document.createElement('div');
         codeHero.className = 'code-hero';
@@ -16989,37 +17235,10 @@ var qrcode = function() {
 
         codeHero.append(codeBtn, ringWrap);
 
-        const subline = document.createElement('div');
-        subline.className = 'code-subline';
-
-        const nextBtn = document.createElement('button');
-        nextBtn.type = 'button';
-        nextBtn.className = 'next-preview-btn';
-        nextBtn.setAttribute('aria-label', `复制 ${displayName} 下一周期验证码`);
-
-        const expDot = document.createElement('span');
-        expDot.className = 'expiry-dot';
-        expDot.setAttribute('aria-hidden', 'true');
-        const nextLbl = document.createElement('span');
-        nextLbl.className = 'next-preview-label';
-        nextLbl.textContent = '下期';
-        const nextDigits = document.createElement('span');
-        nextDigits.className = 'next-preview-code';
-        nextDigits.textContent = '--- ---';
-        nextBtn.append(expDot, nextLbl, nextDigits);
-        subline.appendChild(nextBtn);
-
-        nextBtn.addEventListener('click', () => {
-          const code = nextBtn.dataset.rawCode;
-          if (code) handleCopyOtp(acc, code, zone, copyHint, true);
-        });
-
-        codeBtn.addEventListener('click', () => {
-          const code = codeBtn.dataset.rawCode;
-          if (code) handleCopyOtp(acc, code, zone, copyHint, false);
-        });
-
-        zone.append(actions, codeHero, subline);
+        const expiryLabel = document.createElement('span'); expiryLabel.className = 'expiry-label'; expiryLabel.textContent = '即将更新'; expiryLabel.hidden = true;
+        codeBtn.append(expiryLabel);
+        codeBtn.addEventListener('click', () => handleCopyOtp(acc));
+        zone.append(codeHero);
         li.append(cardMain, zone);
 
         appState.cardNodes.set(acc.id, {
@@ -17028,8 +17247,7 @@ var qrcode = function() {
           codeBtn,
           digitsEl,
           copyHint,
-          nextBtn,
-          nextDigits,
+          expiryLabel,
           ringProg: prog,
           ringSec: rSec,
           circumference,
@@ -17039,21 +17257,186 @@ var qrcode = function() {
         return li;
       }
 
-      async function handleCopyOtp(acc, rawCode, zoneEl, hintEl, isNext) {
-        const ok = await copyText(rawCode);
-        if (!ok) {
-          showToast('复制失败，请手动选中复制');
+      function showManualCopy(text, description) {
+        $('manualCopyDesc').textContent = description;
+        $('manualCopyText').value = text;
+        $('manualCopyDialog').showModal();
+        $('manualCopyText').focus();
+        $('manualCopyText').select();
+      }
+      function showAccountStep(confirm) {
+        appState.importStage = confirm;
+        $('quickImportBlock').hidden = confirm;
+        $('accountConfirmFields').hidden = !confirm;
+        $('backToImportBtn').hidden = Boolean(appState.editingId);
+        $('saveAccountBtn').hidden = !confirm;
+        $('stepImportLabel').classList.toggle('active', !confirm);
+        $('stepConfirmLabel').classList.toggle('active', confirm);
+      }
+      function continueImport() {
+        const text = $('smartImportInput').value.trim();
+        if (!text) { setErrorBox($('qrParseMsg'), '请选择二维码图片，或粘贴密钥、认证链接。'); return; }
+        applyParsedTextToForm(text);
+        if (/^otpauth-migration:\/\//i.test(text)) return;
+        if (isValidBase32(text)) { showAccountStep(true); $('accIssuer').focus(); }
+        else if (!/^otpauth:\/\//i.test(text)) setErrorBox($('qrParseMsg'), '未找到有效的密钥或认证链接。');
+      }
+      function mutable() {
+        if (['conflict', 'read-error'].includes(appState.storageState)) {
+          showToast('请先处理页面顶部的数据提示');
+          return false;
+        }
+        return !appState.locked;
+      }
+      function openAccountActions(acc) {
+        $('accountActionsTitle').textContent = acc.issuer || '未命名平台';
+        $('accountActionsSubtitle').textContent = acc.account;
+        const actions = $('accountActions');
+        actions.replaceChildren();
+        const add = (text, handler, { danger = false, disabled = false } = {}) => {
+          const button = document.createElement('button');
+          button.type = 'button'; button.className = 'menu-item' + (danger ? ' is-danger' : '');
+          button.textContent = text; button.disabled = disabled;
+          button.addEventListener('click', () => { $('accountActionsDialog').close(); handler(); });
+          actions.append(button);
+        };
+        const blocked = ['read-error', 'conflict'].includes(appState.storageState);
+        add('查看详情 / 编辑', () => openAccountDialog(acc), { disabled: blocked });
+        add(acc.pinned ? '取消置顶' : '置顶账号', () => togglePin(acc.id), { disabled: blocked });
+        const visible = getFilteredSortedAccounts(), index = visible.findIndex(a => a.id === acc.id);
+        const canMove = appState.sortBy === 'custom' && !appState.searchQuery && appState.activeFilter === 'all' && appState.platformFilter === 'all';
+        const sameBucket = other => other && Boolean(other.pinned) === Boolean(acc.pinned);
+        add('上移', () => moveAccount(acc.id, -1), { disabled: blocked || !canMove || !sameBucket(visible[index - 1]) });
+        add('下移', () => moveAccount(acc.id, 1), { disabled: blocked || !canMove || !sameBucket(visible[index + 1]) });
+        add('导出账号二维码', () => openQrDialog(acc));
+        add('复制下一周期验证码', () => handleCopyOtp(acc, true));
+        if (acc.password) add('复制已保存的登录密码', async () => {
+          if (await copyText(acc.password)) showToast('已复制登录密码');
+          else showManualCopy(acc.password, '浏览器未允许直接复制，请选中文本后复制。');
+        });
+        add('验证码不正确？', () => showConfirm({ title: '检查验证码', message: '请先开启设备的自动日期与时间，再确认平台、账号以及高级参数。连续多次失败时，请检查网站绑定的密钥是否与此账号一致。', okText: '知道了', isDanger: false }));
+        add('删除账号', () => deleteAccount(acc), { danger: true, disabled: blocked });
+        $('accountActionsDialog').showModal();
+      }
+      async function handleCopyOtp(acc, isNext = false) {
+        const rawCode = generateTOTP({ ...acc, timestampMs: Date.now(), stepOffset: isNext ? 1 : 0 });
+        if (!await copyText(rawCode)) {
+          showManualCopy(rawCode, `${acc.issuer || '账号'}${isNext ? ' 下一周期' : ' 当前'}验证码。选中后复制；当前码会按周期更新。`);
           return;
         }
-        zoneEl.classList.add('is-copied');
-        hintEl.textContent = isNext ? '已复制下期' : '已复制';
-        showToast(`已复制 ${acc.issuer || '账号'}${isNext ? ' 下一期' : ''}验证码：${formatOtpCode(rawCode)}`);
-        clearTimeout(appState.copiedStates.get(acc.id));
-        const tid = setTimeout(() => {
-          zoneEl.classList.remove('is-copied');
-          hintEl.textContent = '点击复制';
-        }, 1600);
-        appState.copiedStates.set(acc.id, tid);
+        const entry = appState.cardNodes.get(acc.id);
+        if (entry) {
+          entry.zoneEl.classList.add('is-copied');
+          entry.copyHint.textContent = isNext ? '✓ 已复制下期' : '✓ 已复制';
+          clearTimeout(appState.copiedStates.get(acc.id));
+          appState.copiedStates.set(acc.id, setTimeout(() => {
+            entry.zoneEl.classList.remove('is-copied'); entry.copyHint.textContent = '点击复制';
+          }, 1800));
+        }
+        showToast(`已复制 ${acc.issuer || '账号'}${isNext ? ' 下一周期' : ''}验证码`);
+      }
+      async function deleteAccount(acc) {
+        if (!mutable()) return;
+        const ok = await showConfirm({ title: '删除账号', message: `删除「${acc.issuer || '账号'}」${acc.account ? `（${acc.account}）` : ''}？删除后十秒内可以撤销。`, okText: '删除账号', isDanger: true });
+        if (!ok || !mutable()) return;
+        const index = appState.accounts.findIndex(a => a.id === acc.id);
+        appState.accounts = appState.accounts.filter(a => a.id !== acc.id);
+        if (!await saveVault()) { renderAll(); return; }
+        clearUndo();
+        const deletion = { acc, index, until: Date.now() + 10_000, timer: null };
+        appState.undoDeletion = deletion;
+        $('undoMessage').textContent = `已删除 ${acc.issuer || '账号'}`;
+        $('undoBar').hidden = false;
+        const tick = () => {
+          const left = Math.max(0, Math.ceil((deletion.until - Date.now()) / 1000));
+          $('undoCountdown').textContent = `${left} 秒`;
+          if (!left) clearUndo();
+        };
+        deletion.timer = setInterval(tick, 250); tick(); renderAll();
+      }
+      async function undoDelete() {
+        if (!appState.undoDeletion || !mutable()) return;
+        if (Date.now() >= appState.undoDeletion.until) { clearUndo(); showToast('撤销时间已结束'); return; }
+        const { acc, index } = appState.undoDeletion;
+        clearUndo();
+        appState.accounts.splice(index, 0, acc);
+        if (!await saveVault()) { renderAll(); return; }
+        renderAll(); showToast('已恢复账号');
+      }
+      function openBackup() {
+        if ($('moreDialog').open) $('moreDialog').close();
+        $('exportPwdInput').value = '';
+        $('importFileInput').value = ''; $('importPwdInput').value = '';
+        $('importDecryptField').hidden = true;
+        setErrorBox($('importErrorBox'), '');
+        appState.pendingImportData = null; invalidateImport();
+        $('previewImportBtn').disabled = true;
+        const recovery = appState.storageState === 'read-error';
+        document.querySelector('input[name="importMode"][value="merge"]').disabled = recovery;
+        document.querySelector(`input[name="importMode"][value="${recovery ? 'replace' : 'merge'}"]`).checked = true;
+        $('exportEncryptedBtn').disabled = recovery;
+        $('exportPlainBtn').disabled = recovery;
+        $('backupSummary').textContent = backupDescription();
+        $('backupDialog').showModal();
+      }
+      function invalidateImport() {
+        appState.importPreview = null;
+        $('importPreview').hidden = true;
+        $('runImportBtn').disabled = true;
+        $('allowPartialImport').checked = false;
+      }
+      const tokenIdentity = account => [account.secret, account.algorithm, account.digits, account.period].join(':');
+      async function previewImport() {
+        invalidateImport(); setErrorBox($('importErrorBox'), '');
+        const data = appState.pendingImportData;
+        if (!data) return;
+        try {
+          const payload = data.encrypted === true ? (await decryptEnvelope(validateEnvelope(data), $('importPwdInput').value)).data : data;
+          if (!payload || !Array.isArray(payload.accounts) || (payload.version !== undefined && payload.version !== 1)) throw new VaultDataError('备份缺少账号列表或版本不受支持');
+          const mode = document.querySelector('input[name="importMode"]:checked').value;
+          const seen = new Set(mode === 'merge' ? appState.accounts.map(tokenIdentity) : []);
+          const valid = [], rows = [];
+          let duplicate = 0, invalid = 0;
+          payload.accounts.forEach((value, index) => {
+            try {
+              const account = validateAccount(value, index), identity = tokenIdentity(account);
+              const name = account.issuer + (account.account ? ` · ${account.account}` : '');
+              if (seen.has(identity)) { duplicate++; rows.push(`${name} — 重复，保留现有记录`); }
+              else { seen.add(identity); valid.push(account); rows.push(`${name} — 可导入`); }
+            } catch (error) {
+              if (!(error instanceof VaultDataError)) throw error;
+              invalid++; rows.push(`第 ${index + 1} 项 — 无效：${error.message}`);
+            }
+          });
+          appState.importPreview = { valid, duplicate, invalid, mode };
+          $('importSummary').textContent = `${valid.length} 项可导入 · ${duplicate} 项重复 · ${invalid} 项无效`;
+          $('importRows').replaceChildren(...rows.map(text => { const li = document.createElement('li'); li.textContent = text; return li; }));
+          $('allowPartialWrap').hidden = invalid === 0;
+          $('importPreview').hidden = false;
+          $('runImportBtn').disabled = (valid.length === 0 && (mode === 'merge' || invalid > 0)) || invalid > 0;
+        } catch (error) {
+          if (!(error instanceof Error)) throw error;
+          setErrorBox($('importErrorBox'), error.message);
+        }
+      }
+      async function runImport() {
+        const preview = appState.importPreview;
+        if (!preview || (preview.invalid && (preview.valid.length === 0 || !$('allowPartialImport').checked))) return;
+        if (preview.mode === 'replace') {
+          if (!await showConfirm({ title: '覆盖当前账号列表', message: `使用校验后的 ${preview.valid.length} 个账号替换当前列表。${preview.invalid ? ` ${preview.invalid} 个无效项不会导入。` : ''}如需保留当前内容，请先导出备份。`, okText: '确认覆盖', isDanger: true })) return;
+        }
+        const usedIds = new Set(preview.mode === 'merge' ? appState.accounts.map(a => a.id) : []);
+        const imported = preview.valid.map(account => {
+          const id = usedIds.has(account.id) ? uid() : account.id; usedIds.add(id);
+          return { ...account, id };
+        });
+        appState.accounts = preview.mode === 'replace' ? imported : [...appState.accounts, ...imported];
+        if (appState.accounts.some(a => !a.isDemo)) appState.demoDismissed = true;
+        const saved = await saveVault({ recovery: appState.storageState === 'read-error' });
+        renderAll();
+        if (!saved) { setErrorBox($('importErrorBox'), '导入内容仍在页面中，尚未写入。请关闭窗口，处理顶部提示后重试或导出。'); return; }
+        $('backupDialog').close();
+        showToast(`已导入 ${imported.length} 个账号，跳过 ${preview.duplicate} 个重复、${preview.invalid} 个无效项`);
       }
 
       function renderAccounts() {
@@ -17061,7 +17444,8 @@ var qrcode = function() {
         const emptyEl = $('emptyState');
         appState.cardNodes.clear();
 
-        if (appState.locked) {
+        if (appState.locked || appState.storageState === 'read-error') {
+          $('demoBanner').hidden = true;
           listEl.replaceChildren();
           emptyEl.hidden = true;
           return;
@@ -17080,10 +17464,12 @@ var qrcode = function() {
             $('emptyTitle').textContent = '没有匹配的账号';
             $('emptyDesc').textContent = '尝试更换搜索关键词或切换到“全部”分组。';
             $('emptyAddBtn').hidden = true;
+            $('emptyRestoreBtn').hidden = true; $('emptyDemoBtn').hidden = true;
           } else {
-            $('emptyTitle').textContent = '还没有保存任何 2FA 账号';
-            $('emptyDesc').textContent = '点击右上角“添加账号”，或直接按 Cmd+V / Ctrl+V 粘贴二维码截图即可导入。';
+            $('emptyTitle').textContent = '让你的验证码，有个固定的位置';
+            $('emptyDesc').textContent = '添加第一个账号，或从加密备份恢复。数据保存在当前浏览器，支持离线取码。';
             $('emptyAddBtn').hidden = false;
+            $('emptyRestoreBtn').hidden = false; $('emptyDemoBtn').hidden = false;
           }
           return;
         }
@@ -17099,6 +17485,7 @@ var qrcode = function() {
 
       function renderAll() {
         updateHeaderStatus();
+        renderStorageStatus();
         renderGroupPills();
         renderAccounts();
         $('viewGridBtn').setAttribute('aria-pressed', String(appState.viewMode === 'grid'));
@@ -17110,43 +17497,26 @@ var qrcode = function() {
 
       // ================= LIVE OTP TICKER =================
       function tickOtpUpdates(force = false) {
-        if (appState.locked) return;
+        if (appState.locked || document.visibilityState !== 'visible') return;
         const now = Date.now();
-        const epochSec = Math.floor(now / 1000);
-
         for (const entry of appState.cardNodes.values()) {
-          const { acc, zoneEl, codeBtn, digitsEl, nextBtn, nextDigits, ringProg, ringSec, circumference } = entry;
-          const period = acc.period || 30;
-          const step = Math.floor(epochSec / period);
-          const remMs = period * 1000 - (now % (period * 1000));
-          const remSec = Math.max(1, Math.ceil(remMs / 1000));
-
+          const { acc, zoneEl, codeBtn, digitsEl, ringProg, ringSec, circumference, expiryLabel } = entry;
+          const step = Math.floor(now / (acc.period * 1000));
+          const remaining = Math.ceil((acc.period * 1000 - now % (acc.period * 1000)) / 1000);
           if (force || entry.lastStep !== step) {
             entry.lastStep = step;
-            try {
-              const cur = generateTOTP({ secret: acc.secret, algorithm: acc.algorithm, digits: acc.digits, period, timestampMs: now, stepOffset: 0 });
-              const nxt = generateTOTP({ secret: acc.secret, algorithm: acc.algorithm, digits: acc.digits, period, timestampMs: now, stepOffset: 1 });
-              codeBtn.dataset.rawCode = cur;
-              digitsEl.textContent = formatOtpCode(cur);
-              nextBtn.dataset.rawCode = nxt;
-              nextDigits.textContent = formatOtpCode(nxt);
-            } catch {
-              digitsEl.textContent = '密钥异常';
-              nextDigits.textContent = '---';
-            }
+            const code = generateTOTP({ ...acc, timestampMs: now });
+            codeBtn.dataset.rawCode = code;
+            digitsEl.textContent = formatOtpCode(code);
           }
-
-          const ratio = Math.max(0, Math.min(1, remMs / (period * 1000)));
-          ringProg.setAttribute('stroke-dashoffset', String(circumference * (1 - ratio)));
-          ringSec.textContent = `${remSec}s`;
-
-          const expiring = remSec <= 5;
-          zoneEl.classList.toggle('is-expiring', expiring);
-          nextBtn.classList.toggle('is-expiring', expiring);
+          ringSec.textContent = `${remaining}s`;
+          ringProg.setAttribute('stroke-dashoffset', String(circumference * (1 - remaining / acc.period)));
+          zoneEl.classList.toggle('is-expiring', remaining <= 5);
+          expiryLabel.hidden = remaining > 5;
         }
+        if ($('accountDialog').open && appState.importStage) updateAccountLivePreview();
       }
-
-      setInterval(() => tickOtpUpdates(false), 120);
+      setInterval(() => tickOtpUpdates(), 1000);
 
       // Auto-lock activity monitor & visibility resync
       const bumpActivity = () => { appState.lastActivityAt = Date.now(); };
@@ -17175,15 +17545,17 @@ var qrcode = function() {
 
       // ================= ACCOUNT MUTATIONS =================
       async function togglePin(id) {
+        if (!mutable()) return;
         const idx = appState.accounts.findIndex((a) => a.id === id);
         if (idx === -1) return;
         const item = appState.accounts[idx];
         appState.accounts = appState.accounts.with(idx, { ...item, pinned: !item.pinned, updatedAt: Date.now() });
-        await saveVault();
+        if (!await saveVault()) { renderAll(); return; }
         renderAll();
       }
 
       async function moveAccount(id, delta) {
+        if (!mutable()) return;
         // Reorder within same pinned bucket
         const sorted = getFilteredSortedAccounts();
         const pos = sorted.findIndex((a) => a.id === id);
@@ -17197,31 +17569,15 @@ var qrcode = function() {
         [reordered[pos], reordered[targetPos]] = [reordered[targetPos], reordered[pos]];
         const orderMap = new Map(reordered.map((a, i) => [a.id, i]));
         appState.accounts = appState.accounts.map((a) => ({ ...a, order: orderMap.get(a.id) ?? a.order }));
-        await saveVault();
+        if (!await saveVault()) { renderAll(); return; }
         renderAccounts();
       }
 
-      async function deleteAccount(acc) {
-        const ok = await showConfirm({
-          title: '删除 2FA 账号',
-          message: `确定要删除「${acc.issuer || '未命名平台'}」（${acc.account || '无账号名'}）吗？删除后将无法恢复此账号密钥，除非你提前保存了备份。`,
-          okText: '确认删除',
-          isDanger: true,
-        });
-        if (!ok) return;
-        appState.accounts = appState.accounts.filter((a) => a.id !== acc.id);
-        if (acc.isDemo && !appState.accounts.some((a) => a.isDemo)) {
-          appState.demoDismissed = true;
-        }
-        await saveVault();
-        renderAll();
-        showToast('已删除账号');
-      }
-
       async function clearDemoAccounts() {
+        if (!mutable()) return;
         appState.accounts = appState.accounts.filter((a) => !a.isDemo);
         appState.demoDismissed = true;
-        await saveVault();
+        if (!await saveVault()) { renderAll(); return; }
         renderAll();
         showToast('已清空示例账号');
       }
@@ -17303,9 +17659,13 @@ var qrcode = function() {
       }
 
       function openAccountDialog(acc = null, focusNote = false) {
+        if (!mutable()) return;
         appState.editingId = acc ? acc.id : null;
         const form = $('accountForm');
         form.reset();
+        setErrorBox($('accountSaveError'), '');
+        $('supplementDetails').open = Boolean(acc);
+        form.querySelector('.adv-details:not(#supplementDetails)').open = false;
         $('qrParseMsg').classList.remove('is-visible');
         $('qrParseMsg').textContent = '';
 
@@ -17354,6 +17714,7 @@ var qrcode = function() {
         renderGroupQuickChips();
         updateAccountLivePreview();
 
+        showAccountStep(Boolean(acc));
         $('accountDialog').showModal();
         if (focusNote) $('accNote').focus();
         else if (acc) $('accIssuer').focus();
@@ -17411,8 +17772,9 @@ var qrcode = function() {
             renderPlatformQuickChips();
             updateIssuerIconPreview();
             updateAccountLivePreview();
-            showToast('已解析 otpauth:// 链接，可补充备注后保存');
-            $('accNote').focus();
+            showToast('已解析，请确认平台和账号后保存');
+            showAccountStep(true);
+            $('accIssuer').focus();
           } catch (err) {
             setErrorBox(msgBox, err.message);
           }
@@ -17536,14 +17898,14 @@ var qrcode = function() {
 
       $('sortSelect').addEventListener('change', (e) => {
         appState.sortBy = e.target.value;
-        localStorage.setItem(KEYS.SORT, appState.sortBy);
+        writePreference('SORT', appState.sortBy);
         renderAccounts();
       });
 
       [$('viewGridBtn'), $('viewListBtn')].forEach((btn) => {
         btn.addEventListener('click', () => {
           appState.viewMode = btn.dataset.view;
-          localStorage.setItem(KEYS.VIEW, appState.viewMode);
+          writePreference('VIEW', appState.viewMode);
           renderAll();
         });
       });
@@ -17600,7 +17962,7 @@ var qrcode = function() {
       });
 
       // Account Form Events
-      $('smartImportInput').addEventListener('input', (e) => applyParsedTextToForm(e.target.value, { quietBase32: true }));
+      $('smartImportInput').addEventListener('input', () => setErrorBox($('qrParseMsg'), ''));
       $('accIssuer').addEventListener('input', () => {
         const typed = $('accIssuer').value.trim();
         if (appState.selectedIcon !== 'auto') {
@@ -17673,6 +18035,10 @@ var qrcode = function() {
       // Save Account Submit
       $('accountForm').addEventListener('submit', async (e) => {
         e.preventDefault();
+        if (!appState.importStage) { continueImport(); return; }
+        if (appState.locked || appState.storageState === 'read-error') return;
+        setErrorBox($('accountSaveError'), '');
+        const firstRealAccount = !appState.accounts.some(a => !a.isDemo);
         const issuerEl = $('accIssuer');
         const secretEl = $('accSecret');
         const periodEl = $('accPeriod');
@@ -17705,6 +18071,7 @@ var qrcode = function() {
         const periodVal = Math.min(300, Math.max(5, Number(periodEl.value) || 30));
         const prevAcc = appState.editingId ? appState.accounts.find((a) => a.id === appState.editingId) : null;
         const record = {
+          ...prevAcc,
           id: appState.editingId || uid(),
           issuer: issuerEl.value.trim(),
           account: $('accName').value.trim(),
@@ -17724,6 +18091,12 @@ var qrcode = function() {
           updatedAt: now,
         };
 
+        const duplicate = appState.accounts.find(a => a.id !== record.id && tokenIdentity(a) === tokenIdentity(record));
+        if (duplicate) {
+          const open = await showConfirm({ title: '此验证码密钥已存在', message: `已保存在「${duplicate.issuer}」${duplicate.account ? `（${duplicate.account}）` : ''}。可以查看并编辑已有账号。`, okText: '查看已有账号', isDanger: false });
+          if (open) { $('accountDialog').close(); openAccountDialog(duplicate); }
+          return;
+        }
         if (appState.editingId) {
           const idx = appState.accounts.findIndex((a) => a.id === appState.editingId);
           if (idx !== -1) {
@@ -17735,10 +18108,16 @@ var qrcode = function() {
           appState.accounts = [...appState.accounts, record];
         }
 
-        await saveVault();
+        const saved = await saveVault();
+        if (!saved) {
+          appState.editingId = record.id;
+          renderAll();
+          setErrorBox($('accountSaveError'), '内容仍在页面中，尚未保存。可再次提交；也可关闭窗口后重试或导出。');
+          return;
+        }
         $('accountDialog').close('save');
         renderAll();
-        showToast(appState.editingId ? '已更新账号信息与备注' : '已添加账号到本机保险库');
+        showToast(firstRealAccount ? '已保存第一个账号，建议现在导出加密备份' : '账号已保存');
       });
 
       // Batch Migration Form Submit
@@ -17750,13 +18129,14 @@ var qrcode = function() {
       });
       $('migrationForm').addEventListener('submit', async (e) => {
         e.preventDefault();
+        if (!mutable()) return;
         const defaultGrp = $('migrationDefaultGroup').value.trim();
         const checkedIdxs = [...$('migrationList').querySelectorAll('input[type="checkbox"]:checked')].map((c) => Number(c.dataset.migIdx));
         if (!checkedIdxs.length) {
           showToast('请至少选择一个账号');
           return;
         }
-        const existingSecrets = new Set(appState.accounts.map((a) => normalizeBase32(a.secret)));
+        const existingSecrets = new Set(appState.accounts.map(tokenIdentity));
         let added = 0;
         let skipped = 0;
         const now = Date.now();
@@ -17764,8 +18144,8 @@ var qrcode = function() {
         for (const idx of checkedIdxs) {
           const item = appState.pendingMigrationItems[idx];
           if (!item?.supported) continue;
-          if (existingSecrets.has(item.secret)) { skipped++; continue; }
-          existingSecrets.add(item.secret);
+          if (existingSecrets.has(tokenIdentity(item))) { skipped++; continue; }
+          existingSecrets.add(tokenIdentity(item));
           additions.push({
             id: uid(),
             issuer: item.issuer,
@@ -17786,7 +18166,7 @@ var qrcode = function() {
           added++;
         }
         appState.accounts = [...appState.accounts, ...additions];
-        await saveVault();
+        if (!await saveVault()) { renderAll(); return; }
         $('migrationDialog').close('import');
         renderAll();
         showToast(skipped ? `已导入 ${added} 个账号（跳过 ${skipped} 个重复密钥）` : `已成功导入 ${added} 个账号`);
@@ -17815,121 +18195,51 @@ var qrcode = function() {
         setTimeout(() => URL.revokeObjectURL(url), 1000);
       }
 
-      $('openBackupBtn').addEventListener('click', () => {
-        $('exportPwdInput').value = '';
-        $('importFileInput').value = '';
-        $('importPwdInput').value = '';
-        $('importDecryptField').hidden = true;
-        $('importErrorBox').classList.remove('is-visible');
-        $('runImportBtn').disabled = true;
-        appState.pendingImportData = null;
-        $('backupDialog').showModal();
-      });
-
+      $('openBackupBtn').addEventListener('click', openBackup);
       $('exportEncryptedBtn').addEventListener('click', async () => {
-        const pwd = $('exportPwdInput').value;
-        if (pwd.length < 4) {
-          showToast('请设置至少 4 位的备份加密密码');
-          $('exportPwdInput').focus();
-          return;
-        }
-        const payload = { version: 1, exportedAt: new Date().toISOString(), accounts: appState.accounts };
-        const { envelope } = await encryptEnvelope(payload, pwd);
-        const stamp = new Date().toISOString().slice(0, 10);
-        downloadJson({ app: '2fa-vault', ...envelope }, `2fa-vault-backup-${stamp}.2favault.json`);
-        showToast('已生成加密备份文件');
+        const password = $('exportPwdInput').value;
+        if (password.length < 8) { showToast('请设置至少八位的备份密码'); $('exportPwdInput').focus(); return; }
+        const at = new Date().toISOString();
+        const payload = { version: 1, exportedAt: at, accounts: structuredClone(appState.accounts), demoDismissed: appState.demoDismissed };
+        const { envelope } = await encryptEnvelope(payload, password);
+        downloadJson({ app: '2fa-vault', ...envelope }, `2fa-vault-backup-${at.slice(0, 10)}.2favault.json`);
+        if (appState.storageState === 'ready' && !appState.dirty) await saveVault({ exportAt: at });
+        $('backupSummary').textContent = backupDescription();
+        showToast('已生成加密备份文件，请保管好文件和密码');
       });
-
       $('exportPlainBtn').addEventListener('click', async () => {
-        const ok = await showConfirm({
-          title: '导出明文 JSON 备份',
-          message: '明文备份中的 2FA 密钥未经过密码加密，任何获得此文件的人都可以生成你的动态验证码。确定继续导出吗？',
-          okText: '确认导出明文',
-          isDanger: true,
-        });
-        if (!ok) return;
-        const payload = { app: '2fa-vault', version: 1, encrypted: false, exportedAt: new Date().toISOString(), accounts: appState.accounts };
-        const stamp = new Date().toISOString().slice(0, 10);
-        downloadJson(payload, `2fa-vault-plain-${stamp}.json`);
-        showToast('已导出明文 JSON 备份');
+        if (!await showConfirm({ title: '导出明文备份', message: '明文文件包含完整验证码密钥及已保存的登录密码。获得文件的人可以使用这些内容。确认导出？', okText: '导出明文', isDanger: true })) return;
+        const at = new Date().toISOString();
+        downloadJson({ app: '2fa-vault', version: 1, encrypted: false, exportedAt: at, accounts: structuredClone(appState.accounts), demoDismissed: appState.demoDismissed }, `2fa-vault-plain-${at.slice(0, 10)}.json`);
+        if (appState.storageState === 'ready' && !appState.dirty) await saveVault({ exportAt: at });
+        showToast('已生成明文备份文件');
       });
-
       $('importFileInput').addEventListener('change', async () => {
-        const file = $('importFileInput').files?.[0];
-        const errBox = $('importErrorBox');
-        errBox.classList.remove('is-visible');
-        $('runImportBtn').disabled = true;
+        invalidateImport(); setErrorBox($('importErrorBox'), '');
+        $('previewImportBtn').disabled = true;
         appState.pendingImportData = null;
+        const file = $('importFileInput').files[0];
         if (!file) return;
         try {
-          const parsed = JSON.parse(await file.text());
-          appState.pendingImportData = parsed;
-          if (parsed?.encrypted && parsed?.ciphertext) {
-            $('importDecryptField').hidden = false;
-            $('importPwdInput').focus();
-          } else if (Array.isArray(parsed?.accounts)) {
-            $('importDecryptField').hidden = true;
-          } else {
-            throw new Error('备份文件结构无效');
-          }
-          $('runImportBtn').disabled = false;
-        } catch (err) {
-          setErrorBox(errBox, `无法读取备份文件：${err.message}`);
+          const data = JSON.parse(await file.text());
+          if (!data || typeof data !== 'object' || (!Array.isArray(data.accounts) && data.encrypted !== true)) throw new VaultDataError('备份中缺少账号列表');
+          appState.pendingImportData = data;
+          $('importDecryptField').hidden = data.encrypted !== true;
+          $('previewImportBtn').disabled = false;
+          if (data.encrypted) $('importPwdInput').focus();
+        } catch (error) {
+          if (!(error instanceof SyntaxError || error instanceof VaultDataError || error instanceof DOMException)) throw error;
+          setErrorBox($('importErrorBox'), `无法读取备份：${error.message}`);
         }
       });
-
-      $('runImportBtn').addEventListener('click', async () => {
-        const errBox = $('importErrorBox');
-        setErrorBox(errBox, '');
-        const data = appState.pendingImportData;
-        if (!data) return;
-        let importedAccounts = [];
-        try {
-          if (data.encrypted) {
-            const pwd = $('importPwdInput').value;
-            if (!pwd) throw new Error('请输入备份加密密码');
-            const dec = await decryptEnvelope(data, pwd);
-            importedAccounts = dec.data?.accounts || [];
-          } else {
-            importedAccounts = data.accounts || [];
-          }
-          if (!Array.isArray(importedAccounts)) throw new Error('备份中未找到账号列表');
-          const mode = document.querySelector('input[name="importMode"]:checked')?.value || 'merge';
-          if (mode === 'replace') {
-            const ok = await showConfirm({
-              title: '覆盖当前账号列表',
-              message: `确认使用备份中的 ${importedAccounts.length} 个账号完全覆盖当前列表吗？`,
-              okText: '确认覆盖',
-              isDanger: true,
-            });
-            if (!ok) return;
-            appState.accounts = importedAccounts.filter((a) => isValidBase32(a.secret)).map((a, idx) => ({
-              ...a,
-              id: a.id || uid(),
-              secret: normalizeBase32(a.secret),
-              order: idx,
-            }));
-          } else {
-            const seen = new Set(appState.accounts.map((a) => normalizeBase32(a.secret)));
-            const toAdd = [];
-            for (const a of importedAccounts) {
-              if (!isValidBase32(a.secret)) continue;
-              const sec = normalizeBase32(a.secret);
-              if (seen.has(sec)) continue;
-              seen.add(sec);
-              toAdd.push({ ...a, id: uid(), secret: sec, order: appState.accounts.length + toAdd.length });
-            }
-            appState.accounts = [...appState.accounts, ...toAdd];
-          }
-          if (appState.accounts.some((a) => !a.isDemo)) appState.demoDismissed = true;
-          await saveVault();
-          $('backupDialog').close('imported');
-          renderAll();
-          showToast('备份恢复完成');
-        } catch (err) {
-          setErrorBox(errBox, err.message);
-        }
+      $('importPwdInput').addEventListener('input', invalidateImport);
+      document.querySelectorAll('input[name="importMode"]').forEach(input => input.addEventListener('change', invalidateImport));
+      $('previewImportBtn').addEventListener('click', previewImport);
+      $('allowPartialImport').addEventListener('change', () => {
+        const preview = appState.importPreview;
+        $('runImportBtn').disabled = !preview || (preview.valid.length === 0 && (preview.mode === 'merge' || preview.invalid > 0)) || (preview.invalid > 0 && !$('allowPartialImport').checked);
       });
+      $('runImportBtn').addEventListener('click', runImport);
 
       // Settings & Master Password
       function syncSettingsModalUi() {
@@ -17940,14 +18250,14 @@ var qrcode = function() {
         if (appState.encryptedMode) {
           $('lockFeatureDesc').textContent = '已开启主密码保护：localStorage 中的所有密钥与备注均以 AES-256-GCM 密文存储。';
           $('currentPwdWrap').hidden = false;
-          $('newMasterPwdLabel').textContent = '新主密码（至少 4 位）';
+          $('newMasterPwdLabel').textContent = '新主密码（至少 8 位）';
           $('saveMasterPwdBtn').textContent = '修改主密码';
           $('disableMasterPwdBtn').hidden = false;
           $('autoLockWrap').hidden = false;
         } else {
           $('lockFeatureDesc').textContent = '当前未开启主密码锁，打开网页即可直接查看验证码；开启后将自动把本地存储加密为密文。';
           $('currentPwdWrap').hidden = true;
-          $('newMasterPwdLabel').textContent = '设置主密码（至少 4 位）';
+          $('newMasterPwdLabel').textContent = '设置主密码（至少 8 位）';
           $('saveMasterPwdBtn').textContent = '开启主密码锁';
           $('disableMasterPwdBtn').hidden = true;
           $('autoLockWrap').hidden = true;
@@ -17967,62 +18277,49 @@ var qrcode = function() {
 
       $('autoLockSelect').addEventListener('change', (e) => {
         appState.autoLockMin = Number(e.target.value) || 0;
-        localStorage.setItem(KEYS.AUTOLOCK, String(appState.autoLockMin));
+        writePreference('AUTOLOCK', String(appState.autoLockMin));
         showToast('已更新自动锁定设置');
       });
 
-      $('masterPwdForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const errBox = $('masterPwdError');
-        setErrorBox(errBox, '');
-        const curPwd = $('currentMasterPwd').value;
-        const newPwd = $('newMasterPwd').value;
-        const confPwd = $('confirmMasterPwd').value;
-
+      $('masterPwdForm').addEventListener('submit', async event => {
+        event.preventDefault(); setErrorBox($('masterPwdError'), '');
+        if (!mutable()) return;
+        const password = $('newMasterPwd').value;
         try {
           if (appState.encryptedMode) {
-            if (!curPwd) throw new Error('请输入当前主密码进行验证');
-            const raw = JSON.parse(localStorage.getItem(KEYS.VAULT));
-            await decryptEnvelope(raw, curPwd);
+            if (!$('currentMasterPwd').value) throw new VaultDataError('请先输入当前主密码');
+            await decryptEnvelope(JSON.parse(appState.baseRaw), $('currentMasterPwd').value);
           }
-          if (newPwd.length < 4) throw new Error('主密码长度至少为 4 位');
-          if (newPwd !== confPwd) throw new Error('两次输入的新密码不一致');
-
-          const payload = { version: 1, accounts: appState.accounts, demoDismissed: appState.demoDismissed };
-          const { envelope, keyBytes, salt, iterations } = await encryptEnvelope(payload, newPwd);
-          appState.encryptedMode = true;
-          appState.sessionKeyBytes = keyBytes;
-          appState.sessionSalt = salt;
-          appState.sessionIterations = iterations;
-          localStorage.setItem(KEYS.VAULT, JSON.stringify(envelope));
-          updateHeaderStatus();
-          syncSettingsModalUi();
-          showToast('主密码已生效，本地保险库已加密');
-        } catch (err) {
-          setErrorBox(errBox, err.message);
+          if (password.length < 8) throw new VaultDataError('新主密码至少需要八位，建议使用较长口令');
+          if (password !== $('confirmMasterPwd').value) throw new VaultDataError('两次输入的密码不一致');
+          const { keyBytes, salt, iterations } = await encryptEnvelope({}, password);
+          if (!await saveVault({ encryption: { keyBytes, salt, iterations } })) {
+            setErrorBox($('masterPwdError'), '主密码变更未写入，原有保护方式保持有效。请处理保存提示后重试。'); return;
+          }
+          if (readPreference('AUTOLOCK') === null) {
+            appState.autoLockMin = 5; writePreference('AUTOLOCK', '5');
+          }
+          syncSettingsModalUi(); showToast('主密码已生效，本地内容已加密');
+        } catch (error) {
+          if (!(error instanceof Error)) throw error;
+          setErrorBox($('masterPwdError'), error.message);
         }
       });
-
       $('disableMasterPwdBtn').addEventListener('click', async () => {
-        const errBox = $('masterPwdError');
-        setErrorBox(errBox, '');
-        const curPwd = $('currentMasterPwd').value;
+        if (!mutable()) return;
         try {
-          if (!curPwd) throw new Error('关闭密码锁前，请先在上方输入当前主密码');
-          const raw = JSON.parse(localStorage.getItem(KEYS.VAULT));
-          await decryptEnvelope(raw, curPwd);
-          appState.encryptedMode = false;
-          appState.sessionKeyBytes = null;
-          appState.sessionSalt = null;
-          await saveVault();
-          syncSettingsModalUi();
-          showToast('已关闭主密码锁');
-        } catch (err) {
-          setErrorBox(errBox, err.message);
+          if (!$('currentMasterPwd').value) throw new VaultDataError('请先输入当前主密码');
+          await decryptEnvelope(JSON.parse(appState.baseRaw), $('currentMasterPwd').value);
+          if (!await saveVault({ encryption: null })) { setErrorBox($('masterPwdError'), '变更尚未写入，原有加密仍然有效。'); return; }
+          syncSettingsModalUi(); showToast('已关闭主密码锁，当前数据未加密');
+        } catch (error) {
+          if (!(error instanceof Error)) throw error;
+          setErrorBox($('masterPwdError'), error.message);
         }
       });
 
       $('restoreDemoBtn').addEventListener('click', async () => {
+        if (!mutable()) return;
         const demos = createDemoAccounts();
         const existingSecrets = new Set(appState.accounts.map((a) => normalizeBase32(a.secret)));
         const toAdd = demos.filter((d) => !existingSecrets.has(d.secret));
@@ -18031,12 +18328,13 @@ var qrcode = function() {
           return;
         }
         appState.accounts = [...appState.accounts, ...toAdd];
-        await saveVault();
+        if (!await saveVault()) { renderAll(); return; }
         renderAll();
         showToast('已添加示例账号');
       });
 
       $('wipeAllBtn').addEventListener('click', async () => {
+        if (!mutable()) return;
         const ok = await showConfirm({
           title: '清空全部本地数据',
           message: '此操作将永久清除当前浏览器保存的所有 2FA 账号、备注和加密设置且不可撤销！确定继续吗？',
@@ -18046,10 +18344,9 @@ var qrcode = function() {
         if (!ok) return;
         appState.accounts = [];
         appState.demoDismissed = true;
-        appState.encryptedMode = false;
-        appState.sessionKeyBytes = null;
         appState.revealedPasswords.clear();
-        await saveVault();
+        clearUndo();
+        if (!await saveVault({ encryption: null })) { renderAll(); return; }
         $('settingsDialog').close('wiped');
         renderAll();
         showToast('已清空所有本地数据');
@@ -18064,48 +18361,79 @@ var qrcode = function() {
         $('toggleUnlockPwdBtn').textContent = show ? '隐藏' : '显示';
       });
 
-      $('unlockForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const pwd = $('unlockPwdInput').value;
-        const errBox = $('unlockErr');
-        errBox.classList.remove('is-visible');
+      $('unlockForm').addEventListener('submit', async event => {
+        event.preventDefault(); $('unlockErr').classList.remove('is-visible');
         try {
-          const envelope = JSON.parse(localStorage.getItem(KEYS.VAULT));
-          const { data, keyBytes, salt, iterations } = await decryptEnvelope(envelope, pwd);
-          appState.accounts = Array.isArray(data?.accounts) ? data.accounts : [];
-          appState.demoDismissed = Boolean(data?.demoDismissed);
-          appState.sessionKeyBytes = keyBytes;
-          appState.sessionSalt = salt;
-          appState.sessionIterations = iterations;
-          appState.locked = false;
-          appState.lastActivityAt = Date.now();
-          $('appRoot').removeAttribute('inert');
-          $('lockDialog').close('unlocked');
-          renderAll();
-        } catch (err) {
-          $('unlockErrText').textContent = err.message || '密码错误，请重试。';
-          errBox.classList.add('is-visible');
-          $('unlockPwdInput').select();
+          const raw = localStorage.getItem(KEYS.VAULT);
+          if (raw === null) throw new VaultDataError('本地保险库已被其他页面移除，请重新打开页面');
+          const result = await decryptEnvelope(validateEnvelope(JSON.parse(raw)), $('unlockPwdInput').value);
+          const saved = validatePayload(result.data);
+          const pending = appState.lockedDraft ? validatePayload((await decryptEnvelope(appState.lockedDraft, $('unlockPwdInput').value)).data) : null;
+          appState.baseRaw = raw;
+          applyPayload(saved);
+          appState.sessionKeyBytes = result.keyBytes; appState.sessionSalt = result.salt; appState.sessionIterations = result.iterations;
+          appState.storageState = 'ready'; appState.dirty = false;
+          if (pending) {
+            appState.accounts = pending.accounts;
+            appState.demoDismissed = pending.demoDismissed === true;
+            appState.dirty = true; appState.storageState = 'write-error'; appState.lockedDraft = null;
+          }
+          appState.locked = false; appState.lastActivityAt = Date.now();
+          $('appRoot').removeAttribute('inert'); $('lockDialog').close();
+          $('unlockPwdInput').value = ''; renderAll();
+        } catch (error) {
+          if (!(error instanceof Error)) throw error;
+          $('unlockErrText').textContent = isStorageError(error) ? '浏览器暂时无法读取保存的数据，请检查存储权限。' : error.message;
+          $('unlockErr').classList.add('is-visible'); $('unlockPwdInput').select();
         }
       });
-
       $('forgotResetBtn').addEventListener('click', async () => {
-        const ok = await showConfirm({
-          title: '忘记主密码并重置？',
-          message: '由于本地加密无法找回密码，重置会清空浏览器中保存的所有加密账号数据并恢复初始状态。确定要重置吗？',
-          okText: '确认清空并重置',
-          isDanger: true,
-        });
-        if (!ok) return;
-        localStorage.removeItem(KEYS.VAULT);
-        appState.encryptedMode = false;
-        appState.locked = false;
-        appState.sessionKeyBytes = null;
-        appState.revealedPasswords.clear();
-        $('appRoot').removeAttribute('inert');
-        $('lockDialog').close('reset');
+        if (!await showConfirm({ title: '清空加密保险库？', message: '重置会删除当前浏览器的所有加密账号。请确认已有可用备份；重置无法找回忘记的密码。', okText: '清空并重置', isDanger: true })) return;
+        try {
+          await writeSnapshot(null, appState.baseRaw);
+        } catch (error) {
+          if (!(error instanceof VaultConflictError) && !isStorageError(error)) throw error;
+          $('unlockErrText').textContent = '重置未完成：数据已变化或浏览器未允许删除。请重新加载后处理。'; $('unlockErr').classList.add('is-visible'); return;
+        }
+        clearUndo(); appState.lockedDraft = null; appState.encryptedMode = false; appState.locked = false;
+        appState.sessionKeyBytes = null; appState.sessionSalt = null;
+        $('appRoot').removeAttribute('inert'); $('lockDialog').close();
+        await loadVaultOnBoot(); showToast('已重置为空保险库');
+      });
+
+      $('openMoreBtn').addEventListener('click', () => $('moreDialog').showModal());
+      $('openDisplayBtn').addEventListener('click', () => $('displayDialog').showModal());
+      $('platformFilter').addEventListener('change', event => { appState.platformFilter = event.target.value; renderAll(); });
+      $('resetFiltersBtn').addEventListener('click', () => {
+        appState.platformFilter = 'all'; appState.activeFilter = 'all'; appState.searchQuery = ''; $('searchInput').value = ''; renderAll();
+      });
+      $('openSettingsBtn').addEventListener('click', () => $('moreDialog').close());
+      $('emptyRestoreBtn').addEventListener('click', () => { openBackup(); $('importFileInput').focus(); });
+      $('backupStatusBtn').addEventListener('click', openBackup);
+      $('exportPendingBtn').addEventListener('click', openBackup);
+      $('emptyDemoBtn').addEventListener('click', () => $('restoreDemoBtn').click());
+      $('continueImportBtn').addEventListener('click', continueImport);
+      $('backToImportBtn').addEventListener('click', () => { showAccountStep(false); $('smartImportInput').focus(); });
+      $('undoDeleteBtn').addEventListener('click', undoDelete);
+      $('selectCopyTextBtn').addEventListener('click', () => { $('manualCopyText').focus(); $('manualCopyText').select(); });
+      $('manualCopyDialog').addEventListener('close', () => { $('manualCopyText').value = ''; });
+      $('retrySaveBtn').addEventListener('click', async () => { if (await saveVault()) { renderAll(); showToast('当前内容已保存'); } });
+      $('downloadRawBtn').addEventListener('click', () => {
+        const blob = new Blob([appState.rawRecovery], { type: 'application/json' });
+        const url = URL.createObjectURL(blob), anchor = document.createElement('a');
+        anchor.href = url; anchor.download = '2fa-vault-recovery.json'; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+      });
+      $('reloadVaultBtn').addEventListener('click', async () => {
+        if (appState.dirty && !await showConfirm({ title: '重新加载保存的数据', message: '重新加载会放弃此页面尚未保存的内容。需要保留时，请先导出当前内容。', okText: '重新加载', isDanger: true })) return;
+        clearUndo(); appState.sessionKeyBytes = null; appState.lockedDraft = null;
         await loadVaultOnBoot();
-        showToast('已重置保险库');
+      });
+      $('exportLockedDraftBtn').addEventListener('click', () => {
+        if (appState.lockedDraft) downloadJson({ app: '2fa-vault', ...appState.lockedDraft }, '2fa-vault-unsaved.2favault.json');
+      });
+      $('discardLockedDraftBtn').addEventListener('click', async () => {
+        if (!await showConfirm({ title: '放弃未保存内容？', message: '此操作仅放弃临时保留的改动，已保存的数据会继续保留。需要这些改动时，请先导出。', okText: '放弃改动', isDanger: true })) return;
+        appState.lockedDraft = null; $('lockedDraftActions').hidden = true;
       });
 
       // ================= BOOTSTRAP =================
