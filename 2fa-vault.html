@@ -12,7 +12,12 @@
       }
     } catch {}
   </script>
-  <title>2FA Vault · 本地双因素认证码</title>
+  <title>2FA Vault</title>
+  <meta name="apple-mobile-web-app-title" content="2FA Vault">
+  <!-- 标签页图标：SVG 跟随浏览器深浅色（浅色黑标、深色白标）；PNG 给不支持 SVG 图标的浏览器；apple-touch-icon 用于添加到主屏幕 -->
+  <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB9klEQVR4nMRXvU7DMBC+/BSpNCy8AJEQT8BKlKosFTMTdGaEuc3CknZnQBVbmZlRF1DT0JEnQH0GBtJma/BFdeSaNrVNm35S5Ets5+77fLZ8JixCK5crt5qmXRL7lDxl2Axi8nwmSfISx5MHYieZQ2pYllWbzeCJmMewXYx1HW6iKHrPApg7f4MCQYI4xyAwAG1/3/qC7TPnMZ5OoxODrPkdWfMrKB6Hpln6NucJtxOgb5R/CorZ7nmttPX9NigixgASUMRk8pO2lcoBqEIHRVD2vC0LZQUoewpVFZQUWMZYVQUlBXj2FCoqSCuQx1RFBWkFWPbtdidtW61m9k1WBSkFeIa4/4fDMHfMOkgpwLOnB1C//wqO42R9MioYpdLevchAZMY6qdcvoFp1wbZtCIIQGo3rrI8csRCGochvxRXg2Y9GI3BdN33v9Z6h231UUkEoB5atPXWOQNv3O7lz/hUAm+XIHqVnYdtHYBj6guyOcwYbCYBnwmc9C1YFXA52SZQD4Nkjy8Eg+DMOv2Efq4LnNdf9Pj+AvHUMgmCpLatCbgA8e/biwarA2rIqrAxAJIuROcueQkaFlVcyfpLowSI5P72SYY/Yntk8PnQsl2BHQN87L0wwCROs1aBgzH0m6S7AGg1rNYwKtg8sTmsLxSmDwsvzXwAAAP//FX/NIwAAAAZJREFUAwBnrt8SNmx8JgAAAABJRU5ErkJggg==">
+  <link rel="icon" type="image/svg+xml" sizes="any" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='2.1 1.8 19.8 19.8'%3E%3Cstyle%3Epath%7Bfill:%230a0a0c%7D%40media %28prefers-color-scheme:dark%29%7Bpath%7Bfill:%23fff%7D%7D%3C/style%3E%3Cpath d='M12 2L2.6 21h3.55l5.85-12.2L17.85 21h3.55L12 2z'/%3E%3Cpath d='M12 11.8l2.75 4.05L12 21.2l-2.75-5.35L12 11.8z' opacity='.52'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAGKklEQVR4nOzdUVLbVhiG4UOb9CJpZ1hB7R00C6hJLjPdQjNlHYVryEbSLXRyGYZugB1gVgDTyX0P/oOqyP6EjiQT6f/f54JJGpOZhs+vbFmGZy9e/JiAXb5LgMA4IDEOSIwDEuOAxDggMQ5IjAMS44DEOCAxDkiMAxLjgMQ4IDEOSIwDEuOAxDggMQ5IjAMS44DEOCAxDkiMAxLjgMQ4IDEOSIwDEuOAxDggMQ5IjAMS44DEOCAxDkiMAxLjgMQ4IDEOSIwDEuOAxDi+slqtEh4wjv+dnp6cnv6Z8OCA731e+fz53/zx5cufEjYoxxc5G41fgHJ8YdkwxMNQjnuNWhAPQznu1bNhiEeiHEl0gngkypF2ZcMQj+jlaCkE8YheDpUNEzweocvxaBuCxyN0OdqzYSLHI245OlYhcjzilqNLNkzYeAQtR1EPwsYjaDm6Z8PEjEfEcvQoQcx4RCxHaTZMwHiEK0fvBgSMR7hy9MuGiRaPWOUYeO+PFo9Y5RiSDRMqHoHKMcr9PlQ8ApVjeDZMnHhEKceI9/g4b3yKUo6xspFdXl6+fftbCiBEOcZ9oLDaSAGEKMeI2TBB4uG/HPt4fhEkHv7LMXo2TIR4OC/H/k5LRIjH98+f/5D8+vjx7+43Pj9/nz8uFouOt18sfv7w4a/kl+dy9MjG2dn77jd2Hw/PjzmKHm3kbJydnadNbLp/yX0/8nBbjt6PNohHxW05hlwlSjyMz3KUZsMeilaIh/FZjuEXlxOP5LIcA7NhiEdyWY6x3pNCPLyVY5RsGOLhrRzjvpWt6G/zFw9X5RgxGx1vUOcvHq7KsY93wEaOh59yjJ6NopsZZ/HwU47h2Xjz5nX++OnTxZC/2VM8nJRjlGy83lgul43/nr/eqTNP8XByPUfRdRvZ9p07Z8NmcXh4eHV1Vf+j9frm3bvfU2durvPwUI7h2cjLyOzXy+XCji+Vy43UmZt4RPzmLXbdRl21jOq3jYNL0QmxdL9XDz/UZ/bjyNk4OSn4SuzMxvbNGnOJGY9w5Whko35Aqds+uASMx7zHMTAb+dixcxmmcXAJGI/Q3966ZRk7bxAtHjN+KtsjG/VjSj5qvHr1S/un5Ke1Bwfp+nptv725uTk6WpW8d2FxeflP/qw0T0HL0X5AqWscXELFY67jGJiNjsvYvnGoRx4Ry7E5Gdr10JC2nrnEiccsH3MMyYZ67touH1nW6/Xt7W2K9MgjXDl6LGP7E4PEY37lKM1Gqr3MVr261kP9mUuQePgvR3Xiq98Bpa7+zCVCPGZWjiHZOD4+ToNVL+hHiIfzctSzkcZQf+biPh5zGkePbFRPUqqznCNyf87DcznqL7Nd3xtnH/WLTPORIpWYVzxmc4Fxj2w0LiHOjyWPj/9Iw1xcXDSuQC69sDk/BirqzTfkthzbF/WMEo/ta9OL3ruQZhWPeZRjeDbMwHhsZ8N4jYfPcqh788B47FxG8huPGZRjrGyY3vFQ2TAu4+GwHO33437xyJ/SsoxU+ManNJN4zOAM6fA3LDXc3d09eg1YQz4r2j6p8jc+zeCE6dTLsY+3R5fGo/2AYkpPiKU5xGPq5Rg9G6YoHuv1usuY/MVj0uXY03dVSCXx6JIN4y8eky7HnrJhOsajYzYebuwqHtMtx/6yYbrEo3s2jLN4THccpec2eshf+zS20tfxp/xS7UTH0SMb2++df1R7PEqzYTzFY6LjeIJsmJZ49D7R7iYeUxzH02TDqHjk0eQ/SL24iccUx/Fk2TA749HjgFLnIx6TG0evn73VMxtmOx7DH6j6iMfkxlGajdJnsDs11jAwG8ZBPKY1jqfPhqnHY6zntw7iMa1xfJNsmGoTo2TDzD0ez9Jk5H+X0rvaKNkwFo98rjyNJ//v5PmuVr92/5Sjo+J/hP3x/+PKu1sul72fvrrEOCCF/oZxaMc4IDEOSIwDEuOAxDggMQ5IjAMS44DEOCAxDkiMAxLjgMQ4IDEOSIwDEuOAxDggMQ5IjAMS44DEOCAxDkiMAxLjgMQ4IDEOSIwDEuOAxDggMQ5IjAMS44DEOCAxDkiMAxLjgMQ4IDEOSIwDEuOAxDggMQ5IjAMS44DEOCAxDkj/AQAA//9RPjuMAAAABklEQVQDAA/JD+PO5Hn6AAAAAElFTkSuQmCC">
   <style>
     /* Google Sans (latin, normal) */
 @font-face {
@@ -1243,14 +1248,6 @@
         color: var(--text-muted);
       }
 
-      .reorder-controls {
-        display: inline-flex;
-        flex-shrink: 0;
-        align-items: center;
-        gap: 0.05rem;
-        transition: opacity 140ms ease;
-      }
-
       /* Right Column: Integrated Hairline-Separated OTP Zone */
       .code-zone {
         border-inline-start: 1px solid var(--border);
@@ -1269,14 +1266,11 @@
       }
 
       @media (hover: hover) {
-        .card-actions .icon-btn:not([aria-pressed="true"]),
-        .reorder-controls {
+        .card-actions .icon-btn:not([aria-pressed="true"]) {
           opacity: 0.38;
         }
         .account-card:hover .card-actions .icon-btn,
-        .account-card:focus-within .card-actions .icon-btn,
-        .account-card:hover .reorder-controls,
-        .account-card:focus-within .reorder-controls {
+        .account-card:focus-within .card-actions .icon-btn {
           opacity: 1;
         }
       }
@@ -1881,22 +1875,56 @@
         flex-shrink: 0;
       }
 
-      /* Details disclosure */
+      /* Details disclosure：右侧细箭头与下拉框的箭头同款，展开时翻转 */
       .adv-details {
         border: 1px solid var(--border);
         border-radius: var(--radius-md);
-        padding: 0.6rem 0.85rem;
+        padding: 0 0.85rem;
         background-color: var(--surface-subtle);
       }
 
+      .adv-details[open] {
+        padding-block-end: 0.85rem;
+      }
+
       .adv-details summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        min-block-size: 40px;
+        padding-block: 0.55rem;
+        list-style: none;
         font-size: 0.84375rem;
         font-weight: 550;
         cursor: pointer;
       }
 
+      .adv-details summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .adv-details summary::after {
+        content: '';
+        inline-size: 14px;
+        block-size: 14px;
+        flex-shrink: 0;
+        background-color: var(--text-muted);
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") center / contain no-repeat;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") center / contain no-repeat;
+        transition: transform 160ms ease;
+      }
+
+      .adv-details summary:hover::after {
+        background-color: var(--text-primary);
+      }
+
       .adv-details[open] summary {
-        margin-block-end: 0.75rem;
+        margin-block-end: 0.35rem;
+      }
+
+      .adv-details[open] summary::after {
+        transform: rotate(180deg);
       }
 
       /* Parsed Preview Box */
@@ -2243,112 +2271,176 @@
       }
     }
 
+    /* ===== 2FA Vault 改进版：在原组件样式之上的统一补充 ===== */
     @layer tokens {
+      /* 次要文字对比度提高 */
       :root { --text-muted-light: #62626d; --text-muted-dark: #a4a5b0; }
     }
     @layer components {
-      .btn, .icon-btn, .chip-btn, .pill-btn, .menu-item { min-block-size: 44px; }
-      .icon-btn, .btn-icon-pill { min-inline-size: 44px; }
+      /* --- 文字与触控尺寸：44px 点击区只给触屏和窄屏，桌面保持原版紧凑尺寸 --- */
       .account-label, .account-copy-btn, .field-hint { font-size: 0.875rem; }
-      .account-copy-btn { min-block-size: 32px; }
+      @media (pointer: coarse), (max-width: 640px) {
+        .btn, .icon-btn, .chip-btn, .pill-btn { min-block-size: 44px; }
+        .icon-btn, .btn-icon-pill { min-inline-size: 44px; }
+        .note-expand-btn { min-block-size: 44px; }
+        /* 添加账号里的平台/分组快捷标签成片排列，36px 足够点中，避免把密钥输入框挤到下面 */
+        .quick-chips .chip-btn { min-block-size: 36px; }
+        .adv-details > summary { min-block-size: 44px; }
+
+        /* 平台名和邮箱是一组两行文字：间距与桌面一致，左侧图标对齐这两行的中心。
+           邮箱复制按钮和分组标签保持紧凑外观，用透明伪元素扩大点击区，
+           不再用 min-height 把文字撑开。 */
+        .identity-text { display: flex; flex-direction: column; gap: 0.2rem; }
+        .account-copy-btn { position: relative; min-block-size: 0; padding-block: 0; margin-block-start: 0; }
+        .account-copy-btn .inline-copy-slot { block-size: 20px; }
+        .account-copy-btn::after { content: ''; position: absolute; inset: -6px 0 -8px; }
+        .tag-chip { position: relative; }
+        .tag-chip::after { content: ''; position: absolute; inset: -9px -4px; }
+      }
+
+      /* --- 顶栏 --- */
       .topbar-actions { flex-wrap: nowrap; }
-      .topbar-actions #openAddBtn { inline-size: auto; min-block-size: 44px; block-size: 44px; padding-inline: 0.85rem; }
-      .topbar-actions #openAddBtn > span, .topbar-actions #openMoreBtn > span { display: inline; }
-      .topbar-actions #openMoreBtn { inline-size: 44px; block-size: 44px; padding: 0; letter-spacing: 1px; }
       .brand-text { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
       .status-pill { font-size: 0.6875rem; padding: 0; border: 0; background: transparent; box-shadow: none; }
-      .search-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
-      .search-input { min-block-size: 46px; }
-      .filter-button { padding-inline: 1rem; }
-      .workspace-status { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.35rem 1rem; color: var(--text-muted); font-size: 0.8125rem; }
-      .status-link { color: var(--text-secondary); background: none; border: none; cursor: pointer; padding: 0.2rem 0; min-block-size: 32px; font-size: 0.8125rem; text-align: start; }
-      .status-link:hover { color: var(--accent-text); }
+      #openBackupBtn { position: relative; }
+      /* 手机顶栏会隐藏按钮里的文字 span，提醒圆点要单独放行 */
+      .topbar-actions .btn > .attention-dot { display: block; }
+      .attention-dot {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-end: 0;
+        inline-size: 8px;
+        block-size: 8px;
+        border-radius: 50%;
+        background: var(--warn);
+        box-shadow: 0 0 0 2px var(--bg-shell);
+      }
+
+      /* --- 数据状态提示（读取失败、写入失败、多页面冲突） --- */
       .state-banner { display: flex; flex-wrap: wrap; gap: 0.7rem 1rem; justify-content: space-between; border: 1px solid color-mix(in srgb, var(--warn) 35%, var(--border)); background: var(--warn-soft); padding: 0.9rem 1rem; border-radius: var(--radius-md); }
       .state-banner strong { font-size: 0.9375rem; }
       .state-banner p { font-size: 0.8125rem; color: var(--text-secondary); margin-block-start: 0.25rem; }
       .banner-actions, .empty-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
       .empty-actions { justify-content: center; }
-      .menu-list { gap: 0.25rem; }
-      .menu-item { display: flex; align-items: center; gap: 0.7rem; inline-size: 100%; padding: 0.65rem 0.75rem; font: inherit; font-size: 0.9375rem; color: var(--text-primary); background: transparent; border: none; border-radius: var(--radius-sm); cursor: pointer; text-align: start; }
-      .menu-item:hover { background: var(--surface-hover); }
-      .menu-item:disabled { opacity: 0.45; cursor: not-allowed; }
-      .menu-item.is-danger { color: var(--danger); border-block-start: 1px solid var(--border); border-radius: 0 0 var(--radius-sm) var(--radius-sm); }
-      .account-card { position: relative; padding-inline-end: 3.8rem; }
-      .card-more { position: absolute; inset-inline-end: 0.5rem; inset-block-start: 0.65rem; color: var(--text-secondary); font-size: 1.2rem; }
+      .empty-state { min-block-size: 280px; justify-content: center; }
+      .cards-list:empty { display: none; }
+
+      /* --- 账号卡片：验证码区 --- */
       .card-main { gap: 0.5rem; }
-      .card-actions, .code-subline { display: none; }
-      .code-zone { justify-content: center; min-inline-size: 0; }
-      .code-hero { justify-content: flex-end; }
+      .code-zone { min-inline-size: 0; }
       .copy-hint { min-block-size: 18px; }
-      .expiry-label { color: var(--warn); font-size: 0.75rem; white-space: nowrap; }
       .ring-progress { transition: stroke-dashoffset 1s linear, stroke 180ms ease; }
-      .cards-list[data-view="list"] .account-card { grid-template-columns: minmax(180px, 0.9fr) minmax(0, 1fr) auto; padding: 0.75rem 3.8rem 0.75rem 1rem; gap: 1rem; }
-      .cards-list[data-view="list"] .code-zone { grid-column: 3; display: flex; justify-content: flex-end; }
-      .cards-list[data-view="list"] .card-more { inset-block-start: calc(50% - 22px); }
-      .cards-list[data-view="list"] .copy-hint { display: block; font-size: 0.6875rem; }
-      .cards-list[data-view="list"] .otp-digits { font-size: 1.6rem; }
-      .pin-indicator { font-size: 0.8rem; }
+
+      /* --- 列表视图：备注与卡片同款（左侧竖线），仍保持单行 --- */
+      .cards-list[data-view="list"] .note-box {
+        border-inline-start: 2px solid var(--border-strong);
+        padding: 0.08rem 0 0.08rem 0.65rem;
+      }
+
+      /* --- 列表视图（窄屏）：下期验证码放在操作行左侧，和卡片视图一致；极窄屏操作另起一行 --- */
+      @media (max-width: 700px) {
+        .cards-list[data-view="list"] .code-zone { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+        .cards-list[data-view="list"] .code-hero { grid-column: 1 / -1; }
+        .cards-list[data-view="list"] .code-subline { display: flex; justify-content: flex-start; }
+      }
+      @media (max-width: 359px) {
+        .cards-list[data-view="list"] .card-actions { grid-column: 1 / -1; }
+      }
+
+      /* --- 拖动排序：卡片和列表通用 --- */
+      .cards-list { position: relative; }
+      .cards-list[data-sortable] .account-card {
+        cursor: grab;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+      }
+      .account-card.is-dragging {
+        position: relative;
+        z-index: 5;
+        border-color: var(--border-strong);
+        box-shadow: 0 14px 36px rgba(10, 10, 12, 0.16), 0 2px 6px rgba(10, 10, 12, 0.08);
+        will-change: transform;
+      }
+      .cards-list[data-view="list"] .account-card.is-dragging {
+        background-color: var(--surface);
+        border-radius: var(--radius-md);
+      }
+      /* 列表外框平时裁掉圆角外的内容；拖动时放开，浮起的那一行才不会被切掉 */
+      .cards-list[data-view="list"]:has(.is-dragging) { overflow: visible; }
+      body.is-sorting, body.is-sorting * { cursor: grabbing !important; }
+
+      /* --- 卡片视图（平板等宽屏触屏）：5 个 44px 图标需要更宽的验证码列 --- */
+      @media (pointer: coarse) and (min-width: 641px) {
+        .cards-list:not([data-view="list"]) .account-card { grid-template-columns: minmax(0, 1fr) 236px; }
+      }
+
+      /* --- 添加账号：两步流程 --- */
       .setup-progress { display: flex; gap: 1rem; border-block-end: 1px solid var(--border); padding-block-end: 0.65rem; font-size: 0.8125rem; color: var(--text-muted); }
       .setup-progress .active { font-weight: 600; color: var(--text-primary); }
+      #continueImportBtn, #manualEntryBtn { inline-size: 100%; justify-content: center; }
+      #manualEntryBtn { color: var(--text-secondary); margin-block-start: -0.35rem; }
+      #backToImportBtn { align-self: flex-start; padding-inline: 0.25rem; color: var(--text-secondary); }
       #accountConfirmFields, .optional-fields { display: flex; flex-direction: column; gap: 0.9rem; }
       .optional-fields { padding-block-start: 0.8rem; }
-      #accountConfirmFields > .field:has(#platformQuickChips) { display: none; }
-      .adv-details > summary { min-block-size: 44px; padding-block: 0.65rem; }
+
+      .form-save-error { margin: 0.5rem 1rem; padding: 0.5rem; }
+
+      /* --- 备份导入预览、撤销条、手动复制、二维码 --- */
       .import-preview { border: 1px solid var(--border); padding: 0.75rem; border-radius: var(--radius-sm); font-size: 0.8125rem; }
       #importRows { max-block-size: 240px; overflow-y: auto; margin-block: 0.6rem; }
       #importRows li { padding: 0.4rem 0; border-block-end: 1px solid var(--border); overflow-wrap: anywhere; }
       .undo-bar { position: fixed; z-index: 40; inset-block-end: max(1rem, env(safe-area-inset-bottom)); inset-inline: 50% auto; transform: translateX(-50%); display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5rem; max-inline-size: calc(100vw - 1.5rem); inline-size: max-content; padding: 0.5rem 0.8rem; border: 1px solid var(--card-edge); border-radius: var(--radius-md); background: var(--surface); box-shadow: var(--glass-shadow); font-size: 0.8125rem; }
       body:has(#undoBar:not([hidden])) .toast { inset-block-end: 6rem; }
-      .view-sort-group { flex-wrap: wrap; align-items: stretch; gap: 0.75rem; }
-      .view-sort-group .select-wrap, .view-sort-group .select-control { inline-size: 100%; max-inline-size: none; }
-      #displayDialog .segmented { inline-size: 100%; }
-      #displayDialog .segmented button { flex: 1; justify-content: center; min-block-size: 44px; }
       #manualCopyText { user-select: text; min-block-size: 72px; font-size: 1.1rem; }
-      .empty-state { min-block-size: 280px; justify-content: center; }
-      @media (max-width: 1100px) {
-        .cards-list[data-view="list"] .account-card { grid-template-columns: minmax(0, 1fr) auto; }
-        .cards-list[data-view="list"] .code-zone { grid-column: 2; }
-      }
-      @media (max-width: 700px) {
-        .cards-list[data-view="list"] .account-card { grid-template-columns: minmax(0, 1fr); padding: 0.85rem 1rem; gap: 0.4rem; }
-        .cards-list[data-view="list"] .identity-block { padding-inline-end: 2.5rem; }
-        .cards-list[data-view="list"] .code-zone { grid-column: 1; padding: 0; border: none; }
-        .cards-list[data-view="list"] .code-hero { inline-size: 100%; justify-content: space-between; }
-        .cards-list[data-view="list"] .card-more { inset-block-start: 0.6rem; }
-        .cards-list[data-view="list"] .otp-digits { font-size: 1.8rem; }
-        .cards-list[data-view="list"] .code-copy-btn { min-block-size: 52px; }
-        .cards-list[data-view="list"] .copy-hint { display: block; }
-      }
-      @media (max-width: 640px) {
-        .topbar-inner { flex-wrap: nowrap; gap: 0.5rem; min-block-size: 72px; }
-        .brand-text h1 { font-size: 1rem; }
-        .topbar-actions .btn { min-inline-size: 44px; min-block-size: 44px; }
-        .topbar-actions #openAddBtn > span { display: inline; }
-        .cards-list:not([data-view="list"]) .account-card { padding: 0.9rem; }
-        .cards-list:not([data-view="list"]) .identity-block { padding-inline-end: 2.4rem; }
-        .cards-list:not([data-view="list"]) .code-zone { display: flex; }
-        .cards-list:not([data-view="list"]) .code-hero { inline-size: 100%; }
-        .account-label, .account-copy-btn { font-size: 0.875rem; }
-        .search-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
-        .search-input { padding-inline: 2.25rem 2.5rem; }
-        .workspace-status { font-size: 0.75rem; }
-        .pill-btn { min-block-size: 44px; }
-        .dialog-header h2 { overflow-wrap: anywhere; }
-        #accountActionsSubtitle { max-inline-size: 230px; overflow-wrap: anywhere; }
-      }
-    }
-    @layer components {
-      .form-save-error { margin: 0.5rem 1rem; padding: 0.5rem; }
-    }
-    @layer components {
-      @media (max-width: 640px) {
-        .account-copy-btn, .tag-chip, .note-expand-btn, .status-link { min-block-size: 44px; }
-      }
-    }
-    @layer components {
       #qrTargetInfo { overflow-wrap: anywhere; min-inline-size: 0; }
       .qr-frame { max-inline-size: 100%; }
       .qr-frame svg { max-inline-size: 100%; block-size: auto; aspect-ratio: 1; }
+
+      /* --- 手机通用 --- */
+      @media (max-width: 640px) {
+        .topbar-inner { flex-wrap: nowrap; gap: 0.5rem; min-block-size: 64px; }
+        .brand-text h1 { font-size: 1rem; }
+        .topbar-actions .btn { inline-size: 44px; block-size: 44px; min-inline-size: 44px; min-block-size: 44px; }
+        .topbar-actions #openAddBtn { inline-size: auto; }
+        .search-input { min-block-size: 46px; padding-inline: 2.25rem 2.5rem; }
+        .view-sort-group .select-control { min-block-size: 44px; }
+        .segmented button { min-block-size: 38px; }
+        .dialog-header h2 { overflow-wrap: anywhere; }
+      }
+      /* 添加按钮只留图标；开了主密码锁、顶栏多一个“锁定”时，按钮略收窄，避免挤压标题 */
+      @media (max-width: 479px) {
+        .topbar-actions #openAddBtn { inline-size: 44px; padding: 0; }
+      }
+      @media (max-width: 389px) {
+        .topbar-actions:has(#lockNowBtn:not([hidden])) { gap: 0.15rem; }
+        .topbar-actions:has(#lockNowBtn:not([hidden])) .btn { inline-size: 40px; min-inline-size: 40px; }
+      }
+
+      /* --- 备份恢复：选择文件，和其他输入框同款 --- */
+      .file-picker {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        min-block-size: 44px;
+        padding: 0.35rem 0.8rem 0.35rem 0.4rem;
+        border-radius: 10px;
+        border: 1px dashed var(--border-strong);
+        background-color: var(--surface-subtle);
+        cursor: pointer;
+        transition: border-color 140ms ease, background-color 140ms ease;
+      }
+      .file-picker:hover, .file-picker.is-dragover {
+        border-color: var(--accent);
+        background-color: var(--accent-soft);
+      }
+      .file-picker:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+      .file-picker input[type="file"] { position: absolute; inline-size: 1px; block-size: 1px; opacity: 0; pointer-events: none; }
+      .file-picker-btn { pointer-events: none; flex-shrink: 0; min-block-size: 30px; padding-block: 0; padding-inline: 0.7rem; font-size: 0.8125rem; }
+      /* 宽度设为 0 再伸展：长文件名不会把外层 fieldset 撑宽 */
+      .file-picker-name { flex: 1 1 0; inline-size: 0; min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.875rem; color: var(--text-muted); }
+      .file-picker.has-file .file-picker-name { color: var(--text-primary); }
     }
 
     @layer utilities {
@@ -2405,15 +2497,45 @@
           </div>
         </div>
 
-        <div class="topbar-actions"><button id="openAddBtn" type="button" class="btn btn-primary" aria-label="添加账号" title="添加账号">
+        <div class="topbar-actions">
+          <button id="lockNowBtn" type="button" class="btn" aria-label="立即锁定保险库" title="立即锁定" hidden>
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>锁定</span>
+          </button>
+          <button id="quickThemeBtn" type="button" class="btn btn-icon-pill" aria-label="切换外观主题" title="切换外观主题">
+            <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          </button>
+          <button id="openBackupBtn" type="button" class="btn">
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>备份</span>
+            <span class="attention-dot" data-backup-dot hidden></span>
+          </button>
+          <button id="openSettingsBtn" type="button" class="btn">
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>设置</span>
+          </button>
+          <button id="openAddBtn" type="button" class="btn btn-primary">
             <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             <span>添加账号</span>
-          </button><button id="openMoreBtn" type="button" class="btn btn-icon-pill" aria-label="更多功能" title="更多功能"><span aria-hidden="true">•••</span></button></div>
+          </button>
+        </div>
       </div>
     </header>
 
     <main id="mainContent" class="app-main">
-      <section id="storageBanner" class="state-banner" role="status" hidden><div><strong id="storageTitle"></strong><p id="storageDesc"></p></div><div class="banner-actions"><button id="retrySaveBtn" class="btn" type="button">重试保存</button><button id="exportPendingBtn" class="btn" type="button">导出当前内容</button><button id="downloadRawBtn" class="btn" type="button">导出原始数据</button><button id="reloadVaultBtn" class="btn" type="button">重新加载</button></div></section>
+      <!-- 数据状态提示：读取失败、存储不可用、写入失败、多页面冲突 -->
+      <section id="storageBanner" class="state-banner" role="status" hidden>
+        <div>
+          <strong id="storageTitle"></strong>
+          <p id="storageDesc"></p>
+        </div>
+        <div class="banner-actions">
+          <button id="retrySaveBtn" class="btn" type="button">重试保存</button>
+          <button id="exportPendingBtn" class="btn" type="button">导出当前内容</button>
+          <button id="downloadRawBtn" class="btn" type="button">导出原始数据</button>
+          <button id="reloadVaultBtn" class="btn" type="button">重新加载</button>
+        </div>
+      </section>
       <section class="controls-bar" aria-label="筛选与视图控制">
         <div class="search-row">
           <search class="search-box">
@@ -2438,56 +2560,7 @@
             </form>
           </search>
 
-          <button id="openDisplayBtn" type="button" class="btn filter-button" aria-label="筛选、显示与排序">筛选</button>
-        </div>
-
-        <div class="filter-row">
-          <div id="groupPills" class="group-pills" role="group" aria-label="分组筛选"></div>
-        </div>
-      </section>
-
-      <div id="demoBanner" class="demo-banner" hidden>
-        <div class="demo-banner-msg">
-          <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.28 1.28L21 12l-5.82 1.92a2 2 0 0 0-1.28 1.28L12 21l-1.9-5.8a2 2 0 0 0-1.28-1.28L3 12l5.82-1.92a2 2 0 0 0 1.28-1.28L12 3z"/></svg>
-          <span>当前为示例账号，可上传二维码导入。<span class="desktop-import-hint">也可按 <kbd>Cmd+V / Ctrl+V</kbd> 粘贴截图。</span></span>
-        </div>
-        <button id="clearDemoBtn" type="button" class="chip-btn">清空示例</button>
-      </div>
-
-      <div class="workspace-status"><span id="saveStatus" role="status"></span><button id="backupStatusBtn" class="status-link" type="button"></button></div>
-      <ul id="accountsList" class="cards-list" role="list" data-view="grid"></ul>
-      <div id="emptyState" class="empty-state" hidden>
-        <div class="empty-icon" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </div>
-        <h2 id="emptyTitle">还没有保存任何 2FA 账号</h2>
-        <p id="emptyDesc" class="field-hint">点击右上角“+”添加账号，支持上传或粘贴二维码截图导入。</p>
-        <div class="empty-actions"><button id="emptyAddBtn" type="button" class="btn btn-primary">添加第一个账号</button><button id="emptyRestoreBtn" class="btn" type="button">从备份恢复</button><button id="emptyDemoBtn" class="btn btn-ghost" type="button">体验示例</button></div>
-      </div>
-    </main>
-  </div>
-
-  <dialog id="moreDialog" class="dialog-narrow" aria-labelledby="moreTitle">
-    <div class="dialog-header"><h2 id="moreTitle">更多</h2><button class="icon-btn" type="button" data-dialog-close="moreDialog" aria-label="关闭更多">×</button></div>
-    <div class="dialog-body menu-list"><button id="openBackupBtn" type="button" class="menu-item" aria-label="备份与导入" title="备份与导入">
-            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <span>备份</span>
-          </button>
-<button id="openSettingsBtn" type="button" class="menu-item" aria-label="设置" title="设置">
-            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            <span>设置</span>
-          </button>
-<button id="quickThemeBtn" type="button" class="menu-item" aria-label="切换外观主题" title="切换外观主题">
-            <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-          <span>切换外观</span></button>
-<button id="lockNowBtn" type="button" class="menu-item" aria-label="锁定保险库" title="锁定保险库" hidden>
-            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>锁定</span>
-          </button>
-<p class="field-hint">账号保存在当前浏览器中。复制 HTML 文件不会复制账号，请使用加密备份迁移。</p></div></dialog>
-  <dialog id="displayDialog" class="dialog-narrow" aria-labelledby="displayTitle">
-    <div class="dialog-header"><h2 id="displayTitle">筛选与显示</h2><button type="button" class="icon-btn" data-dialog-close="displayDialog" aria-label="关闭筛选">×</button></div>
-    <div class="dialog-body"><div class="field"><label for="platformFilter">平台</label><select id="platformFilter" class="input-control"><option value="all">全部平台</option></select></div><p class="field-hint">平台筛选可与分组、搜索一起使用。</p>          <div class="view-sort-group">
+          <div class="view-sort-group">
             <label for="sortSelect" class="visually-hidden">排序方式</label>
             <div class="select-wrap">
               <select id="sortSelect" class="select-control">
@@ -2508,11 +2581,51 @@
                 <span>列表</span>
               </button>
             </div>
-          </div><button id="resetFiltersBtn" class="btn" type="button">重置筛选</button></div>
-    <div class="dialog-footer"><button class="btn btn-primary" type="button" data-dialog-close="displayDialog">完成</button></div>
+          </div>
+        </div>
+
+        <div class="filter-row">
+          <div id="groupPills" class="group-pills" role="group" aria-label="分组筛选"></div>
+        </div>
+      </section>
+
+      <div id="demoBanner" class="demo-banner" hidden>
+        <div class="demo-banner-msg">
+          <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.28 1.28L21 12l-5.82 1.92a2 2 0 0 0-1.28 1.28L12 21l-1.9-5.8a2 2 0 0 0-1.28-1.28L3 12l5.82-1.92a2 2 0 0 0 1.28-1.28L12 3z"/></svg>
+          <span>当前为示例账号，可上传二维码导入。<span class="desktop-import-hint">也可按 <kbd>Cmd+V / Ctrl+V</kbd> 粘贴截图。</span></span>
+        </div>
+        <button id="clearDemoBtn" type="button" class="chip-btn">清空示例</button>
+      </div>
+
+      <ul id="accountsList" class="cards-list" role="list" data-view="grid"></ul>
+      <div id="emptyState" class="empty-state" hidden>
+        <div class="empty-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h2 id="emptyTitle">还没有保存任何 2FA 账号</h2>
+        <p id="emptyDesc" class="field-hint">点击右上角“+”添加账号，支持上传或粘贴二维码截图导入。</p>
+        <div class="empty-actions">
+          <button id="emptyAddBtn" type="button" class="btn btn-primary">添加第一个账号</button>
+          <button id="emptyRestoreBtn" class="btn" type="button">从备份恢复</button>
+          <button id="emptyDemoBtn" class="btn btn-ghost" type="button">体验示例</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="manualCopyDialog" class="dialog-narrow" closedby="any" aria-labelledby="manualCopyTitle">
+    <div class="dialog-header">
+      <h2 id="manualCopyTitle">手动复制</h2>
+      <button type="button" class="icon-btn" data-dialog-close="manualCopyDialog" aria-label="关闭">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="dialog-body">
+      <p id="manualCopyDesc" class="field-hint"></p>
+      <textarea id="manualCopyText" class="textarea-control is-mono" readonly aria-label="待复制内容"></textarea>
+      <button id="selectCopyTextBtn" class="btn" type="button">选中全部文本</button>
+    </div>
   </dialog>
-  <dialog id="accountActionsDialog" class="dialog-narrow" aria-labelledby="accountActionsTitle"><div class="dialog-header"><div><h2 id="accountActionsTitle"></h2><p id="accountActionsSubtitle" class="field-hint"></p></div><button type="button" class="icon-btn" data-dialog-close="accountActionsDialog" aria-label="关闭账号操作">×</button></div><div id="accountActions" class="dialog-body menu-list"></div></dialog>
-  <dialog id="manualCopyDialog" class="dialog-narrow" aria-labelledby="manualCopyTitle"><div class="dialog-header"><h2 id="manualCopyTitle">手动复制</h2><button class="icon-btn" type="button" data-dialog-close="manualCopyDialog" aria-label="关闭手动复制">×</button></div><div class="dialog-body"><p id="manualCopyDesc" class="field-hint"></p><textarea id="manualCopyText" class="textarea-control is-mono" readonly aria-label="待复制内容"></textarea><button id="selectCopyTextBtn" class="btn" type="button">选中全部文本</button></div></dialog>
   <div id="undoBar" class="undo-bar" role="status" hidden><span id="undoMessage"></span><button id="undoDeleteBtn" class="btn" type="button">撤销删除</button><span id="undoCountdown" class="field-hint"></span></div>
 
   <!-- Add / Edit Account Dialog -->
@@ -2525,7 +2638,10 @@
     </div>
     <form id="accountForm" novalidate>
       <div class="dialog-body">
-        <div class="setup-progress" aria-label="添加步骤"><span id="stepImportLabel" class="active">1 导入</span><span id="stepConfirmLabel">2 确认账号</span></div>
+        <div id="setupProgress" class="setup-progress" aria-label="添加步骤">
+          <span id="stepImportLabel" class="active">1 导入</span>
+          <span id="stepConfirmLabel">2 确认账号</span>
+        </div>
         <div id="quickImportBlock" class="field">
           <label for="smartImportInput">粘贴密钥或认证链接</label>
           <span id="smartImportHint" class="field-hint">支持直接粘贴密钥、otpauth:// 链接、otpauth-migration:// 批量迁移码，或在下方上传/粘贴二维码截图。</span>
@@ -2547,8 +2663,10 @@
           </div>
           <div id="qrParseMsg" class="error-msg" role="status"></div>
           <button id="continueImportBtn" type="button" class="btn btn-primary">确认导入内容</button>
+          <button id="manualEntryBtn" type="button" class="btn btn-ghost">没有二维码？手动输入密钥</button>
         </div>
-        <div id="accountConfirmFields"><button id="backToImportBtn" class="btn btn-ghost" type="button">← 更换导入内容</button>
+        <div id="accountConfirmFields">
+        <button id="backToImportBtn" class="btn btn-ghost" type="button">← 返回导入</button>
 
         <div class="field">
           <label>常用平台预设（点击快速填入并匹配图标）</label>
@@ -2620,7 +2738,10 @@
           <span id="livePreviewMeta" class="param-badge">30s · 6位 · SHA1</span>
         </div>
 
-        <details id="supplementDetails" class="adv-details"><summary>补充信息 · 备注、分组和登录密码</summary><div class="optional-fields">        <div class="field">
+        <details id="supplementDetails" class="adv-details">
+          <summary>补充信息 · 备注、分组和登录密码</summary>
+          <div class="optional-fields">
+        <div class="field">
           <label for="accPassword">登录密码（可选，随保险库保存）</label>
           <div class="input-with-action">
             <input
@@ -2778,7 +2899,8 @@
     </div>
     <div class="dialog-body">
       <fieldset class="settings-group">
-        <legend>导出备份文件</legend><p id="backupSummary" class="field-hint"></p>
+        <legend>导出备份文件</legend>
+        <p id="backupSummary" class="field-hint"></p>
         <p class="field-hint">包含全部验证码密钥、已保存的登录密码、分组和备注。建议定期导出保存到安全位置（如加密网盘或 U 盘），防止清理浏览器缓存导致丢失。</p>
         <div class="field">
           <label for="exportPwdInput">备份加密密码（至少八位）</label>
@@ -2794,7 +2916,14 @@
         <legend>从备份文件恢复</legend>
         <div class="field">
           <label for="importFileInput">选择备份文件 (.json / .2favault.json)</label>
-          <input id="importFileInput" class="input-control" type="file" accept=".json,application/json">
+          <label id="importFilePicker" class="file-picker">
+            <input id="importFileInput" type="file" accept=".json,application/json">
+            <span class="btn file-picker-btn" aria-hidden="true">
+              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span>选择文件</span>
+            </span>
+            <span id="importFileName" class="file-picker-name">未选择文件，也可以把文件拖到这里</span>
+          </label>
         </div>
         <div id="importDecryptField" class="field" hidden>
           <label for="importPwdInput">此备份已加密，请输入备份密码</label>
@@ -2808,7 +2937,15 @@
           </div>
         </div>
         <div id="importErrorBox" class="error-msg"></div>
-        <button id="previewImportBtn" class="btn" type="button" disabled>校验并预览</button><div id="importPreview" class="import-preview" hidden><strong id="importSummary"></strong><ul id="importRows"></ul><label class="checkbox-row" id="allowPartialWrap" hidden><input id="allowPartialImport" type="checkbox"><span>已查看无效记录，仅导入有效项</span></label></div>
+        <button id="previewImportBtn" class="btn" type="button" disabled>校验并预览</button>
+        <div id="importPreview" class="import-preview" hidden>
+          <strong id="importSummary"></strong>
+          <ul id="importRows"></ul>
+          <label class="checkbox-row" id="allowPartialWrap" hidden>
+            <input id="allowPartialImport" type="checkbox">
+            <span>已查看无效记录，仅导入有效项</span>
+          </label>
+        </div>
         <button id="runImportBtn" type="button" class="btn btn-primary" disabled>开始恢复导入</button>
       </fieldset>
     </div>
@@ -2939,7 +3076,11 @@
           <div id="unlockErr" class="error-msg"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span id="unlockErrText">密码错误，请重试。</span></div>
         </div>
       </div>
-      <div id="lockedDraftActions" class="dialog-body" hidden><p class="field-hint">还有未保存的内容，已临时加密保留。可先导出，再处理当前保险库。</p><button id="exportLockedDraftBtn" class="btn" type="button">导出未保存内容</button><button id="discardLockedDraftBtn" class="btn btn-ghost" type="button">放弃未保存内容</button></div>
+      <div id="lockedDraftActions" class="dialog-body" hidden>
+        <p class="field-hint">还有未保存的内容，已临时加密保留。可先导出，再处理当前保险库。</p>
+        <button id="exportLockedDraftBtn" class="btn" type="button">导出未保存内容</button>
+        <button id="discardLockedDraftBtn" class="btn btn-ghost" type="button">放弃未保存内容</button>
+      </div>
       <div class="dialog-footer" style="justify-content:space-between;">
         <button id="forgotResetBtn" type="button" class="btn btn-ghost" style="font-size:0.8rem;color:var(--danger);">忘记密码并重置</button>
         <button type="submit" class="btn btn-primary">解锁</button>
@@ -16321,7 +16462,6 @@ var qrcode = function() {
         sortBy: ['custom', 'name', 'recent'].includes(preferences.SORT) ? preferences.SORT : 'custom',
         viewMode: ['list', 'grid'].includes(preferences.VIEW) ? preferences.VIEW : (matchMedia('(max-width: 700px)').matches ? 'list' : 'grid'),
         autoLockMin: preferences.AUTOLOCK === null || preferences.AUTOLOCK === undefined ? 5 : Number(preferences.AUTOLOCK),
-        platformFilter: 'all',
         storageState: startupStorageError ? 'unavailable' : 'ready',
         storageMessage: '',
         baseRaw: null,
@@ -16536,9 +16676,7 @@ var qrcode = function() {
                   { tag: 'circle', attrs: { cx: '12', cy: '12', r: '4' } },
                   { tag: 'path', attrs: { d: 'M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41' } },
                 ], 15);
-          const label = document.createElement('span');
-          label.textContent = labels[stored];
-          qBtn.replaceChildren(icon, label);
+          qBtn.replaceChildren(icon);
         }
       }
 
@@ -16684,7 +16822,7 @@ var qrcode = function() {
             issuer: 'Cloudflare',
             account: 'ops@example.com',
             secret: 'GEZDGNBVGY3TQOJQ',
-            note: '示例账号：剩余时间少于 5 秒时提示即将更新；可从更多菜单复制下一周期验证码。',
+            note: '示例账号：剩余时间少于 5 秒时变色提醒；点击“下期”可复制下一周期验证码。',
             group: '服务器',
             pinned: false,
             algorithm: 'SHA1',
@@ -16775,8 +16913,9 @@ var qrcode = function() {
         $('exportPendingBtn').hidden = state === 'read-error' || appState.locked;
         $('downloadRawBtn').hidden = appState.rawRecovery === null;
         $('reloadVaultBtn').hidden = !['read-error', 'conflict', 'unavailable', 'write-error'].includes(state);
-        $('saveStatus').textContent = appState.locked ? '保险库已锁定' : appState.dirty ? '有未保存的改动' : state === 'ready' ? `${appState.accounts.length} 个账号 · 保存在当前浏览器` : '本地保存需要处理';
-        $('backupStatusBtn').textContent = backupDescription();
+        // 有真实账号但从未导出过备份时，在备份入口上显示提醒圆点
+        const needsBackup = !appState.locked && !appState.lastExport && appState.accounts.some(a => !a.isDemo);
+        document.querySelectorAll('[data-backup-dot]').forEach((dot) => { dot.hidden = !needsBackup; });
         $('openAddBtn').disabled = state === 'read-error' || state === 'conflict';
         $('emptyAddBtn').disabled = $('openAddBtn').disabled;
         $('emptyDemoBtn').disabled = $('openAddBtn').disabled;
@@ -16841,7 +16980,7 @@ var qrcode = function() {
         appState.saveQueue = pending;
         return pending;
       }
-      async function loadVaultOnBoot() {
+      async function loadVaultOnBoot({ seedDemo = false } = {}) {
         let raw;
         try { raw = localStorage.getItem(KEYS.VAULT); }
         catch (error) {
@@ -16855,7 +16994,7 @@ var qrcode = function() {
         appState.dirty = false;
         appState.rawRecovery = null;
         if (raw === null) {
-          applyPayload({ accounts: [], demoDismissed: true });
+          applyPayload(seedDemo ? { accounts: createDemoAccounts(), demoDismissed: false } : { accounts: [], demoDismissed: true });
           appState.encryptedMode = false;
           appState.locked = false;
           renderAll();
@@ -16902,10 +17041,9 @@ var qrcode = function() {
         appState.copiedStates.clear();
         appState.savedContent = null;
         appState.pendingMigrationItems = [];
-        $('accountActions').replaceChildren();
         $('migrationList').replaceChildren();
         $('importRows').replaceChildren();
-        $('importFileInput').value = '';
+        resetImportFile();
         for (const dialog of document.querySelectorAll('dialog[open]')) dialog.close();
         $('manualCopyText').value = '';
         $('qrFrame').replaceChildren();
@@ -16968,7 +17106,6 @@ var qrcode = function() {
       function getFilteredSortedAccounts() {
         const q = appState.searchQuery.trim().toLowerCase();
         const filtered = appState.accounts.filter((acc) => {
-          if (appState.platformFilter !== 'all' && getAccountPlatformInfo(acc).key !== appState.platformFilter) return false;
           if (appState.activeFilter === 'pinned' && !acc.pinned) return false;
           if (appState.activeFilter.startsWith('platform:') && getAccountPlatformInfo(acc).key !== appState.activeFilter) return false;
           if (appState.activeFilter.startsWith('group:')) {
@@ -17008,34 +17145,98 @@ var qrcode = function() {
       }
 
       function renderGroupPills() {
+        const container = $('groupPills');
         const focusKey = document.activeElement?.dataset.filterKey;
-        const groups = getAvailableGroups();
-        const pills = [{ key: 'all', label: '全部', count: appState.accounts.length }];
-        if (appState.accounts.some(a => a.pinned)) pills.push({ key: 'pinned', label: '★ 已置顶', count: appState.accounts.filter(a => a.pinned).length });
-        for (const [group, count] of groups) pills.push({ key: `group:${group}`, label: `# ${group}`, count });
-        if (!pills.some(p => p.key === appState.activeFilter)) appState.activeFilter = 'all';
-        const buttons = pills.map(pill => {
-          const button = document.createElement('button'); button.type = 'button'; button.className = 'pill-btn';
-          button.dataset.filterKey = pill.key; button.setAttribute('aria-pressed', String(appState.activeFilter === pill.key));
-          const label = document.createElement('span'); label.textContent = pill.label;
-          const count = document.createElement('span'); count.className = 'pill-count'; count.textContent = String(pill.count);
-          button.append(label, count);
-          button.addEventListener('click', () => { appState.activeFilter = pill.key; renderAll(); $('groupPills').querySelector(`[data-filter-key="${CSS.escape(pill.key)}"]`).focus({ preventScroll: true }); });
-          return button;
-        });
-        $('groupPills').replaceChildren(...buttons);
-        if (focusKey) $('groupPills').querySelector(`[data-filter-key="${CSS.escape(focusKey)}"]`)?.focus({ preventScroll: true });
+        const pinnedCount = appState.accounts.filter((a) => a.pinned).length;
+
+        const corePills = [{ key: 'all', label: '全部', count: appState.accounts.length }];
+        if (pinnedCount > 0) corePills.push({ key: 'pinned', label: '已置顶', count: pinnedCount, isStar: true });
+
+        // 只有一个平台时，平台药丸和“全部”重复，不显示
         const platforms = getAvailablePlatforms();
-        if (appState.platformFilter !== 'all' && !platforms.some(p => p.key === appState.platformFilter)) appState.platformFilter = 'all';
-        $('platformFilter').replaceChildren(...[{ key: 'all', label: '全部平台' }, ...platforms].map(p => { const option = document.createElement('option'); option.value = p.key; option.textContent = p.label; return option; }));
-        $('platformFilter').value = appState.platformFilter;
-        $('openDisplayBtn').textContent = appState.platformFilter === 'all' ? '筛选' : '筛选 · 1';
+        const platformPills = platforms.length > 1 ? platforms : [];
+
+        const groupPills = [...getAvailableGroups()].map(([group, count]) => ({ key: `group:${group}`, label: `# ${group}`, count }));
+
+        const allKeys = new Set([...corePills, ...platformPills, ...groupPills].map((p) => p.key));
+        if (!allKeys.has(appState.activeFilter)) appState.activeFilter = 'all';
+
+        const makePill = (p) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'pill-btn';
+          btn.dataset.filterKey = p.key;
+          btn.setAttribute('aria-pressed', String(appState.activeFilter === p.key));
+          if (p.isStar) {
+            btn.appendChild(svgIcon([
+              { tag: 'polygon', attrs: { points: '12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2', fill: 'currentColor' } },
+            ], 12));
+          } else if (p.preset) {
+            btn.appendChild(brandSvg(p.preset.shapes, 13));
+          }
+          const lbl = document.createElement('span');
+          lbl.textContent = p.label;
+          const cnt = document.createElement('span');
+          cnt.className = 'pill-count';
+          cnt.textContent = String(p.count);
+          btn.append(lbl, cnt);
+          btn.addEventListener('click', () => {
+            // 再点一次已选中的药丸回到“全部”
+            appState.activeFilter = (p.key !== 'all' && appState.activeFilter === p.key) ? 'all' : p.key;
+            renderAll();
+            container.querySelector(`[data-filter-key="${CSS.escape(p.key)}"]`)?.focus({ preventScroll: true });
+          });
+          return btn;
+        };
+
+        const divider = () => {
+          const d = document.createElement('span');
+          d.className = 'filter-divider';
+          d.setAttribute('aria-hidden', 'true');
+          return d;
+        };
+
+        const nodes = corePills.map(makePill);
+        if (platformPills.length) nodes.push(divider(), ...platformPills.map(makePill));
+        if (groupPills.length) nodes.push(divider(), ...groupPills.map(makePill));
+        container.replaceChildren(...nodes);
+        if (focusKey) container.querySelector(`[data-filter-key="${CSS.escape(focusKey)}"]`)?.focus({ preventScroll: true });
       }
 
-      function buildAccountCard(acc, index, totalVisible) {
+      // 账号操作图标
+      const ACTION_ICONS = {
+        pin: (filled) => [{ tag: 'polygon', attrs: { points: '12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2', fill: filled ? 'currentColor' : 'none' } }],
+        qr: () => [
+          { tag: 'rect', attrs: { x: '3', y: '3', width: '7', height: '7' } },
+          { tag: 'rect', attrs: { x: '14', y: '3', width: '7', height: '7' } },
+          { tag: 'rect', attrs: { x: '3', y: '14', width: '7', height: '7' } },
+          { tag: 'path', attrs: { d: 'M14 14h3v3h-3zM17 17h4v4h-4z' } },
+        ],
+        edit: () => [
+          { tag: 'path', attrs: { d: 'M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7' } },
+          { tag: 'path', attrs: { d: 'M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z' } },
+        ],
+        trash: () => [
+          { tag: 'polyline', attrs: { points: '3 6 5 6 21 6' } },
+          { tag: 'path', attrs: { d: 'M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2' } },
+        ],
+      };
+
+      function makeIconButton(label, icon, onClick, className = 'icon-btn') {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = className;
+        btn.setAttribute('aria-label', label);
+        btn.title = label;
+        btn.appendChild(svgIcon(icon, 14.5));
+        btn.addEventListener('click', onClick);
+        return btn;
+      }
+
+      function buildAccountCard(acc) {
         const li = document.createElement('li');
         li.className = `account-card${acc.pinned ? ' is-pinned' : ''}`;
-        const more = document.createElement('button'); more.type = 'button'; more.className = 'icon-btn card-more'; more.textContent = '•••'; more.setAttribute('aria-label', `${acc.issuer || '账号'} 的更多操作`); more.addEventListener('click', () => openAccountActions(acc)); li.append(more);
+        li.dataset.id = acc.id;
 
         const displayName = acc.issuer || acc.account || '账号';
 
@@ -17063,7 +17264,6 @@ var qrcode = function() {
         title.className = 'issuer-name';
         title.textContent = acc.issuer || '未命名平台';
         issuerRow.appendChild(title);
-        if (acc.pinned) { const star = document.createElement('span'); star.className = 'pin-indicator'; star.textContent = '★'; star.setAttribute('aria-label', '已置顶'); issuerRow.append(star); }
 
         if (acc.isDemo) {
           const demoTag = document.createElement('span');
@@ -17125,6 +17325,92 @@ var qrcode = function() {
 
         identity.append(badge, idText);
         identityBlock.appendChild(identity);
+
+        // Optional Saved Password Strip
+        if (acc.password && acc.password.length > 0) {
+          const pwdRow = document.createElement('div');
+          pwdRow.className = 'password-row';
+
+          const pwdValBtn = document.createElement('button');
+          pwdValBtn.type = 'button';
+          pwdValBtn.className = 'pwd-value-btn';
+          pwdValBtn.setAttribute('aria-label', `复制 ${displayName} 登录密码`);
+          pwdValBtn.title = '点击复制登录密码';
+
+          const keyIco = svgIcon([
+            { tag: 'path', attrs: { d: 'M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4' } },
+          ], 12, 1.75);
+          keyIco.classList.add('pwd-key-ico');
+
+          const pwdText = document.createElement('span');
+          const syncPwdMask = () => {
+            const revealed = appState.revealedPasswords.has(acc.id);
+            pwdText.className = `pwd-mask${revealed ? ' is-revealed' : ''}`;
+            pwdText.textContent = revealed ? acc.password : '••••••••';
+            pwdValBtn.title = revealed ? acc.password : '点击复制登录密码';
+          };
+          syncPwdMask();
+          pwdValBtn.append(keyIco, pwdText);
+
+          const eyeShowSpec = () => [
+            { tag: 'path', attrs: { d: 'M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z' } },
+            { tag: 'circle', attrs: { cx: '12', cy: '12', r: '3' } },
+          ];
+          const eyeHideSpec = () => [
+            { tag: 'path', attrs: { d: 'M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24' } },
+            { tag: 'line', attrs: { x1: '1', y1: '1', x2: '23', y2: '23' } },
+          ];
+
+          const pwdToggleBtn = document.createElement('button');
+          pwdToggleBtn.type = 'button';
+          pwdToggleBtn.className = 'icon-btn pwd-toggle-btn';
+          const syncPwdToggleBtn = () => {
+            const revealed = appState.revealedPasswords.has(acc.id);
+            pwdToggleBtn.setAttribute('aria-pressed', String(revealed));
+            pwdToggleBtn.setAttribute('aria-label', revealed ? `隐藏 ${displayName} 密码` : `显示 ${displayName} 密码`);
+            pwdToggleBtn.title = revealed ? '隐藏密码' : '显示密码';
+            pwdToggleBtn.replaceChildren(svgIcon(revealed ? eyeHideSpec() : eyeShowSpec(), 13, 1.75));
+          };
+          syncPwdToggleBtn();
+          pwdToggleBtn.addEventListener('click', () => {
+            if (appState.revealedPasswords.has(acc.id)) appState.revealedPasswords.delete(acc.id);
+            else appState.revealedPasswords.add(acc.id);
+            syncPwdMask();
+            syncPwdToggleBtn();
+          });
+
+          const pwdCopyBtn = document.createElement('button');
+          pwdCopyBtn.type = 'button';
+          pwdCopyBtn.className = 'icon-btn pwd-copy-btn';
+          pwdCopyBtn.setAttribute('aria-label', `一键复制 ${displayName} 登录密码`);
+          pwdCopyBtn.title = '一键复制密码';
+          pwdCopyBtn.replaceChildren(svgIcon(copyIcoSpec(), 13, 1.75));
+
+          let pwdCopyTimer = null;
+          const doCopyPwd = async () => {
+            const ok = await copyText(acc.password);
+            if (!ok) {
+              showManualCopy(acc.password, '浏览器未允许直接复制，请选中文本后复制。');
+              return;
+            }
+            pwdRow.classList.add('is-copied');
+            pwdCopyBtn.replaceChildren(svgIcon(checkIcoSpec(), 13, 2));
+            showToast(`已复制 ${displayName} 登录密码`);
+            clearTimeout(pwdCopyTimer);
+            pwdCopyTimer = setTimeout(() => {
+              pwdRow.classList.remove('is-copied');
+              pwdCopyBtn.replaceChildren(svgIcon(copyIcoSpec(), 13, 1.75));
+            }, 1500);
+          };
+          pwdValBtn.addEventListener('click', doCopyPwd);
+          pwdCopyBtn.addEventListener('click', doCopyPwd);
+
+          const pwdActions = document.createElement('div');
+          pwdActions.className = 'pwd-actions';
+          pwdActions.append(pwdToggleBtn, pwdCopyBtn);
+          pwdRow.append(pwdValBtn, pwdActions);
+          identityBlock.appendChild(pwdRow);
+        }
 
         // Note Area (Only shown when acc.note is non-empty)
         let noteEl = null;
@@ -17235,10 +17521,37 @@ var qrcode = function() {
 
         codeHero.append(codeBtn, ringWrap);
 
-        const expiryLabel = document.createElement('span'); expiryLabel.className = 'expiry-label'; expiryLabel.textContent = '即将更新'; expiryLabel.hidden = true;
-        codeBtn.append(expiryLabel);
         codeBtn.addEventListener('click', () => handleCopyOtp(acc));
-        zone.append(codeHero);
+        // 下期验证码常显，最后 5 秒变色提示；点击复制（复制时按当时的周期重新计算）
+        const subline = document.createElement('div');
+        subline.className = 'code-subline';
+        const nextBtn = document.createElement('button');
+        nextBtn.type = 'button';
+        nextBtn.className = 'next-preview-btn';
+        nextBtn.setAttribute('aria-label', `复制 ${displayName} 下一周期验证码`);
+        const expDot = document.createElement('span');
+        expDot.className = 'expiry-dot';
+        expDot.setAttribute('aria-hidden', 'true');
+        const nextLbl = document.createElement('span');
+        nextLbl.className = 'next-preview-label';
+        nextLbl.textContent = '下期';
+        const nextDigits = document.createElement('span');
+        nextDigits.className = 'next-preview-code';
+        nextDigits.textContent = '--- ---';
+        nextBtn.append(expDot, nextLbl, nextDigits);
+        nextBtn.addEventListener('click', () => handleCopyOtp(acc, true));
+        subline.append(nextBtn);
+        const actions = document.createElement('div');
+        actions.className = 'card-actions';
+        const pinBtn = makeIconButton(acc.pinned ? `取消置顶 ${displayName}` : `置顶 ${displayName}`, ACTION_ICONS.pin(acc.pinned), () => togglePin(acc.id));
+        pinBtn.setAttribute('aria-pressed', String(Boolean(acc.pinned)));
+        actions.append(
+          pinBtn,
+          makeIconButton(`导出 ${displayName} 二维码`, ACTION_ICONS.qr(), () => openQrDialog(acc)),
+          makeIconButton(`编辑 ${displayName}`, ACTION_ICONS.edit(), () => openAccountDialog(acc)),
+          makeIconButton(`删除 ${displayName}`, ACTION_ICONS.trash(), () => deleteAccount(acc)),
+        );
+        zone.append(actions, codeHero, subline);
         li.append(cardMain, zone);
 
         appState.cardNodes.set(acc.id, {
@@ -17247,7 +17560,8 @@ var qrcode = function() {
           codeBtn,
           digitsEl,
           copyHint,
-          expiryLabel,
+          nextBtn,
+          nextDigits,
           ringProg: prog,
           ringSec: rSec,
           circumference,
@@ -17269,6 +17583,7 @@ var qrcode = function() {
         $('quickImportBlock').hidden = confirm;
         $('accountConfirmFields').hidden = !confirm;
         $('backToImportBtn').hidden = Boolean(appState.editingId);
+        $('setupProgress').hidden = Boolean(appState.editingId);
         $('saveAccountBtn').hidden = !confirm;
         $('stepImportLabel').classList.toggle('active', !confirm);
         $('stepConfirmLabel').classList.toggle('active', confirm);
@@ -17287,36 +17602,6 @@ var qrcode = function() {
           return false;
         }
         return !appState.locked;
-      }
-      function openAccountActions(acc) {
-        $('accountActionsTitle').textContent = acc.issuer || '未命名平台';
-        $('accountActionsSubtitle').textContent = acc.account;
-        const actions = $('accountActions');
-        actions.replaceChildren();
-        const add = (text, handler, { danger = false, disabled = false } = {}) => {
-          const button = document.createElement('button');
-          button.type = 'button'; button.className = 'menu-item' + (danger ? ' is-danger' : '');
-          button.textContent = text; button.disabled = disabled;
-          button.addEventListener('click', () => { $('accountActionsDialog').close(); handler(); });
-          actions.append(button);
-        };
-        const blocked = ['read-error', 'conflict'].includes(appState.storageState);
-        add('查看详情 / 编辑', () => openAccountDialog(acc), { disabled: blocked });
-        add(acc.pinned ? '取消置顶' : '置顶账号', () => togglePin(acc.id), { disabled: blocked });
-        const visible = getFilteredSortedAccounts(), index = visible.findIndex(a => a.id === acc.id);
-        const canMove = appState.sortBy === 'custom' && !appState.searchQuery && appState.activeFilter === 'all' && appState.platformFilter === 'all';
-        const sameBucket = other => other && Boolean(other.pinned) === Boolean(acc.pinned);
-        add('上移', () => moveAccount(acc.id, -1), { disabled: blocked || !canMove || !sameBucket(visible[index - 1]) });
-        add('下移', () => moveAccount(acc.id, 1), { disabled: blocked || !canMove || !sameBucket(visible[index + 1]) });
-        add('导出账号二维码', () => openQrDialog(acc));
-        add('复制下一周期验证码', () => handleCopyOtp(acc, true));
-        if (acc.password) add('复制已保存的登录密码', async () => {
-          if (await copyText(acc.password)) showToast('已复制登录密码');
-          else showManualCopy(acc.password, '浏览器未允许直接复制，请选中文本后复制。');
-        });
-        add('验证码不正确？', () => showConfirm({ title: '检查验证码', message: '请先开启设备的自动日期与时间，再确认平台、账号以及高级参数。连续多次失败时，请检查网站绑定的密钥是否与此账号一致。', okText: '知道了', isDanger: false }));
-        add('删除账号', () => deleteAccount(acc), { danger: true, disabled: blocked });
-        $('accountActionsDialog').showModal();
       }
       async function handleCopyOtp(acc, isNext = false) {
         const rawCode = generateTOTP({ ...acc, timestampMs: Date.now(), stepOffset: isNext ? 1 : 0 });
@@ -17364,9 +17649,8 @@ var qrcode = function() {
         renderAll(); showToast('已恢复账号');
       }
       function openBackup() {
-        if ($('moreDialog').open) $('moreDialog').close();
         $('exportPwdInput').value = '';
-        $('importFileInput').value = ''; $('importPwdInput').value = '';
+        resetImportFile(); $('importPwdInput').value = '';
         $('importDecryptField').hidden = true;
         setErrorBox($('importErrorBox'), '');
         appState.pendingImportData = null; invalidateImport();
@@ -17457,6 +17741,9 @@ var qrcode = function() {
         const hasDemo = appState.accounts.some((a) => a.isDemo);
         $('demoBanner').hidden = !hasDemo;
 
+        // 空库时搜索和筛选没有意义，整行隐藏
+        document.querySelector('.controls-bar').hidden = appState.accounts.length === 0;
+
         if (visible.length === 0) {
           listEl.replaceChildren();
           emptyEl.hidden = false;
@@ -17476,10 +17763,11 @@ var qrcode = function() {
 
         emptyEl.hidden = true;
         const fragment = document.createDocumentFragment();
-        visible.forEach((acc, idx) => {
-          fragment.appendChild(buildAccountCard(acc, idx, visible.length));
+        visible.forEach((acc) => {
+          fragment.appendChild(buildAccountCard(acc));
         });
         listEl.replaceChildren(fragment);
+        listEl.toggleAttribute('data-sortable', appState.sortBy === 'custom' && visible.length > 1);
         tickOtpUpdates(true);
       }
 
@@ -17500,7 +17788,7 @@ var qrcode = function() {
         if (appState.locked || document.visibilityState !== 'visible') return;
         const now = Date.now();
         for (const entry of appState.cardNodes.values()) {
-          const { acc, zoneEl, codeBtn, digitsEl, ringProg, ringSec, circumference, expiryLabel } = entry;
+          const { acc, zoneEl, codeBtn, digitsEl, nextBtn, nextDigits, ringProg, ringSec, circumference } = entry;
           const step = Math.floor(now / (acc.period * 1000));
           const remaining = Math.ceil((acc.period * 1000 - now % (acc.period * 1000)) / 1000);
           if (force || entry.lastStep !== step) {
@@ -17508,11 +17796,12 @@ var qrcode = function() {
             const code = generateTOTP({ ...acc, timestampMs: now });
             codeBtn.dataset.rawCode = code;
             digitsEl.textContent = formatOtpCode(code);
+            nextDigits.textContent = formatOtpCode(generateTOTP({ ...acc, timestampMs: now, stepOffset: 1 }));
           }
           ringSec.textContent = `${remaining}s`;
           ringProg.setAttribute('stroke-dashoffset', String(circumference * (1 - remaining / acc.period)));
           zoneEl.classList.toggle('is-expiring', remaining <= 5);
-          expiryLabel.hidden = remaining > 5;
+          nextBtn.classList.toggle('is-expiring', remaining <= 5);
         }
         if ($('accountDialog').open && appState.importStage) updateAccountLivePreview();
       }
@@ -17552,25 +17841,6 @@ var qrcode = function() {
         appState.accounts = appState.accounts.with(idx, { ...item, pinned: !item.pinned, updatedAt: Date.now() });
         if (!await saveVault()) { renderAll(); return; }
         renderAll();
-      }
-
-      async function moveAccount(id, delta) {
-        if (!mutable()) return;
-        // Reorder within same pinned bucket
-        const sorted = getFilteredSortedAccounts();
-        const pos = sorted.findIndex((a) => a.id === id);
-        const targetPos = pos + delta;
-        if (pos === -1 || targetPos < 0 || targetPos >= sorted.length) return;
-        if (Boolean(sorted[pos].pinned) !== Boolean(sorted[targetPos].pinned)) {
-          showToast('置顶账号与普通账号分组排序，可先调整置顶状态');
-          return;
-        }
-        const reordered = [...sorted];
-        [reordered[pos], reordered[targetPos]] = [reordered[targetPos], reordered[pos]];
-        const orderMap = new Map(reordered.map((a, i) => [a.id, i]));
-        appState.accounts = appState.accounts.map((a) => ({ ...a, order: orderMap.get(a.id) ?? a.order }));
-        if (!await saveVault()) { renderAll(); return; }
-        renderAccounts();
       }
 
       async function clearDemoAccounts() {
@@ -17899,7 +18169,7 @@ var qrcode = function() {
       $('sortSelect').addEventListener('change', (e) => {
         appState.sortBy = e.target.value;
         writePreference('SORT', appState.sortBy);
-        renderAccounts();
+        renderAll();
       });
 
       [$('viewGridBtn'), $('viewListBtn')].forEach((btn) => {
@@ -17908,6 +18178,209 @@ var qrcode = function() {
           writePreference('VIEW', appState.viewMode);
           renderAll();
         });
+      });
+
+      // ================= 拖动排序 =================
+      // 鼠标按住卡片移动即可拖动；触屏长按约 0.3 秒、卡片浮起后再拖动，没到时间就移动当作滚动。
+      // 在“置顶与自定义”排序下可用；筛选或搜索时，只调整当前显示的账号之间的先后，其他账号位置不变。
+      // 置顶账号和普通账号各自排序，不能互相拖过界。键盘：焦点在卡片里时按 Alt+↑ / Alt+↓。
+      const SORT_LONG_PRESS_MS = 300;
+      const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+      let sortDrag = null;
+      let suppressClickUntil = 0;
+
+      // 当前显示的账号换成新顺序，写回它们在完整自定义顺序里原来占的位置
+      async function applyVisibleOrder(newIds) {
+        if (!mutable()) { renderAccounts(); return false; }
+        const byId = new Map(appState.accounts.map((a) => [a.id, a]));
+        const full = [...appState.accounts].sort((a, b) => (Boolean(b.pinned) - Boolean(a.pinned)) || ((a.order ?? 0) - (b.order ?? 0)));
+        const visibleSet = new Set(newIds);
+        const slots = full.map((a, i) => (visibleSet.has(a.id) ? i : -1)).filter((i) => i >= 0);
+        const next = [...full];
+        slots.forEach((slot, k) => { next[slot] = byId.get(newIds[k]); });
+        const orderMap = new Map(next.map((a, i) => [a.id, i]));
+        appState.accounts = appState.accounts.map((a) => ({ ...a, order: orderMap.get(a.id) ?? a.order }));
+        if (!await saveVault()) { renderAll(); return false; }
+        return true;
+      }
+
+      // 其他卡片让位时的过渡动画（FLIP）
+      function flipMove(list, skip, mutate) {
+        const items = [...list.children].filter((el) => el !== skip);
+        const before = items.map((el) => [el.offsetLeft, el.offsetTop]);
+        mutate();
+        if (reducedMotion.matches) return;
+        items.forEach((el, i) => {
+          const dx = before[i][0] - el.offsetLeft;
+          const dy = before[i][1] - el.offsetTop;
+          if (dx || dy) el.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: 'none' }], { duration: 180, easing: 'cubic-bezier(0.2, 0.7, 0.3, 1)' });
+        });
+      }
+
+      function startDragSort() {
+        const d = sortDrag;
+        if (!d || d.active) return;
+        if (!d.card.isConnected) { cancelDragSort(); return; }
+        clearTimeout(d.timer);
+        d.active = true;
+        const listRect = d.list.getBoundingClientRect();
+        d.grabX = d.startX - listRect.left - d.card.offsetLeft;
+        d.grabY = d.startY - listRect.top - d.card.offsetTop;
+        d.startOrder = [...d.list.children].map((el) => el.dataset.id).join();
+        d.card.classList.add('is-dragging');
+        document.body.classList.add('is-sorting');
+        try { d.card.setPointerCapture(d.pointerId); } catch { /* 指针已离开时忽略 */ }
+        window.getSelection()?.removeAllRanges();
+        if (d.touch) navigator.vibrate?.(8);
+        updateDragSort();
+        d.raf = requestAnimationFrame(autoScrollDragSort);
+      }
+
+      function updateDragSort() {
+        const d = sortDrag;
+        if (!d?.active) return;
+        if (!d.card.isConnected) { cancelDragSort(); return; }
+        const listRect = d.list.getBoundingClientRect();
+        const px = d.x - listRect.left;
+        const py = d.y - listRect.top;
+        const pinned = d.card.classList.contains('is-pinned');
+        for (const el of d.list.children) {
+          if (el === d.card || el.classList.contains('is-pinned') !== pinned) continue;
+          const l = el.offsetLeft, t = el.offsetTop, w = el.offsetWidth, h = el.offsetHeight;
+          if (px < l || px > l + w || py < t || py > t + h) continue;
+          // 越过目标卡片的中线才换位，避免高矮不一的卡片来回跳
+          const forward = Boolean(d.card.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING);
+          const sameRow = Math.abs(t - d.card.offsetTop) < 2;
+          const past = sameRow
+            ? (forward ? px > l + w / 2 : px < l + w / 2)
+            : (forward ? py > t + h / 2 : py < t + h / 2);
+          if (past) flipMove(d.list, d.card, () => (forward ? el.after(d.card) : el.before(d.card)));
+          break;
+        }
+        // 单列（列表视图、手机卡片）只上下移动，不跟着左右晃
+        const singleColumn = d.card.offsetWidth > listRect.width * 0.7;
+        const dx = singleColumn ? 0 : px - d.grabX - d.card.offsetLeft;
+        const dy = py - d.grabY - d.card.offsetTop;
+        d.card.style.transform = `translate(${dx}px, ${dy}px) scale(1.015)`;
+      }
+
+      // 拖到窗口上下边缘时自动滚动
+      function autoScrollDragSort() {
+        const d = sortDrag;
+        if (!d?.active) return;
+        const top = Math.max(0, document.querySelector('.topbar')?.getBoundingClientRect().bottom ?? 0) + 56;
+        const bottom = innerHeight - 56;
+        let step = 0;
+        if (d.y < top) step = -Math.ceil((top - d.y) / 5);
+        else if (d.y > bottom) step = Math.ceil((d.y - bottom) / 5);
+        if (step) {
+          const before = scrollY;
+          scrollBy(0, step);
+          if (scrollY !== before) updateDragSort();
+        }
+        d.raf = requestAnimationFrame(autoScrollDragSort);
+      }
+
+      function endDragVisual(d) {
+        d.card.classList.remove('is-dragging');
+        document.body.classList.remove('is-sorting');
+        const from = d.card.style.transform;
+        d.card.style.transform = '';
+        if (from && !reducedMotion.matches) d.card.animate([{ transform: from }, { transform: 'none' }], { duration: 160, easing: 'ease-out' });
+      }
+
+      function cancelDragSort() {
+        const d = sortDrag;
+        if (!d) return;
+        clearTimeout(d.timer);
+        cancelAnimationFrame(d.raf);
+        sortDrag = null;
+        if (!d.active) return;
+        endDragVisual(d);
+        if (d.card.isConnected) renderAccounts(); // 放弃这次拖动，恢复原顺序
+      }
+
+      async function finishDragSort() {
+        const d = sortDrag;
+        clearTimeout(d.timer);
+        cancelAnimationFrame(d.raf);
+        sortDrag = null;
+        if (!d.active) return;
+        // 拖动结束后浏览器可能补发一次 click（鼠标紧跟其后，触屏稍晚），不能让它触发复制或按钮
+        suppressClickUntil = Date.now() + (d.touch ? 350 : 50);
+        endDragVisual(d);
+        const ids = [...d.list.children].map((el) => el.dataset.id);
+        if (ids.join() !== d.startOrder) await applyVisibleOrder(ids);
+      }
+
+      $('accountsList').addEventListener('pointerdown', (event) => {
+        if (sortDrag || !event.isPrimary || event.button !== 0) return;
+        const card = event.target.closest('.account-card');
+        if (!card || event.target.closest('input, textarea, select, [contenteditable="true"]')) return;
+        const list = $('accountsList');
+        const touch = event.pointerType !== 'mouse';
+        if (!list.hasAttribute('data-sortable')) {
+          // 按名称/最近更新排序时长按，提示怎样才能拖动
+          if (touch && appState.sortBy !== 'custom' && list.children.length > 1) {
+            sortDrag = { hintOnly: true, pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, active: false, raf: 0,
+              timer: setTimeout(() => { sortDrag = null; showToast('切换到“置顶与自定义”排序后，可长按拖动调整顺序'); }, 500) };
+          }
+          return;
+        }
+        sortDrag = { card, list, touch, pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, x: event.clientX, y: event.clientY, active: false, timer: 0, raf: 0 };
+        if (touch) sortDrag.timer = setTimeout(startDragSort, SORT_LONG_PRESS_MS);
+      });
+      window.addEventListener('pointermove', (event) => {
+        const d = sortDrag;
+        if (!d || event.pointerId !== d.pointerId) return;
+        d.x = event.clientX;
+        d.y = event.clientY;
+        if (!d.active) {
+          const moved = Math.hypot(d.x - d.startX, d.y - d.startY);
+          if (d.touch || d.hintOnly) { if (moved > 8) cancelDragSort(); } // 长按前就移动：当作滚动
+          else if (moved > 6) startDragSort();
+          return;
+        }
+        updateDragSort();
+      });
+      window.addEventListener('pointerup', (event) => {
+        if (!sortDrag || event.pointerId !== sortDrag.pointerId) return;
+        if (sortDrag.hintOnly) { cancelDragSort(); return; }
+        finishDragSort();
+      });
+      window.addEventListener('pointercancel', (event) => {
+        if (sortDrag && event.pointerId === sortDrag.pointerId) cancelDragSort();
+      });
+      // 卡片浮起后阻止页面跟着手指滚动；长按时不弹出系统菜单
+      document.addEventListener('touchmove', (event) => { if (sortDrag?.active) event.preventDefault(); }, { passive: false });
+      $('accountsList').addEventListener('contextmenu', (event) => { if (sortDrag && !sortDrag.hintOnly) event.preventDefault(); });
+      window.addEventListener('click', (event) => {
+        if (Date.now() < suppressClickUntil && event.target.closest?.('#accountsList')) {
+          suppressClickUntil = 0;
+          event.preventDefault();
+          event.stopImmediatePropagation();
+        }
+      }, true);
+      window.addEventListener('blur', cancelDragSort);
+
+      // 键盘：焦点在卡片里时 Alt+↑ / Alt+↓ 移动这张卡片
+      $('accountsList').addEventListener('keydown', async (event) => {
+        if (!event.altKey || (event.key !== 'ArrowUp' && event.key !== 'ArrowDown')) return;
+        const card = event.target.closest('.account-card');
+        if (!card || !$('accountsList').hasAttribute('data-sortable')) return;
+        event.preventDefault();
+        const cards = [...$('accountsList').children];
+        const index = cards.indexOf(card);
+        const other = cards[index + (event.key === 'ArrowUp' ? -1 : 1)];
+        if (!other || other.classList.contains('is-pinned') !== card.classList.contains('is-pinned')) return;
+        const ids = cards.map((el) => el.dataset.id);
+        const j = cards.indexOf(other);
+        [ids[index], ids[j]] = [ids[j], ids[index]];
+        const label = event.target.getAttribute('aria-label');
+        if (!await applyVisibleOrder(ids)) return;
+        renderAccounts();
+        const moved = $('accountsList').querySelector(`[data-id="${CSS.escape(card.dataset.id)}"]`);
+        (label && moved?.querySelector(`[aria-label="${CSS.escape(label)}"]`) || moved?.querySelector('.code-copy-btn'))?.focus();
       });
 
       // Global shortcuts (IME safe)
@@ -18214,7 +18687,27 @@ var qrcode = function() {
         if (appState.storageState === 'ready' && !appState.dirty) await saveVault({ exportAt: at });
         showToast('已生成明文备份文件');
       });
+      function resetImportFile() {
+        $('importFileInput').value = '';
+        syncImportFileName();
+      }
+      function syncImportFileName() {
+        const file = $('importFileInput').files[0];
+        $('importFileName').textContent = file ? file.name : '未选择文件，也可以把文件拖到这里';
+        $('importFilePicker').classList.toggle('has-file', Boolean(file));
+      }
+      const filePicker = $('importFilePicker');
+      filePicker.addEventListener('dragover', (event) => { event.preventDefault(); filePicker.classList.add('is-dragover'); });
+      filePicker.addEventListener('dragleave', () => filePicker.classList.remove('is-dragover'));
+      filePicker.addEventListener('drop', (event) => {
+        event.preventDefault();
+        filePicker.classList.remove('is-dragover');
+        if (!event.dataTransfer?.files?.length) return;
+        $('importFileInput').files = event.dataTransfer.files;
+        $('importFileInput').dispatchEvent(new Event('change'));
+      });
       $('importFileInput').addEventListener('change', async () => {
+        syncImportFileName();
         invalidateImport(); setErrorBox($('importErrorBox'), '');
         $('previewImportBtn').disabled = true;
         appState.pendingImportData = null;
@@ -18401,19 +18894,12 @@ var qrcode = function() {
         await loadVaultOnBoot(); showToast('已重置为空保险库');
       });
 
-      $('openMoreBtn').addEventListener('click', () => $('moreDialog').showModal());
-      $('openDisplayBtn').addEventListener('click', () => $('displayDialog').showModal());
-      $('platformFilter').addEventListener('change', event => { appState.platformFilter = event.target.value; renderAll(); });
-      $('resetFiltersBtn').addEventListener('click', () => {
-        appState.platformFilter = 'all'; appState.activeFilter = 'all'; appState.searchQuery = ''; $('searchInput').value = ''; renderAll();
-      });
-      $('openSettingsBtn').addEventListener('click', () => $('moreDialog').close());
       $('emptyRestoreBtn').addEventListener('click', () => { openBackup(); $('importFileInput').focus(); });
-      $('backupStatusBtn').addEventListener('click', openBackup);
       $('exportPendingBtn').addEventListener('click', openBackup);
       $('emptyDemoBtn').addEventListener('click', () => $('restoreDemoBtn').click());
       $('continueImportBtn').addEventListener('click', continueImport);
       $('backToImportBtn').addEventListener('click', () => { showAccountStep(false); $('smartImportInput').focus(); });
+      $('manualEntryBtn').addEventListener('click', () => { setErrorBox($('qrParseMsg'), ''); showAccountStep(true); $('accIssuer').focus(); });
       $('undoDeleteBtn').addEventListener('click', undoDelete);
       $('selectCopyTextBtn').addEventListener('click', () => { $('manualCopyText').focus(); $('manualCopyText').select(); });
       $('manualCopyDialog').addEventListener('close', () => { $('manualCopyText').value = ''; });
@@ -18438,7 +18924,7 @@ var qrcode = function() {
 
       // ================= BOOTSTRAP =================
       applyTheme(getStoredTheme());
-      loadVaultOnBoot();
+      loadVaultOnBoot({ seedDemo: true });
     })();
   </script>
 </body>
