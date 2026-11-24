@@ -1837,6 +1837,12 @@
         }
       }
 
+      /* Edge 会在密码框里自带一个“显示密码”眼睛，和右边页面自己的眼睛按钮重复，藏掉自带的 */
+      input[type="password"]::-ms-reveal,
+      input[type="password"]::-ms-clear {
+        display: none;
+      }
+
       :is(.input-control, .search-input, .textarea-control, .select-control):is(:focus, :focus-visible) {
         outline: 2px solid color-mix(in srgb, var(--accent) 36%, transparent);
         outline-offset: 0;
