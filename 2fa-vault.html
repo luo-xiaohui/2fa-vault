@@ -2164,7 +2164,9 @@
         color: var(--danger);
       }
 
-      .btn-danger-text:hover {
+      /* 要压过 .btn-ghost:hover:not(:disabled)，否则鼠标停上去红字会变黑 */
+      .btn-danger-text:hover:not(:disabled),
+      .btn-danger-ghost:hover:not(:disabled) {
         background-color: var(--danger-soft);
         color: var(--danger);
       }
@@ -16423,9 +16425,9 @@ var qrcode = function() {
           'search.count': '{count} found',
           'search.enterHint': ' · Enter copies first',
           'sort.label': 'Sort order',
-          'sort.custom': 'Pinned & Custom',
+          'sort.custom': 'Custom Order',
           'sort.name': 'Name A–Z',
-          'sort.recent': 'Recently Updated',
+          'sort.recent': 'Last Updated',
           'view.aria': 'View mode',
           'view.grid': 'Grid',
           'view.list': 'List',
@@ -18068,6 +18070,7 @@ var qrcode = function() {
         pendingMigrationItems: [],
         pendingImportData: null,
         currentQrUri: '',
+        currentQrIssuer: '',
         qrUriRevealed: false,
         cardNodes: new Map(), // Mounted account controls and countdown state.
       };
@@ -18784,6 +18787,7 @@ var qrcode = function() {
         $('qrFrame').replaceChildren();
         $('qrUriText').textContent = '';
         appState.currentQrUri = '';
+        appState.currentQrIssuer = '';
         appState.pendingImportData = null;
         appState.importPreview = null;
         appState.editingId = null;
@@ -20060,6 +20064,7 @@ var qrcode = function() {
       let qrCopyTimer = null;
       function openQrDialog(acc) {
         appState.currentQrUri = buildOtpAuthUri(acc);
+        appState.currentQrIssuer = acc.issuer || '';
         appState.qrUriRevealed = false;
         clearTimeout(qrCopyTimer);
         $('copyQrUriBtn').textContent = t('qr.copyUri');
@@ -20675,7 +20680,9 @@ var qrcode = function() {
         appState.qrUriRevealed = !appState.qrUriRevealed;
         $('toggleQrUriBtn').setAttribute('aria-pressed', String(appState.qrUriRevealed));
         $('toggleQrUriBtn').textContent = appState.qrUriRevealed ? t('qr.hideUri') : t('qr.showUri');
-        $('qrUriText').textContent = appState.qrUriRevealed ? appState.currentQrUri : 'otpauth://totp/...（默认隐藏明文密钥）';
+        $('qrUriText').textContent = appState.qrUriRevealed
+          ? appState.currentQrUri
+          : t('qr.hiddenPreview', { issuer: appState.currentQrIssuer || '' });
       });
       $('copyQrUriBtn').addEventListener('click', async () => {
         const ok = await copyText(appState.currentQrUri);
