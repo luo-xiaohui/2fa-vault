@@ -38,6 +38,18 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+    @property --fade-start {
+      syntax: "<length>";
+      inherits: false;
+      initial-value: 0px;
+    }
+
+    @property --fade-end {
+      syntax: "<length>";
+      inherits: false;
+      initial-value: 0px;
+    }
+
     @layer reset, base, tokens, layout, components, utilities;
 
     @layer reset {
@@ -1459,6 +1471,39 @@
         }
       }
 
+      @container cards (inline-size < 430px) {
+        .cards-list:not([data-view="list"]) .account-card {
+          grid-template-columns: 1fr;
+          gap: 0.75rem;
+        }
+        .cards-list:not([data-view="list"]) .code-zone {
+          border-inline-start: none;
+          border-block-start: 1px solid var(--border);
+          padding-inline-start: 0;
+          padding-block-start: 0.7rem;
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .cards-list:not([data-view="list"]) .code-hero {
+          inline-size: auto;
+          order: 1;
+        }
+        .cards-list:not([data-view="list"]) .code-copy-btn {
+          text-align: start;
+          align-items: flex-start;
+        }
+        .cards-list:not([data-view="list"]) .code-subline {
+          order: 2;
+        }
+        .cards-list:not([data-view="list"]) .card-actions {
+          order: 3;
+          inline-size: 100%;
+          justify-content: flex-end;
+        }
+      }
+
       /* ==================== COMPACT DENSE LIST VIEW ==================== */
       .cards-list[data-view="list"] .account-card {
         border: none;
@@ -1692,6 +1737,7 @@
 
       .dialog-footer {
         display: flex;
+        flex-direction: row;
         flex-wrap: wrap;
         align-items: center;
         justify-content: flex-end;
@@ -2050,7 +2096,7 @@
       /* Toast Popover */
       .toast {
         position: fixed;
-        inset-block-end: 1.25rem;
+        inset-block: auto max(1.25rem, env(safe-area-inset-bottom));
         inset-inline: 50% auto;
         transform: translateX(-50%);
         margin: 0;
@@ -2068,6 +2114,16 @@
         display: inline-flex;
         align-items: center;
         gap: 0.42rem;
+      }
+
+      [popover].toast:not(:popover-open) {
+        display: none;
+      }
+
+      .action-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
       }
 
       .inline-alert {
@@ -2090,6 +2146,16 @@
         background-color: var(--warn-soft);
         border-color: color-mix(in srgb, var(--warn) 34%, var(--border));
         color: var(--warn);
+      }
+
+      .inline-alert.is-success {
+        background-color: var(--success-soft);
+        border-color: color-mix(in srgb, var(--success) 34%, var(--border));
+        color: var(--success);
+      }
+
+      .error-msg.is-success {
+        color: var(--success);
       }
 
       /* Narrow lists keep identity, code and actions on separate rows. */
@@ -2132,6 +2198,24 @@
         .cards-list[data-view="list"] .card-actions {
           justify-content: flex-end;
           gap: 0.25rem;
+        }
+
+        .cards-list[data-view="list"] .note-box {
+          display: flex;
+          grid-column: 1;
+        }
+
+        .cards-list[data-view="list"] .note-text {
+          white-space: pre-wrap;
+        }
+
+        .cards-list[data-view="list"] .note-text.is-clamped {
+          display: -webkit-box;
+        }
+
+        .cards-list[data-view="list"] .note-expand-btn {
+          display: inline-flex;
+          align-items: center;
         }
       }
 
@@ -2188,8 +2272,26 @@
           flex-wrap: nowrap;
           overflow-x: auto;
           overscroll-behavior-inline: contain;
-          scrollbar-width: thin;
-          padding: 0.2rem 0.15rem 0.4rem;
+          scrollbar-width: none;
+          --fade-size: 28px;
+          scroll-padding-inline: var(--fade-size);
+          padding: 0.2rem 0.6rem 0.35rem 0.15rem;
+          -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--fade-start), #000 calc(100% - var(--fade-end)), transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 var(--fade-start), #000 calc(100% - var(--fade-end)), transparent 100%);
+          animation: reveal-fade-start linear both, hide-fade-end linear both;
+          animation-timeline: scroll(self inline);
+          animation-range: 0 var(--fade-size), calc(100% - var(--fade-size)) 100%;
+          transition: --fade-start 0.2s, --fade-end 0.2s;
+        }
+        .group-pills.more-start { --fade-start: var(--fade-size); }
+        .group-pills.more-end { --fade-end: var(--fade-size); }
+        @supports not (scrollbar-width: none) {
+          .group-pills::-webkit-scrollbar {
+            display: none;
+          }
+        }
+        .radio-cards {
+          grid-template-columns: 1fr;
         }
         .group-pills > * { flex-shrink: 0; }
         .pill-btn { min-block-size: 38px; white-space: nowrap; }
@@ -2253,7 +2355,14 @@
         .field, .field-row > * { min-inline-size: 0; }
         .field-row { grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); }
         .input-control, .input-control.is-mono, .textarea-control, .field .select-control { font-size: 16px; }
-        .toast { max-inline-size: calc(100vw - 2rem); inline-size: max-content; border-radius: var(--radius-md); }
+        .toast { max-inline-size: calc(100% - 2rem); inline-size: max-content; border-radius: var(--radius-md); }
+      }
+
+      @keyframes reveal-fade-start {
+        to { --fade-start: var(--fade-size); }
+      }
+      @keyframes hide-fade-end {
+        from { --fade-end: var(--fade-size); }
       }
 
       @media (max-width: 479px) {
@@ -2296,6 +2405,10 @@
         .account-copy-btn::after { content: ''; position: absolute; inset: -6px 0 -8px; }
         .tag-chip { position: relative; }
         .tag-chip::after { content: ''; position: absolute; inset: -9px -4px; }
+        /* 密码行的“显示”“复制”按钮保持 24px 外观，用透明层把点击区扩到约 42×40px */
+        .pwd-actions { gap: 1rem; }
+        .password-row .icon-btn { position: relative; }
+        .password-row .icon-btn::after { content: ''; position: absolute; inset: -7px -8px -11px; }
       }
 
       /* --- 顶栏 --- */
@@ -2329,7 +2442,7 @@
       .card-main { gap: 0.5rem; }
       .code-zone { min-inline-size: 0; }
       .copy-hint { min-block-size: 18px; }
-      .ring-progress { transition: stroke-dashoffset 1s linear, stroke 180ms ease; }
+      .ring-progress { transition: stroke 180ms ease; }
 
       /* --- 列表视图：备注与卡片同款（左侧竖线），仍保持单行 --- */
       .cards-list[data-view="list"] .note-box {
@@ -2354,6 +2467,11 @@
         -webkit-user-select: none;
         user-select: none;
         -webkit-touch-callout: none;
+      }
+      .cards-list[data-sortable] .note-text {
+        -webkit-user-select: text;
+        user-select: text;
+        cursor: text;
       }
       .account-card.is-dragging {
         position: relative;
@@ -2443,6 +2561,63 @@
       .file-picker.has-file .file-picker-name { color: var(--text-primary); }
     }
 
+    @layer components {
+      /* --- 列表视图：分组和非默认参数显示在平台名后面（卡片视图用底栏，这里隐藏） --- */
+      .list-meta { display: none; }
+      .cards-list[data-view="list"] .issuer-row { flex-wrap: nowrap; min-inline-size: 0; }
+      .cards-list[data-view="list"] .list-meta {
+        display: inline-block;
+        flex: 0 1 auto;
+        min-inline-size: 0;
+        max-inline-size: 50%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 0.67rem;
+        font-weight: 550;
+        padding: 0.04rem 0.4rem;
+        border-radius: var(--radius-pill);
+        border: 1px solid var(--border);
+        background-color: var(--surface-subtle);
+        color: var(--text-muted);
+      }
+
+      /* --- 列表视图中等宽度（701–1100px）：放得下就保留备注列和下期码；再窄一些，备注放到账号下方 --- */
+      @media (min-width: 701px) and (max-width: 1100px) {
+        .cards-list[data-view="list"] .account-card { grid-template-columns: minmax(200px, 1fr) minmax(120px, 1fr) auto; }
+        .cards-list[data-view="list"] .note-box { display: flex; grid-column: 2; }
+        .cards-list[data-view="list"] .code-zone { grid-column: 3; gap: 0.6rem; }
+        .cards-list[data-view="list"] .code-subline { display: flex; }
+        @container cards (inline-size < 900px) {
+          .cards-list[data-view="list"] .account-card { grid-template-columns: minmax(0, 1fr) auto; }
+          .cards-list[data-view="list"] .note-box { grid-column: 1; }
+          .cards-list[data-view="list"] .code-zone { grid-column: 2; }
+          .cards-list[data-view="list"] .account-card:has(.note-box) .code-zone { grid-row: 1 / span 2; }
+        }
+      }
+
+      /* --- 搜索框只留页面自己的清除按钮，去掉浏览器自带的“×” --- */
+      .search-input::-webkit-search-cancel-button,
+      .search-input::-webkit-search-decoration { -webkit-appearance: none; appearance: none; display: none; }
+
+      /* --- 搜索时显示匹配个数 --- */
+      .search-count {
+        position: absolute;
+        inset-inline-end: 2.6rem;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        white-space: nowrap;
+        pointer-events: none;
+      }
+      .search-input.has-count { padding-inline-end: 11rem; }
+      @media (max-width: 640px) {
+        .search-count-hint { display: none; }
+        .search-input.has-count { padding-inline-end: 5.5rem; }
+      }
+
+      [aria-busy="true"] { cursor: progress; }
+    }
+
     @layer utilities {
       [hidden] {
         display: none !important;
@@ -2530,6 +2705,7 @@
           <p id="storageDesc"></p>
         </div>
         <div class="banner-actions">
+          <button id="recoverBackupBtn" class="btn btn-primary" type="button">从备份恢复</button>
           <button id="retrySaveBtn" class="btn" type="button">重试保存</button>
           <button id="exportPendingBtn" class="btn" type="button">导出当前内容</button>
           <button id="downloadRawBtn" class="btn" type="button">导出原始数据</button>
@@ -2553,6 +2729,7 @@
                   spellcheck="false"
                 >
                 <span id="searchKbdHint" class="search-kbd" aria-hidden="true">/</span>
+                <span id="searchCount" class="search-count" aria-live="polite" hidden></span>
                 <button id="searchClearBtn" type="button" class="icon-btn search-clear" aria-label="清除搜索关键词" hidden>
                   <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>
@@ -2608,6 +2785,7 @@
           <button id="emptyAddBtn" type="button" class="btn btn-primary">添加第一个账号</button>
           <button id="emptyRestoreBtn" class="btn" type="button">从备份恢复</button>
           <button id="emptyDemoBtn" class="btn btn-ghost" type="button">体验示例</button>
+          <button id="emptyResetBtn" class="btn" type="button" hidden>清除搜索和筛选</button>
         </div>
       </div>
     </main>
@@ -2643,13 +2821,13 @@
           <span id="stepConfirmLabel">2 确认账号</span>
         </div>
         <div id="quickImportBlock" class="field">
-          <label for="smartImportInput">粘贴密钥或认证链接</label>
-          <span id="smartImportHint" class="field-hint">支持直接粘贴密钥、otpauth:// 链接、otpauth-migration:// 批量迁移码，或在下方上传/粘贴二维码截图。</span>
+          <label for="smartImportInput">粘贴账号信息、密钥或认证链接</label>
+          <span id="smartImportHint" class="field-hint">支持直接粘贴「账号---密码---密钥」（兼容 | / : / , / 空格 等分隔符）、密钥、otpauth:// 链接、批量迁移码，或在下方上传/粘贴二维码截图。</span>
           <input
             id="smartImportInput"
             class="input-control is-mono"
             type="text"
-            placeholder="粘贴密钥、otpauth://totp/... 或 otpauth-migration://..."
+            placeholder="如 user@example.com---密码---密钥，或 otpauth://..."
             autocorrect="off"
             autocapitalize="none"
             spellcheck="false"
@@ -2667,6 +2845,7 @@
         </div>
         <div id="accountConfirmFields">
         <button id="backToImportBtn" class="btn btn-ghost" type="button">← 返回导入</button>
+        <div id="accountInlineStatus" class="inline-alert is-success" role="status" hidden></div>
 
         <div class="field">
           <label>常用平台预设（点击快速填入并匹配图标）</label>
@@ -2709,6 +2888,22 @@
         </div>
 
         <div class="field">
+          <label for="accPassword">登录密码（可选，随保险库保存）</label>
+          <div class="input-with-action">
+            <input
+              id="accPassword"
+              name="password"
+              class="input-control is-mono"
+              type="password"
+              maxlength="256"
+              autocomplete="new-password"
+              placeholder="可选：保存此账号对应的登录密码"
+            >
+            <button id="toggleAccPwdBtn" type="button" class="btn" aria-pressed="false" aria-label="显示登录密码">显示</button>
+          </div>
+        </div>
+
+        <div class="field">
           <label for="accSecret">Base32 密钥 *</label>
           <span id="accSecretHint" class="field-hint">自动去除空格与短横线并转为大写（至少 2 位 A-Z 或 2-7）。</span>
           <div class="input-with-action">
@@ -2732,30 +2927,15 @@
 
         <div id="liveCodePreviewBox" class="live-preview-box" hidden>
           <div>
-            <div class="field-hint">实时校验 · 当前验证码</div>
+            <div id="livePreviewLabel" class="field-hint">实时校验 · 当前验证码</div>
             <div id="livePreviewCode" class="live-preview-code">000 000</div>
           </div>
           <span id="livePreviewMeta" class="param-badge">30s · 6位 · SHA1</span>
         </div>
 
         <details id="supplementDetails" class="adv-details">
-          <summary>补充信息 · 备注、分组和登录密码</summary>
+          <summary>补充信息 · 备注、分组与置顶</summary>
           <div class="optional-fields">
-        <div class="field">
-          <label for="accPassword">登录密码（可选，随保险库保存）</label>
-          <div class="input-with-action">
-            <input
-              id="accPassword"
-              name="password"
-              class="input-control is-mono"
-              type="password"
-              maxlength="256"
-              autocomplete="new-password"
-              placeholder="可选：保存此账号对应的登录密码"
-            >
-            <button id="toggleAccPwdBtn" type="button" class="btn" aria-pressed="false" aria-label="显示登录密码">显示</button>
-          </div>
-        </div>
 
         <div class="field">
           <label for="accNote">账号备注（用途、关联信息、恢复提示等）</label>
@@ -2850,6 +3030,7 @@
           </div>
         </div>
         <div id="migrationList" class="migration-list"></div>
+        <div id="migrationErrorBox" class="error-msg" role="status"></div>
       </div>
       <div class="dialog-footer">
         <button type="button" class="btn" data-dialog-close="migrationDialog">取消</button>
@@ -2879,6 +3060,7 @@
           <div style="display:flex;gap:0.4rem;">
             <button id="toggleQrUriBtn" type="button" class="chip-btn" aria-pressed="false">显示完整链接</button>
             <button id="copyQrUriBtn" type="button" class="chip-btn">复制链接</button>
+            <span id="qrCopyStatus" class="visually-hidden" role="status"></span>
           </div>
         </div>
         <div id="qrUriText" class="uri-preview">otpauth://totp/...（已隐藏密钥）</div>
@@ -2904,9 +3086,17 @@
         <p class="field-hint">包含全部验证码密钥、已保存的登录密码、分组和备注。建议定期导出保存到安全位置（如加密网盘或 U 盘），防止清理浏览器缓存导致丢失。</p>
         <div class="field">
           <label for="exportPwdInput">备份加密密码（至少八位）</label>
-          <input id="exportPwdInput" class="input-control" type="password" autocomplete="new-password" placeholder="输入加密密码以生成 AES-256-GCM 加密备份">
+          <div class="input-with-action">
+            <input id="exportPwdInput" class="input-control" type="password" autocomplete="new-password" placeholder="输入至少 8 位密码以加密备份">
+            <button id="toggleExportPwdBtn" type="button" class="btn" aria-pressed="false" aria-label="显示备份加密密码">显示</button>
+          </div>
         </div>
-        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+        <div class="field">
+          <label for="exportPwdConfirm">再次输入备份密码</label>
+          <input id="exportPwdConfirm" class="input-control" type="password" autocomplete="new-password" placeholder="再输一次，防止输错后备份解不开">
+        </div>
+        <div id="exportFeedback" class="error-msg" role="status"></div>
+        <div class="action-row">
           <button id="exportEncryptedBtn" type="button" class="btn btn-primary">导出加密备份 (.2favault.json)</button>
           <button id="exportPlainBtn" type="button" class="btn">导出明文 JSON</button>
         </div>
@@ -2922,12 +3112,15 @@
               <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
               <span>选择文件</span>
             </span>
-            <span id="importFileName" class="file-picker-name">未选择文件，也可以把文件拖到这里</span>
+            <span id="importFileName" class="file-picker-name">选择或拖拽备份文件</span>
           </label>
         </div>
         <div id="importDecryptField" class="field" hidden>
           <label for="importPwdInput">此备份已加密，请输入备份密码</label>
-          <input id="importPwdInput" class="input-control" type="password" autocomplete="off" placeholder="输入导出时设置的加密密码">
+          <div class="input-with-action">
+            <input id="importPwdInput" class="input-control" type="password" autocomplete="off" placeholder="输入导出时设置的加密密码">
+            <button id="toggleImportPwdBtn" type="button" class="btn" aria-pressed="false" aria-label="显示备份解密密码">显示</button>
+          </div>
         </div>
         <div class="field">
           <label>导入方式</label>
@@ -2936,8 +3129,11 @@
             <label class="radio-card"><input type="radio" name="importMode" value="replace"><span>覆盖现有列表</span></label>
           </div>
         </div>
-        <div id="importErrorBox" class="error-msg"></div>
-        <button id="previewImportBtn" class="btn" type="button" disabled>校验并预览</button>
+        <div id="importErrorBox" class="error-msg" role="status"></div>
+        <div class="action-row">
+          <button id="previewImportBtn" class="btn" type="button" disabled>校验并预览</button>
+          <button id="runImportBtn" type="button" class="btn btn-primary" disabled>开始恢复导入</button>
+        </div>
         <div id="importPreview" class="import-preview" hidden>
           <strong id="importSummary"></strong>
           <ul id="importRows"></ul>
@@ -2946,7 +3142,6 @@
             <span>已查看无效记录，仅导入有效项</span>
           </label>
         </div>
-        <button id="runImportBtn" type="button" class="btn btn-primary" disabled>开始恢复导入</button>
       </fieldset>
     </div>
     <div class="dialog-footer">
@@ -2987,18 +3182,24 @@
         <form id="masterPwdForm" novalidate style="display:flex;flex-direction:column;gap:0.75rem;">
           <div id="currentPwdWrap" class="field" hidden>
             <label for="currentMasterPwd">当前主密码</label>
-            <input id="currentMasterPwd" class="input-control" type="password" autocomplete="current-password">
+            <div class="input-with-action">
+              <input id="currentMasterPwd" class="input-control" type="password" autocomplete="current-password">
+              <button id="toggleCurrentMasterPwdBtn" type="button" class="btn" aria-pressed="false" aria-label="显示当前主密码">显示</button>
+            </div>
           </div>
           <div id="newPwdWrap" class="field">
             <label for="newMasterPwd" id="newMasterPwdLabel">设置主密码（至少 8 位）</label>
-            <input id="newMasterPwd" class="input-control" type="password" minlength="8" autocomplete="new-password" placeholder="设置解锁密码">
+            <div class="input-with-action">
+              <input id="newMasterPwd" class="input-control" type="password" minlength="8" autocomplete="new-password" placeholder="设置解锁密码">
+              <button id="toggleNewMasterPwdBtn" type="button" class="btn" aria-pressed="false" aria-label="显示新主密码">显示</button>
+            </div>
           </div>
           <div id="confirmPwdWrap" class="field">
             <label for="confirmMasterPwd">确认主密码</label>
             <input id="confirmMasterPwd" class="input-control" type="password" minlength="8" autocomplete="new-password" placeholder="再次输入主密码">
           </div>
-          <div id="masterPwdError" class="error-msg"></div>
-          <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+          <div id="masterPwdError" class="error-msg" role="status"></div>
+          <div class="action-row">
             <button id="saveMasterPwdBtn" type="submit" class="btn btn-primary">开启主密码锁</button>
             <button id="disableMasterPwdBtn" type="button" class="btn btn-danger" hidden>关闭主密码锁</button>
           </div>
@@ -3019,11 +3220,12 @@
 
       <fieldset class="settings-group">
         <legend>数据管理</legend>
-        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+        <div class="action-row">
           <button id="restoreDemoBtn" type="button" class="btn">添加示例演示账号</button>
           <button id="wipeAllBtn" type="button" class="btn btn-danger">清空账号数据</button>
         </div>
       </fieldset>
+      <div id="settingsStatus" class="inline-alert" role="status" hidden></div>
     </div>
     <div class="dialog-footer">
       <button type="button" class="btn btn-primary" data-dialog-close="settingsDialog">完成</button>
@@ -3058,6 +3260,7 @@
           <h1 id="lockDialogTitle">解锁 2FA Vault</h1>
           <p class="field-hint">本地保险库已启用 AES-256-GCM 加密保护。</p>
         </div>
+        <div id="lockReasonNotice" class="inline-alert is-warn" role="status" hidden></div>
         <div class="field">
           <label for="unlockPwdInput">主密码</label>
           <div class="input-with-action">
@@ -3083,7 +3286,10 @@
       </div>
       <div class="dialog-footer" style="justify-content:space-between;">
         <button id="forgotResetBtn" type="button" class="btn btn-ghost" style="font-size:0.8rem;color:var(--danger);">忘记密码并重置</button>
-        <button type="submit" class="btn btn-primary">解锁</button>
+        <div class="action-row">
+          <button id="reloadFromLockBtn" type="button" class="btn" hidden>刷新页面</button>
+          <button type="submit" class="btn btn-primary">解锁</button>
+        </div>
       </div>
     </form>
   </dialog>
@@ -15530,11 +15736,12 @@ var qrcode = function() {
         VIEW: 'vault2fa_v1_view',
         SORT: 'vault2fa_v1_sort',
         AUTOLOCK: 'vault2fa_v1_autolock_min',
+        PWD_HINT: 'vault2fa_v1_pwd_hint_shown',
       };
       let startupStorageError = null;
       const preferences = {};
       try {
-        for (const name of ['THEME', 'VIEW', 'SORT', 'AUTOLOCK']) preferences[name] = localStorage.getItem(KEYS[name]);
+        for (const name of ['THEME', 'VIEW', 'SORT', 'AUTOLOCK', 'PWD_HINT']) preferences[name] = localStorage.getItem(KEYS[name]);
       } catch (error) {
         if (!(error instanceof DOMException) || !['SecurityError', 'InvalidStateError'].includes(error.name)) throw error;
         startupStorageError = error;
@@ -15546,7 +15753,7 @@ var qrcode = function() {
           id: 'google',
           name: 'Google',
           color: '#2f75c3',
-          aliases: ['google', 'gmail', 'youtube', 'gcp', 'workspace'],
+          aliases: ['google', 'gmail', 'youtube', 'gcp'],
           shapes: [
             { tag: 'path', attrs: { d: 'M21.6 12.23c0-.7-.06-1.38-.18-2.03H12v3.84h5.38a4.6 4.6 0 0 1-2 3.02v2.5h3.23c1.9-1.74 2.99-4.32 2.99-7.33z', fill: '#4285F4' } },
             { tag: 'path', attrs: { d: 'M12 22c2.7 0 4.96-.9 6.61-2.44l-3.23-2.5c-.9.6-2.04.96-3.38.96-2.6 0-4.8-1.76-5.59-4.12H3.07v2.58A10 10 0 0 0 12 22z', fill: '#34A853' } },
@@ -15607,7 +15814,7 @@ var qrcode = function() {
           id: 'aws',
           name: 'AWS',
           color: '#b45309',
-          aliases: ['aws', 'amazon'],
+          aliases: ['aws', 'amazon web services', 'amazonaws'],
           shapes: [
             { tag: 'path', attrs: { d: 'M12 3.2L4.8 7.1v5.8L12 16.8l7.2-3.9V7.1L12 3.2zM12 11.2L5.8 7.8M12 11.2l6.2-3.4M12 11.2v5.4', fill: 'none', stroke: 'currentColor', 'stroke-width': '1.7', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' } },
             { tag: 'path', attrs: { d: 'M4.5 17.6c4.4 2.6 10.1 2.7 14.5.3m-1.4-1.5l2 .3-.8 2.1', fill: 'none', stroke: '#FF9900', 'stroke-width': '1.9', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' } },
@@ -16112,7 +16319,8 @@ var qrcode = function() {
       async function encryptEnvelope(plaintextObj, password, preDerivedKeyBytes = null) {
         const salt = crypto.getRandomValues(new Uint8Array(16));
         const iv = crypto.getRandomValues(new Uint8Array(12));
-        const iterations = 100000;
+        // 新加密的内容（新设主密码、导出加密备份）用 60 万次；旧数据按自己记录的次数解开，旧版本也照样能读
+        const iterations = 600000;
         const keyBytes = preDerivedKeyBytes || await deriveAesKeyBytes(password, salt, iterations);
         const ptBytes = te.encode(JSON.stringify(plaintextObj));
         let ctBytes;
@@ -16219,7 +16427,15 @@ var qrcode = function() {
         if (otpType === 'hotp') throw new Error('检测到 HOTP 计数器令牌，当前仅支持基于时间的 TOTP 令牌');
         if (otpType !== 'totp') throw new Error(`不支持的令牌类型：${otpType}`);
 
-        const labelPath = decodeURIComponent(url.pathname.replace(/^\/+/, ''));
+        let labelPath;
+        try {
+          labelPath = decodeURIComponent(url.pathname.replace(/^\/+/, ''));
+        } catch {
+          throw new VaultDataError('认证链接编码无效');
+        }
+        if (!url.host && labelPath.toLowerCase().startsWith(`${otpType}/`)) {
+          labelPath = labelPath.slice(otpType.length + 1);
+        }
         const colonIdx = labelPath.indexOf(':');
         let labelIssuer = '';
         let labelAccount = labelPath;
@@ -16246,6 +16462,7 @@ var qrcode = function() {
         let result = 0n;
         let shift = 0n;
         while (state.pos < bytes.length) {
+          if (shift > 63n) throw new Error('迁移二维码 Protobuf 数据异常');
           const b = bytes[state.pos++];
           result |= BigInt(b & 0x7f) << shift;
           if ((b & 0x80) === 0) return result;
@@ -16254,12 +16471,28 @@ var qrcode = function() {
         throw new Error('迁移二维码 Protobuf 数据不完整');
       }
 
+      function readLengthBytes(bytes, state) {
+        const lenBig = readVarint(bytes, state);
+        if (lenBig > BigInt(bytes.length - state.pos)) {
+          throw new Error('迁移二维码 Protobuf 数据不完整');
+        }
+        const len = Number(lenBig);
+        const slice = bytes.subarray(state.pos, state.pos + len);
+        state.pos += len;
+        return slice;
+      }
+
       function skipField(bytes, state, wireType) {
         if (wireType === 0) readVarint(bytes, state);
-        else if (wireType === 1) state.pos += 8;
-        else if (wireType === 2) { const len = Number(readVarint(bytes, state)); state.pos += len; }
-        else if (wireType === 5) state.pos += 4;
-        else throw new Error('迁移二维码格式未知');
+        else if (wireType === 1) {
+          if (state.pos + 8 > bytes.length) throw new Error('迁移二维码 Protobuf 数据不完整');
+          state.pos += 8;
+        } else if (wireType === 2) {
+          readLengthBytes(bytes, state);
+        } else if (wireType === 5) {
+          if (state.pos + 4 > bytes.length) throw new Error('迁移二维码 Protobuf 数据不完整');
+          state.pos += 4;
+        } else throw new Error('迁移二维码格式未知');
       }
 
       function parseOtpParams(bytes) {
@@ -16276,17 +16509,11 @@ var qrcode = function() {
           const field = tag >>> 3;
           const wire = tag & 0x07;
           if (field === 1 && wire === 2) {
-            const len = Number(readVarint(bytes, state));
-            secretBytes = bytes.slice(state.pos, state.pos + len);
-            state.pos += len;
+            secretBytes = new Uint8Array(readLengthBytes(bytes, state));
           } else if (field === 2 && wire === 2) {
-            const len = Number(readVarint(bytes, state));
-            name = td.decode(bytes.subarray(state.pos, state.pos + len));
-            state.pos += len;
+            name = td.decode(readLengthBytes(bytes, state));
           } else if (field === 3 && wire === 2) {
-            const len = Number(readVarint(bytes, state));
-            issuer = td.decode(bytes.subarray(state.pos, state.pos + len));
-            state.pos += len;
+            issuer = td.decode(readLengthBytes(bytes, state));
           } else if (field === 4 && wire === 0) {
             algoCode = Number(readVarint(bytes, state));
           } else if (field === 5 && wire === 0) {
@@ -16327,9 +16554,14 @@ var qrcode = function() {
       function parseGoogleMigrationUri(raw) {
         const m = raw.trim().match(/[?&]data=([^&#]+)/i);
         if (!m) throw new Error('迁移链接中未找到 data 参数');
-        let b64 = decodeURIComponent(m[1]).replace(/\s+/g, '+').replace(/-/g, '+').replace(/_/g, '/');
-        while (b64.length % 4) b64 += '=';
-        const bytes = b64ToBytes(b64);
+        let bytes;
+        try {
+          let b64 = decodeURIComponent(m[1]).replace(/\s+/g, '+').replace(/-/g, '+').replace(/_/g, '/');
+          while (b64.length % 4) b64 += '=';
+          bytes = b64ToBytes(b64);
+        } catch {
+          throw new Error('迁移链接的 Base64 数据格式无效');
+        }
         const state = { pos: 0 };
         const items = [];
         while (state.pos < bytes.length) {
@@ -16337,9 +16569,7 @@ var qrcode = function() {
           const field = tag >>> 3;
           const wire = tag & 0x07;
           if (field === 1 && wire === 2) {
-            const len = Number(readVarint(bytes, state));
-            items.push(parseOtpParams(bytes.subarray(state.pos, state.pos + len)));
-            state.pos += len;
+            items.push(parseOtpParams(readLengthBytes(bytes, state)));
           } else {
             skipField(bytes, state, wire);
           }
@@ -16358,6 +16588,250 @@ var qrcode = function() {
           period: String(acc.period || 30),
         });
         return `otpauth://totp/${encodeURIComponent(label)}?${params.toString()}`;
+      }
+
+      const SECRET_LABEL_RE = /^(?:2fa|totp|otp|secret|key|auth|token|code|密钥|秘钥|二步验证(?:密钥|秘钥)?|二次验证(?:密钥|秘钥)?|谷歌验证(?:密钥|秘钥)?)\s*[:：=]\s*/i;
+      const SECRET_LABEL_ONLY_RE = /^(?:2fa|totp|otp|secret|key|auth|token|code|密钥|秘钥|二步验证(?:密钥|秘钥)?|二次验证(?:密钥|秘钥)?|谷歌验证(?:密钥|秘钥)?)$/i;
+      const ACCOUNT_LABEL_RE = /^(?:account|user(?:name)?|email|mail|login|id|账号|帐号|邮箱|用户名)\s*[:：=]\s*/i;
+      const PASSWORD_LABEL_RE = /^(?:password|passwd|pwd|密码)\s*[:：=]\s*/i;
+      const ISSUER_LABEL_RE = /^(?:platform|service|issuer|site|平台|服务|网站)\s*[:：=]\s*/i;
+      const FIELD_LABEL_ONLY_RE = /^(?:account|user(?:name)?|email|mail|login|id|password|passwd|pwd|platform|service|issuer|site|2fa|totp|otp|secret|key|auth|token|code|账号|帐号|邮箱|用户名|密码|平台|服务|网站|密钥|秘钥|二步验证(?:密钥|秘钥)?|二次验证(?:密钥|秘钥)?|谷歌验证(?:密钥|秘钥)?)$/i;
+
+      function escapeRegExp(str) {
+        return String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      }
+
+      function isLikelyEmail(str) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(str || '').trim());
+      }
+
+      function isExactPlatformName(str) {
+        const q = String(str || '').trim().toLowerCase();
+        if (!q) return false;
+        return PLATFORM_PRESETS.some((p) => p.name.toLowerCase() === q || p.aliases.includes(q));
+      }
+
+      function stripFieldLabel(value, labelRe) {
+        const raw = String(value || '').trim();
+        const stripped = raw.replace(labelRe, '').trim();
+        return stripped || raw;
+      }
+
+      function extractSecretFromToken(token, { minLen = 8, allowOtpAuth = true } = {}) {
+        const raw = String(token || '').trim();
+        if (!raw) return null;
+        if (allowOtpAuth && /^otpauth:\/\//i.test(raw)) {
+          try {
+            const parsed = parseOtpAuthUri(raw);
+            return { secret: parsed.secret, otpauth: parsed, isOtpAuth: true, hadLabel: false };
+          } catch {
+            return null;
+          }
+        }
+        const stripped = raw.replace(SECRET_LABEL_RE, '').trim();
+        if (!stripped) return null;
+        if (!/^[A-Za-z0-9]/.test(stripped) || !/[A-Za-z0-9=]$/.test(stripped)) return null;
+        if (/--|__/.test(stripped)) return null;
+        if (!isValidBase32(stripped)) return null;
+        const clean = normalizeBase32(stripped);
+        if (clean.length < minLen) return null;
+        return { secret: clean, otpauth: null, isOtpAuth: false, hadLabel: stripped !== raw };
+      }
+
+      function isStrongSecretMatch(match) {
+        if (!match) return false;
+        if (match.isOtpAuth || match.hadLabel) return true;
+        if (match.secret.length >= 16) return true;
+        if (match.secret.length >= 10 && /[2-7]/.test(match.secret)) return true;
+        return false;
+      }
+
+      function splitProtectedText(text, splitter, { unquoteCsv = false } = {}) {
+        const placeholders = [];
+        const masked = text.replace(/otpauth:\/\/[^\t|｜;；\r\n]+?(?=(?:\s*(?:[-_=|:;/#~*+—]{2,}|[|｜;；\t\r\n])|$))/gi, (m) => {
+          const key = `\u0000OTP${placeholders.length}\u0000`;
+          placeholders.push(m);
+          return key;
+        });
+        const parts = masked.split(splitter).map((part) => {
+          let val = part.replace(/\u0000OTP(\d+)\u0000/g, (_, idx) => placeholders[Number(idx)]).trim();
+          if (unquoteCsv && val.length >= 2 && val.startsWith('"') && val.endsWith('"')) {
+            val = val.slice(1, -1).replace(/""/g, '"').trim();
+          }
+          return val;
+        });
+        while (parts.length && !parts[0]) parts.shift();
+        while (parts.length && !parts[parts.length - 1]) parts.pop();
+        return parts;
+      }
+
+      function mapDelimitedParts(parts, { strict = false, allowTwoPart = false } = {}) {
+        if (parts.length < 2) return null;
+        if (parts.some((p) => !p)) return null;
+        if (FIELD_LABEL_ONLY_RE.test(parts[0])) return null;
+
+        const buildResult = ({ issuer = '', account = '', password = '', secretMatch, noteParts = [] }) => {
+          const otp = secretMatch.otpauth;
+          const cleanIssuer = issuer ? stripFieldLabel(issuer, ISSUER_LABEL_RE) : (otp?.issuer || '');
+          const cleanAccount = account ? stripFieldLabel(account, ACCOUNT_LABEL_RE) : (otp?.account || '');
+          const cleanPassword = password ? stripFieldLabel(password, PASSWORD_LABEL_RE) : '';
+          if (!cleanAccount) return null;
+          return {
+            issuer: cleanIssuer,
+            account: cleanAccount,
+            password: cleanPassword,
+            secret: secretMatch.secret,
+            note: noteParts.map((s) => String(s || '').trim()).filter(Boolean).join(' · '),
+            algorithm: otp?.algorithm || 'SHA1',
+            digits: otp?.digits || 6,
+            period: otp?.period || 30,
+          };
+        };
+
+        if (parts.length === 2) {
+          if (!allowTwoPart) return null;
+          if (SECRET_LABEL_ONLY_RE.test(parts[0])) return null;
+          const sMatch = extractSecretFromToken(parts[1], { minLen: 10 });
+          if (!isStrongSecretMatch(sMatch)) return null;
+          return buildResult({ account: parts[0], secretMatch: sMatch });
+        }
+
+        if (parts.length === 3) {
+          const sMatch = extractSecretFromToken(parts[2], { minLen: strict ? 10 : 8 });
+          if (!sMatch) return null;
+          if (strict && !isStrongSecretMatch(sMatch)) return null;
+          return buildResult({ account: parts[0], password: parts[1], secretMatch: sMatch });
+        }
+
+        // 4 or more parts: find the secret field (index >= 2)
+        const candidates = [];
+        for (let i = 2; i < parts.length; i++) {
+          const m = extractSecretFromToken(parts[i], { minLen: 8 });
+          if (m) candidates.push({ idx: i, match: m, strong: isStrongSecretMatch(m) });
+        }
+        if (!candidates.length) return null;
+        const chosen =
+          candidates.find((c) => c.match.isOtpAuth) ||
+          candidates.find((c) => c.match.hadLabel) ||
+          [...candidates].reverse().find((c) => c.strong) ||
+          (!strict ? candidates[candidates.length - 1] : null);
+        if (!chosen) return null;
+
+        const { idx: secretIdx, match: sMatch } = chosen;
+        if (parts.length === 4 && secretIdx === 3 && !isLikelyEmail(parts[0]) && (isExactPlatformName(parts[0]) || isLikelyEmail(parts[1]))) {
+          return buildResult({ issuer: parts[0], account: parts[1], password: parts[2], secretMatch: sMatch });
+        }
+        const extraNotes = [
+          ...parts.slice(2, secretIdx),
+          ...parts.slice(secretIdx + 1),
+        ];
+        return buildResult({ account: parts[0], password: parts[1], secretMatch: sMatch, noteParts: extraNotes });
+      }
+
+      function parseDelimitedAccountText(raw) {
+        const text = String(raw || '').trim();
+        if (!text) return null;
+        if (/^(?:otpauth(?:-migration)?|https?):\/\//i.test(text)) return null;
+
+        // Multi-line single-account snippet (e.g. account\npassword\nsecret)
+        if (/[\r\n]/.test(text)) {
+          const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+          if (lines.length >= 2 && lines.length <= 5) {
+            const multiRes = mapDelimitedParts(lines, { strict: false, allowTwoPart: true });
+            if (multiRes) return multiRes;
+          }
+          return null;
+        }
+
+        const maskedForScan = text.replace(/(?:otpauth|https?):\/\/\S+/gi, ' ');
+        const runCounts = new Map();
+        for (const m of maskedForScan.matchAll(/([^\sA-Za-z0-9\u4e00-\u9fff])\1+/g)) {
+          const tok = m[0];
+          runCounts.set(tok, (runCounts.get(tok) || 0) + 1);
+        }
+        const preferredDelims = '-—|｜:：;；,，=/_#~*+·•';
+        const repeatedTokens = [...runCounts.entries()].sort((a, b) => {
+          const aMulti = a[1] >= 2 ? 1 : 0;
+          const bMulti = b[1] >= 2 ? 1 : 0;
+          if (aMulti !== bMulti) return bMulti - aMulti;
+          const aPref = preferredDelims.includes(a[0][0]) ? 1 : 0;
+          const bPref = preferredDelims.includes(b[0][0]) ? 1 : 0;
+          if (aPref !== bPref) return bPref - aPref;
+          return b[0].length - a[0].length;
+        });
+
+        const makeExactRunRegex = (tok) => {
+          const ch = escapeRegExp(tok[0]);
+          return new RegExp(`\\s*(?<!${ch})${escapeRegExp(tok)}(?!${ch})\\s*`);
+        };
+
+        const strongSplitters = [
+          ...repeatedTokens.filter(([, count]) => count >= 2).map(([tok]) => ({
+            re: makeExactRunRegex(tok),
+            unquoteCsv: false,
+          })),
+          { re: /\s*-{2,}\s*/, unquoteCsv: false },
+          { re: /\s*—+\s*/, unquoteCsv: false },
+          { re: /\s*(?:=>|->|→|⇒)\s*/, unquoteCsv: false },
+          { re: /\t+/, unquoteCsv: true },
+          { re: /\s*[|｜]+\s*/, unquoteCsv: false },
+          { re: /\s*[;；]\s*/, unquoteCsv: false },
+          { re: /\s+-\s+/, unquoteCsv: false },
+          { re: /\s+\/\s+/, unquoteCsv: false },
+          { re: /\s*[,，]\s*/, unquoteCsv: true },
+          { re: /\s*[:：]\s*/, unquoteCsv: false },
+          { re: /\s*\/\s*/, unquoteCsv: false },
+          { re: /\s*[·•]\s*/, unquoteCsv: false },
+        ];
+
+        // Pass 1: 3+ fields using structured delimiters
+        for (const spec of strongSplitters) {
+          const parts = splitProtectedText(text, spec.re, { unquoteCsv: spec.unquoteCsv });
+          if (parts.length >= 3) {
+            const res = mapDelimitedParts(parts, { strict: false, allowTwoPart: false });
+            if (res) return res;
+          }
+        }
+
+        // Pass 2: 3+ fields using whitespace (strictly guarded against spaced Base32 keys)
+        const wsSplitters = [/\s{2,}/, /\s+/];
+        for (const wsRe of wsSplitters) {
+          const parts = splitProtectedText(text, wsRe);
+          if (parts.length >= 3) {
+            if (isValidBase32(text) && parts.every((p) => normalizeBase32(p).length <= 8)) {
+              continue;
+            }
+            const res = mapDelimitedParts(parts, { strict: true, allowTwoPart: false });
+            if (res) return res;
+          }
+        }
+
+        // Pass 3: 2 fields (account + secret) using explicit strong delimiters only
+        const twoPartSplitters = [
+          ...repeatedTokens.map(([tok]) => ({
+            re: makeExactRunRegex(tok),
+            unquoteCsv: false,
+          })),
+          { re: /\s*-{2,}\s*/, unquoteCsv: false },
+          { re: /\s*—+\s*/, unquoteCsv: false },
+          { re: /\s*(?:=>|->|→|⇒)\s*/, unquoteCsv: false },
+          { re: /\t+/, unquoteCsv: true },
+          { re: /\s*[|｜]+\s*/, unquoteCsv: false },
+          { re: /\s*[;；]\s*/, unquoteCsv: false },
+          { re: /\s+-\s+/, unquoteCsv: false },
+          { re: /\s+\/\s+/, unquoteCsv: false },
+          { re: /\s*[,，]\s*/, unquoteCsv: true },
+          { re: /\s*[:：]\s*/, unquoteCsv: false },
+        ];
+        for (const spec of twoPartSplitters) {
+          const parts = splitProtectedText(text, spec.re, { unquoteCsv: spec.unquoteCsv });
+          if (parts.length === 2) {
+            const res = mapDelimitedParts(parts, { strict: true, allowTwoPart: true });
+            if (res) return res;
+          }
+        }
+
+        return null;
       }
 
       // ================= QR IMAGE DECODER & SVG GENERATOR =================
@@ -16507,8 +16981,10 @@ var qrcode = function() {
         }
         const q = String(issuer || '').trim().toLowerCase();
         if (!q) return null;
+        // 别名按整词匹配：GitHub Enterprise、Xbox Live 能认出，Deliveroo、Bitget、Ghost 不会被误认成 Microsoft、Telegram、GitHub
+        const asWord = (a) => new RegExp(`(^|[^a-z0-9])${escapeRegExp(a)}($|[^a-z0-9])`).test(q);
         return PLATFORM_PRESETS.find((p) =>
-          p.name.toLowerCase() === q || p.aliases.some((a) => q.includes(a))
+          p.name.toLowerCase() === q || p.aliases.some(asWord)
         ) || null;
       }
 
@@ -16559,12 +17035,82 @@ var qrcode = function() {
       }
 
       let toastTimer = null;
-      function showToast(msg) {
-        const toast = $('toast');
-        toast.textContent = msg;
-        toast.hidden = false;
+      const toastEl = $('toast');
+      const supportsPopover = 'popover' in HTMLElement.prototype && typeof toastEl.showPopover === 'function';
+      if (supportsPopover) toastEl.setAttribute('popover', 'manual');
+
+      function hideToast() {
         clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => { toast.hidden = true; }, 2200);
+        if (supportsPopover && toastEl.matches(':popover-open')) {
+          try { toastEl.hidePopover(); } catch {}
+        }
+        toastEl.hidden = true;
+      }
+
+      function scheduleToastHide(ms = 2200) {
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          if (toastEl.matches(':hover, :focus-within')) return;
+          hideToast();
+        }, ms);
+      }
+
+      toastEl.addEventListener('pointerenter', () => clearTimeout(toastTimer));
+      toastEl.addEventListener('pointerleave', () => { if (!toastEl.hidden) scheduleToastHide(1200); });
+      toastEl.addEventListener('focusin', () => clearTimeout(toastTimer));
+      toastEl.addEventListener('focusout', () => { if (!toastEl.hidden) scheduleToastHide(1200); });
+
+      function showToast(msg) {
+        if (!msg || document.querySelector('dialog[open]')) return;
+        toastEl.textContent = msg;
+        toastEl.hidden = false;
+        if (supportsPopover && !toastEl.matches(':popover-open')) {
+          try { toastEl.showPopover(); } catch {}
+        }
+        scheduleToastHide();
+      }
+
+      function resetPasswordToggle(btn, input) {
+        if (!btn || !input) return;
+        input.type = 'password';
+        btn.setAttribute('aria-pressed', 'false');
+        btn.textContent = '显示';
+      }
+
+      function bindPasswordToggle(btn, input) {
+        if (!btn || !input) return;
+        btn.addEventListener('click', () => {
+          const show = input.type === 'password';
+          input.type = show ? 'text' : 'password';
+          btn.setAttribute('aria-pressed', String(show));
+          btn.textContent = show ? '隐藏' : '显示';
+        });
+      }
+
+      function setInlineAlert(el, msg, kind = 'success') {
+        if (!el) return;
+        if (!msg) {
+          el.hidden = true;
+          el.classList.remove('is-warn', 'is-success');
+          el.replaceChildren();
+          return;
+        }
+        el.classList.remove('is-warn', 'is-success');
+        if (kind === 'warn') el.classList.add('is-warn');
+        else if (kind === 'success') el.classList.add('is-success');
+        const iconSpec = kind === 'warn'
+          ? [
+              { tag: 'path', attrs: { d: 'M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z' } },
+              { tag: 'line', attrs: { x1: '12', y1: '9', x2: '12', y2: '13' } },
+              { tag: 'line', attrs: { x1: '12', y1: '17', x2: '12.01', y2: '17' } },
+            ]
+          : [
+              { tag: 'polyline', attrs: { points: '20 6 9 17 4 12' } },
+            ];
+        const span = document.createElement('span');
+        span.textContent = msg;
+        el.replaceChildren(svgIcon(iconSpec, 14, 1.8), span);
+        el.hidden = false;
       }
 
       function syncExecCopy(text) {
@@ -16575,7 +17121,11 @@ var qrcode = function() {
           ta.setAttribute('readonly', '');
           ta.style.position = 'fixed';
           ta.style.top = '0';
-          ta.style.left = '-9999px';
+          ta.style.left = '0';
+          ta.style.width = '1px';
+          ta.style.height = '1px';
+          ta.style.fontSize = '16px';
+          ta.style.pointerEvents = 'none';
           ta.style.opacity = '0';
           document.body.appendChild(ta);
           ta.focus({ preventScroll: true });
@@ -16846,7 +17396,7 @@ var qrcode = function() {
         if (!value || typeof value !== 'object' || Array.isArray(value)) throw new VaultDataError('账号记录必须是对象');
         if (typeof value.secret !== 'string' || !isValidBase32(value.secret)) throw new VaultDataError('密钥不是有效的 Base32 文本');
         for (const field of ['issuer', 'account', 'password', 'note', 'group', 'icon', 'color', 'id']) {
-          if (value[field] !== undefined && typeof value[field] !== 'string') throw new VaultDataError(`${field} 必须是文本`);
+          if (value[field] !== undefined && value[field] !== null && typeof value[field] !== 'string') throw new VaultDataError(`${field} 必须是文本`);
         }
         const algorithm = value.algorithm === undefined ? 'SHA1' : value.algorithm;
         const digits = value.digits === undefined ? 6 : value.digits;
@@ -16861,9 +17411,14 @@ var qrcode = function() {
           if (value[field] !== undefined && typeof value[field] !== 'boolean') throw new VaultDataError(`${field} 必须是布尔值`);
         }
         return { ...value, id: value.id || uid(), secret: normalizeBase32(value.secret), algorithm, digits, period,
-          issuer: value.issuer === undefined ? '未命名平台' : value.issuer,
-          account: value.account === undefined ? '' : value.account, note: value.note === undefined ? '' : value.note,
-          group: value.group === undefined ? '' : value.group, order: value.order === undefined ? index : value.order };
+          issuer: (typeof value.issuer === 'string' && value.issuer.trim()) ? value.issuer.trim() : '未命名平台',
+          account: value.account || '',
+          password: value.password || '',
+          note: value.note || '',
+          group: value.group || '',
+          icon: value.icon || 'auto',
+          color: value.color || 'auto',
+          order: value.order === undefined ? index : value.order };
       }
       function validateEnvelope(value) {
         if (!value || value.version !== 1 || value.encrypted !== true || value.kdf !== 'PBKDF2-SHA256') throw new VaultDataError('不支持的加密备份格式');
@@ -16909,6 +17464,7 @@ var qrcode = function() {
           $('storageTitle').textContent = descriptions[state][0];
           $('storageDesc').textContent = descriptions[state][1];
         }
+        $('recoverBackupBtn').hidden = state !== 'read-error';
         $('retrySaveBtn').hidden = !['write-error', 'unavailable'].includes(state);
         $('exportPendingBtn').hidden = state === 'read-error' || appState.locked;
         $('downloadRawBtn').hidden = appState.rawRecovery === null;
@@ -16977,7 +17533,7 @@ var qrcode = function() {
           return true;
         };
         const pending = appState.saveQueue.then(run);
-        appState.saveQueue = pending;
+        appState.saveQueue = pending.catch(() => false);
         return pending;
       }
       async function loadVaultOnBoot({ seedDemo = false } = {}) {
@@ -17029,13 +17585,14 @@ var qrcode = function() {
         appState.undoDeletion = null;
         $('undoBar').hidden = true;
       }
-      async function openLockScreen() {
+      async function openLockScreen({ reason = '' } = {}) {
         if (appState.locked || appState.locking) return;
         appState.locking = true;
         await appState.saveQueue;
         if (appState.dirty && appState.encryptedMode) {
           appState.lockedDraft = await encryptWithExistingKey({ version: 1, accounts: appState.accounts, demoDismissed: appState.demoDismissed, contentRevision: appState.contentRevision, lastExport: appState.lastExport }, appState.sessionKeyBytes, appState.sessionSalt, appState.sessionIterations);
         }
+        hideToast();
         clearUndo();
         for (const timer of appState.copiedStates.values()) clearTimeout(timer);
         appState.copiedStates.clear();
@@ -17051,7 +17608,18 @@ var qrcode = function() {
         appState.currentQrUri = '';
         appState.pendingImportData = null;
         appState.importPreview = null;
+        appState.editingId = null;
         $('accountForm').reset();
+        $('exportPwdInput').value = '';
+        $('exportPwdConfirm').value = ''; $('exportPwdConfirm').type = 'password';
+        $('importPwdInput').value = '';
+        $('masterPwdForm').reset();
+        resetPasswordToggle($('toggleAccPwdBtn'), $('accPassword'));
+        resetPasswordToggle($('toggleAccSecretBtn'), $('accSecret'));
+        resetPasswordToggle($('toggleExportPwdBtn'), $('exportPwdInput'));
+        resetPasswordToggle($('toggleImportPwdBtn'), $('importPwdInput'));
+        resetPasswordToggle($('toggleCurrentMasterPwdBtn'), $('currentMasterPwd'));
+        resetPasswordToggle($('toggleNewMasterPwdBtn'), $('newMasterPwd'));
         appState.locked = true;
         appState.accounts = [];
         appState.sessionKeyBytes = null;
@@ -17059,9 +17627,12 @@ var qrcode = function() {
         $('appRoot').setAttribute('inert', '');
         renderAll();
         $('unlockForm').reset();
+        resetPasswordToggle($('toggleUnlockPwdBtn'), $('unlockPwdInput'));
         $('unlockErr').classList.remove('is-visible');
         $('unlockPwdInput').setCustomValidity('');
         syncAria($('unlockPwdInput'));
+        $('reloadFromLockBtn').hidden = true;
+        setInlineAlert($('lockReasonNotice'), reason, 'warn');
         $('lockedDraftActions').hidden = !appState.lockedDraft;
         $('lockDialog').showModal();
         $('unlockPwdInput').focus();
@@ -17144,8 +17715,14 @@ var qrcode = function() {
         }
       }
 
+      let groupPillObserver = null;
       function renderGroupPills() {
         const container = $('groupPills');
+        if (groupPillObserver) {
+          groupPillObserver.disconnect();
+          groupPillObserver = null;
+        }
+        container.classList.remove('more-start', 'more-end');
         const focusKey = document.activeElement?.dataset.filterKey;
         const pinnedCount = appState.accounts.filter((a) => a.pinned).length;
 
@@ -17200,6 +17777,18 @@ var qrcode = function() {
         if (platformPills.length) nodes.push(divider(), ...platformPills.map(makePill));
         if (groupPills.length) nodes.push(divider(), ...groupPills.map(makePill));
         container.replaceChildren(...nodes);
+        if (!CSS.supports('animation-timeline', 'scroll()') && nodes.length > 1) {
+          const first = container.firstElementChild;
+          const last = container.lastElementChild;
+          groupPillObserver = new IntersectionObserver((entries) => {
+            for (const { target, intersectionRatio } of entries) {
+              if (target === first) container.classList.toggle('more-start', intersectionRatio < 1);
+              if (target === last) container.classList.toggle('more-end', intersectionRatio < 1);
+            }
+          }, { root: container, threshold: 1, rootMargin: '1px' });
+          groupPillObserver.observe(first);
+          groupPillObserver.observe(last);
+        }
         if (focusKey) container.querySelector(`[data-filter-key="${CSS.escape(focusKey)}"]`)?.focus({ preventScroll: true });
       }
 
@@ -17231,6 +17820,24 @@ var qrcode = function() {
         btn.appendChild(svgIcon(icon, 14.5));
         btn.addEventListener('click', onClick);
         return btn;
+      }
+
+      // 显示出来的登录密码：30 秒后，或页面切到后台时，自动重新隐藏
+      const pwdRevealSync = new Map();
+      const pwdRevealTimers = new Map();
+      function hideRevealedPassword(id) {
+        clearTimeout(pwdRevealTimers.get(id));
+        pwdRevealTimers.delete(id);
+        if (!appState.revealedPasswords.delete(id)) return;
+        pwdRevealSync.get(id)?.();
+      }
+      function scheduleRevealHide(id) {
+        clearTimeout(pwdRevealTimers.get(id));
+        pwdRevealTimers.delete(id);
+        if (appState.revealedPasswords.has(id)) pwdRevealTimers.set(id, setTimeout(() => hideRevealedPassword(id), 30_000));
+      }
+      function hideAllRevealedPasswords() {
+        [...appState.revealedPasswords].forEach(hideRevealedPassword);
       }
 
       function buildAccountCard(acc) {
@@ -17270,6 +17877,18 @@ var qrcode = function() {
           demoTag.className = 'demo-tag';
           demoTag.textContent = '示例';
           issuerRow.appendChild(demoTag);
+        }
+        // 列表视图不显示卡片底栏，分组和非默认参数改放在平台名后面（卡片视图里隐藏）
+        const listMetaParts = [];
+        if (acc.group) listMetaParts.push(`# ${acc.group}`);
+        if (acc.period && acc.period !== 30) listMetaParts.push(`${acc.period}s`);
+        if (acc.digits && acc.digits !== 6) listMetaParts.push(`${acc.digits}位`);
+        if (acc.algorithm && acc.algorithm !== 'SHA1') listMetaParts.push(acc.algorithm);
+        if (listMetaParts.length) {
+          const listMeta = document.createElement('span');
+          listMeta.className = 'list-meta';
+          listMeta.textContent = listMetaParts.join(' · ');
+          issuerRow.appendChild(listMeta);
         }
         idText.appendChild(issuerRow);
 
@@ -17372,11 +17991,13 @@ var qrcode = function() {
             pwdToggleBtn.replaceChildren(svgIcon(revealed ? eyeHideSpec() : eyeShowSpec(), 13, 1.75));
           };
           syncPwdToggleBtn();
+          pwdRevealSync.set(acc.id, () => { syncPwdMask(); syncPwdToggleBtn(); });
           pwdToggleBtn.addEventListener('click', () => {
             if (appState.revealedPasswords.has(acc.id)) appState.revealedPasswords.delete(acc.id);
             else appState.revealedPasswords.add(acc.id);
             syncPwdMask();
             syncPwdToggleBtn();
+            scheduleRevealHide(acc.id);
           });
 
           const pwdCopyBtn = document.createElement('button');
@@ -17472,8 +18093,9 @@ var qrcode = function() {
 
         footer.appendChild(tags);
 
-        if (noteEl) cardMain.append(identityBlock, noteEl, footer);
-        else cardMain.append(identityBlock, footer);
+        cardMain.append(identityBlock);
+        if (noteEl) cardMain.append(noteEl);
+        if (tags.childElementCount) cardMain.append(footer);
 
         // Right Column: Actions + Hero Code + Countdown Ring + Next Code Preview
         const zone = document.createElement('div');
@@ -17590,21 +18212,31 @@ var qrcode = function() {
       }
       function continueImport() {
         const text = $('smartImportInput').value.trim();
-        if (!text) { setErrorBox($('qrParseMsg'), '请选择二维码图片，或粘贴密钥、认证链接。'); return; }
-        applyParsedTextToForm(text);
-        if (/^otpauth-migration:\/\//i.test(text)) return;
-        if (isValidBase32(text)) { showAccountStep(true); $('accIssuer').focus(); }
-        else if (!/^otpauth:\/\//i.test(text)) setErrorBox($('qrParseMsg'), '未找到有效的密钥或认证链接。');
+        if (!text) { setErrorBox($('qrParseMsg'), '请选择二维码图片，或粘贴「账号---密码---密钥」、密钥或认证链接。'); return; }
+        const kind = applyParsedTextToForm(text);
+        if (kind === 'migration' || kind === 'otpauth' || kind === 'delimited' || kind === 'error') return;
+        if (kind === 'base32') { showAccountStep(true); $('accIssuer').focus(); }
+        else setErrorBox($('qrParseMsg'), '未识别到有效的密钥、认证链接或「账号---密码---密钥」格式。');
       }
       function mutable() {
         if (['conflict', 'read-error'].includes(appState.storageState)) {
-          showToast('请先处理页面顶部的数据提示');
+          // 对话框开着时底部提示不会显示，改在对话框里提醒
+          const msg = '数据有异常，请先关闭窗口，处理页面顶部的提示';
+          if ($('settingsDialog').open) setInlineAlert($('settingsStatus'), msg, 'warn');
+          else if ($('migrationDialog').open) setErrorBox($('migrationErrorBox'), msg);
+          else showToast('请先处理页面顶部的数据提示');
           return false;
         }
         return !appState.locked;
       }
       async function handleCopyOtp(acc, isNext = false) {
-        const rawCode = generateTOTP({ ...acc, timestampMs: Date.now(), stepOffset: isNext ? 1 : 0 });
+        let rawCode;
+        try {
+          rawCode = generateTOTP({ ...acc, period: Math.max(5, Number(acc.period) || 30), timestampMs: Date.now(), stepOffset: isNext ? 1 : 0 });
+        } catch {
+          showToast('密钥格式异常，无法生成验证码');
+          return;
+        }
         if (!await copyText(rawCode)) {
           showManualCopy(rawCode, `${acc.issuer || '账号'}${isNext ? ' 下一周期' : ' 当前'}验证码。选中后复制；当前码会按周期更新。`);
           return;
@@ -17626,7 +18258,8 @@ var qrcode = function() {
         if (!ok || !mutable()) return;
         const index = appState.accounts.findIndex(a => a.id === acc.id);
         appState.accounts = appState.accounts.filter(a => a.id !== acc.id);
-        if (!await saveVault()) { renderAll(); return; }
+        const saved = await saveVault();
+        if (!saved) showToast('账号已在页面移除，但未能保存到本地存储，请查看顶部提示');
         clearUndo();
         const deletion = { acc, index, until: Date.now() + 10_000, timer: null };
         appState.undoDeletion = deletion;
@@ -17648,9 +18281,18 @@ var qrcode = function() {
         if (!await saveVault()) { renderAll(); return; }
         renderAll(); showToast('已恢复账号');
       }
+      function setExportFeedback(msg, isSuccess = false) {
+        const el = $('exportFeedback');
+        setErrorBox(el, msg);
+        el.classList.toggle('is-success', Boolean(msg && isSuccess));
+      }
       function openBackup() {
         $('exportPwdInput').value = '';
+        $('exportPwdConfirm').value = ''; $('exportPwdConfirm').type = 'password';
+        resetPasswordToggle($('toggleExportPwdBtn'), $('exportPwdInput'));
+        setExportFeedback('');
         resetImportFile(); $('importPwdInput').value = '';
+        resetPasswordToggle($('toggleImportPwdBtn'), $('importPwdInput'));
         $('importDecryptField').hidden = true;
         setErrorBox($('importErrorBox'), '');
         appState.pendingImportData = null; invalidateImport();
@@ -17727,9 +18369,11 @@ var qrcode = function() {
         const listEl = $('accountsList');
         const emptyEl = $('emptyState');
         appState.cardNodes.clear();
+        pwdRevealSync.clear();
 
         if (appState.locked || appState.storageState === 'read-error') {
           $('demoBanner').hidden = true;
+          document.querySelector('.controls-bar').hidden = true;
           listEl.replaceChildren();
           emptyEl.hidden = true;
           return;
@@ -17737,6 +18381,17 @@ var qrcode = function() {
 
         listEl.dataset.view = appState.viewMode;
         const visible = getFilteredSortedAccounts();
+        // 搜索时在搜索框右侧显示匹配个数；桌面上提示回车可复制第一个
+        const searching = Boolean(appState.searchQuery.trim()) && visible.length > 0;
+        $('searchCount').hidden = !searching;
+        $('searchInput').classList.toggle('has-count', searching);
+        if (searching) {
+          $('searchCount').replaceChildren(`${visible.length} 个`);
+          const hint = document.createElement('span');
+          hint.className = 'search-count-hint';
+          hint.textContent = ' · 回车复制第一个';
+          $('searchCount').appendChild(hint);
+        }
 
         const hasDemo = appState.accounts.some((a) => a.isDemo);
         $('demoBanner').hidden = !hasDemo;
@@ -17749,14 +18404,16 @@ var qrcode = function() {
           emptyEl.hidden = false;
           if (appState.accounts.length > 0) {
             $('emptyTitle').textContent = '没有匹配的账号';
-            $('emptyDesc').textContent = '尝试更换搜索关键词或切换到“全部”分组。';
+            $('emptyDesc').textContent = '换个关键词，或清除搜索和筛选后查看全部账号。';
             $('emptyAddBtn').hidden = true;
             $('emptyRestoreBtn').hidden = true; $('emptyDemoBtn').hidden = true;
+            $('emptyResetBtn').hidden = false;
           } else {
             $('emptyTitle').textContent = '让你的验证码，有个固定的位置';
             $('emptyDesc').textContent = '添加第一个账号，或从加密备份恢复。数据保存在当前浏览器，支持离线取码。';
             $('emptyAddBtn').hidden = false;
             $('emptyRestoreBtn').hidden = false; $('emptyDemoBtn').hidden = false;
+            $('emptyResetBtn').hidden = true;
           }
           return;
         }
@@ -17784,28 +18441,44 @@ var qrcode = function() {
       }
 
       // ================= LIVE OTP TICKER =================
+      let lastPreviewSec = -1;
       function tickOtpUpdates(force = false) {
         if (appState.locked || document.visibilityState !== 'visible') return;
         const now = Date.now();
+        const epochSec = Math.floor(now / 1000);
         for (const entry of appState.cardNodes.values()) {
           const { acc, zoneEl, codeBtn, digitsEl, nextBtn, nextDigits, ringProg, ringSec, circumference } = entry;
-          const step = Math.floor(now / (acc.period * 1000));
-          const remaining = Math.ceil((acc.period * 1000 - now % (acc.period * 1000)) / 1000);
+          const period = Math.max(5, Number(acc.period) || 30);
+          const step = Math.floor(epochSec / period);
+          const remMs = period * 1000 - (now % (period * 1000));
+          const remSec = Math.max(1, Math.ceil(remMs / 1000));
           if (force || entry.lastStep !== step) {
             entry.lastStep = step;
-            const code = generateTOTP({ ...acc, timestampMs: now });
-            codeBtn.dataset.rawCode = code;
-            digitsEl.textContent = formatOtpCode(code);
-            nextDigits.textContent = formatOtpCode(generateTOTP({ ...acc, timestampMs: now, stepOffset: 1 }));
+            try {
+              const code = generateTOTP({ ...acc, period, timestampMs: now, stepOffset: 0 });
+              const nxt = generateTOTP({ ...acc, period, timestampMs: now, stepOffset: 1 });
+              codeBtn.dataset.rawCode = code;
+              digitsEl.textContent = formatOtpCode(code);
+              nextBtn.dataset.rawCode = nxt;
+              nextDigits.textContent = formatOtpCode(nxt);
+            } catch {
+              codeBtn.dataset.rawCode = '';
+              digitsEl.textContent = '密钥异常';
+              nextDigits.textContent = '---';
+            }
           }
-          ringSec.textContent = `${remaining}s`;
-          ringProg.setAttribute('stroke-dashoffset', String(circumference * (1 - remaining / acc.period)));
-          zoneEl.classList.toggle('is-expiring', remaining <= 5);
-          nextBtn.classList.toggle('is-expiring', remaining <= 5);
+          const ratio = Math.max(0, Math.min(1, remMs / (period * 1000)));
+          ringSec.textContent = `${remSec}s`;
+          ringProg.setAttribute('stroke-dashoffset', String(circumference * (1 - ratio)));
+          zoneEl.classList.toggle('is-expiring', remSec <= 5);
+          nextBtn.classList.toggle('is-expiring', remSec <= 5);
         }
-        if ($('accountDialog').open && appState.importStage) updateAccountLivePreview();
+        if ((force || lastPreviewSec !== epochSec) && $('accountDialog').open && appState.importStage) {
+          lastPreviewSec = epochSec;
+          updateAccountLivePreview();
+        }
       }
-      setInterval(() => tickOtpUpdates(), 1000);
+      setInterval(() => tickOtpUpdates(false), 120);
 
       // Auto-lock activity monitor & visibility resync
       const bumpActivity = () => { appState.lastActivityAt = Date.now(); };
@@ -17814,17 +18487,17 @@ var qrcode = function() {
       setInterval(() => {
         if (appState.encryptedMode && !appState.locked && appState.autoLockMin > 0) {
           if (Date.now() - appState.lastActivityAt >= appState.autoLockMin * 60_000) {
-            openLockScreen();
-            showToast('超时无操作，保险库已自动锁定');
+            openLockScreen({ reason: '超时无操作，保险库已自动锁定' });
           }
         }
       }, 15_000);
 
       document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') hideAllRevealedPasswords();
         if (document.visibilityState === 'visible') {
           if (appState.encryptedMode && !appState.locked && appState.autoLockMin > 0) {
             if (Date.now() - appState.lastActivityAt >= appState.autoLockMin * 60_000) {
-              openLockScreen();
+              openLockScreen({ reason: '超时无操作，保险库已自动锁定' });
               return;
             }
           }
@@ -17922,6 +18595,8 @@ var qrcode = function() {
           const code = generateTOTP({ secret, algorithm: algo, digits, period });
           $('livePreviewCode').textContent = formatOtpCode(code);
           $('livePreviewMeta').textContent = `${period}s · ${digits}位 · ${algo}`;
+          const left = period - (Math.floor(Date.now() / 1000) % period);
+          $('livePreviewLabel').textContent = `实时校验 · 当前验证码 · ${left} 秒后更新`;
           box.hidden = false;
         } catch {
           box.hidden = true;
@@ -17934,7 +18609,8 @@ var qrcode = function() {
         const form = $('accountForm');
         form.reset();
         setErrorBox($('accountSaveError'), '');
-        $('supplementDetails').open = Boolean(acc);
+        setInlineAlert($('accountInlineStatus'), '');
+        $('supplementDetails').open = Boolean(focusNote || acc?.note || acc?.group || acc?.pinned);
         form.querySelector('.adv-details:not(#supplementDetails)').open = false;
         $('qrParseMsg').classList.remove('is-visible');
         $('qrParseMsg').textContent = '';
@@ -17965,12 +18641,8 @@ var qrcode = function() {
         }
 
         // Reset password & secret visibility to masked
-        $('accPassword').type = 'password';
-        $('toggleAccPwdBtn').setAttribute('aria-pressed', 'false');
-        $('toggleAccPwdBtn').textContent = '显示';
-        $('accSecret').type = 'password';
-        $('toggleAccSecretBtn').setAttribute('aria-pressed', 'false');
-        $('toggleAccSecretBtn').textContent = '显示';
+        resetPasswordToggle($('toggleAccPwdBtn'), $('accPassword'));
+        resetPasswordToggle($('toggleAccSecretBtn'), $('accSecret'));
 
         // Clear validation visuals
         [...form.elements].forEach((el) => {
@@ -18013,17 +18685,18 @@ var qrcode = function() {
         const text = String(raw || '').trim();
         const msgBox = $('qrParseMsg');
         setErrorBox(msgBox, '');
-        if (!text) return;
+        if (!text) return null;
 
         if (/^otpauth-migration:\/\//i.test(text)) {
           try {
             const items = parseGoogleMigrationUri(text);
             if ($('accountDialog').open) $('accountDialog').close('cancel');
             openMigrationDialog(items);
+            return 'migration';
           } catch (err) {
             setErrorBox(msgBox, err.message);
+            return 'error';
           }
-          return;
         }
 
         if (/^otpauth:\/\//i.test(text)) {
@@ -18032,6 +18705,7 @@ var qrcode = function() {
             if (!$('accountDialog').open) openAccountDialog(null);
             $('accIssuer').value = parsed.issuer || '未命名平台';
             $('accName').value = parsed.account || '';
+            if (!appState.editingId) $('accPassword').value = '';
             $('accSecret').value = parsed.secret;
             $('accAlgo').value = parsed.algorithm;
             $('accDigits').value = String(parsed.digits);
@@ -18042,23 +18716,71 @@ var qrcode = function() {
             renderPlatformQuickChips();
             updateIssuerIconPreview();
             updateAccountLivePreview();
-            showToast('已解析，请确认平台和账号后保存');
+            setInlineAlert($('accountInlineStatus'), '已解析链接，请确认平台和账号后保存', 'success');
             showAccountStep(true);
             $('accIssuer').focus();
+            return 'otpauth';
           } catch (err) {
             setErrorBox(msgBox, err.message);
+            return 'error';
           }
-          return;
         }
 
-        if (isValidBase32(text)) {
+        const delimited = parseDelimitedAccountText(text);
+        if (delimited) {
           if (!$('accountDialog').open) openAccountDialog(null);
-          $('accSecret').value = normalizeBase32(text);
+          $('accIssuer').value = delimited.issuer || '';
+          $('accName').value = delimited.account || '';
+          $('accPassword').value = delimited.password || '';
+          $('accSecret').value = delimited.secret;
+          $('accAlgo').value = delimited.algorithm || 'SHA1';
+          $('accDigits').value = String(delimited.digits || 6);
+          $('accPeriod').value = String(delimited.period || 30);
+          if (delimited.note) {
+            $('accNote').value = delimited.note;
+            $('supplementDetails').open = true;
+          } else if (!appState.editingId) {
+            $('accNote').value = '';
+          }
+          appState.selectedIcon = 'auto';
+          $('accSecret').setCustomValidity('');
+          syncAria($('accSecret'));
+          renderPlatformQuickChips();
+          updateIssuerIconPreview();
+          updateAccountLivePreview();
+          const importedFields = [];
+          if (delimited.issuer) importedFields.push('平台');
+          if (delimited.account) importedFields.push('账号');
+          if (delimited.password) importedFields.push('密码');
+          importedFields.push('密钥');
+          if (delimited.note) importedFields.push('备注');
+          const lastField = importedFields.pop();
+          const summaryText = importedFields.length ? `${importedFields.join('、')}与${lastField}` : lastField;
+          const tailHint = delimited.issuer ? '请确认信息后保存' : '请选择或填写平台名称后保存';
+          setInlineAlert($('accountInlineStatus'), `已一键识别${summaryText}，${tailHint}`, 'success');
+          showAccountStep(true);
+          $('accIssuer').focus();
+          return 'delimited';
+        }
+
+        const singleSecret = extractSecretFromToken(text, { minLen: 2, allowOtpAuth: false });
+        const wsTokens = text.split(/\s+/).filter(Boolean);
+        const looksLikeProse =
+          wsTokens.length >= 2 &&
+          !/[2-7]/.test(text) &&
+          text === text.toLowerCase() &&
+          new Set(wsTokens.map((t) => t.length)).size > 1;
+        if (!looksLikeProse && (singleSecret || isValidBase32(text))) {
+          if (!$('accountDialog').open) openAccountDialog(null);
+          $('accSecret').value = singleSecret ? singleSecret.secret : normalizeBase32(text);
           $('accSecret').setCustomValidity('');
           syncAria($('accSecret'));
           updateAccountLivePreview();
-          if (!quietBase32) showToast('已规范化 Base32 密钥');
+          if (!quietBase32) setInlineAlert($('accountInlineStatus'), '已规范化 Base32 密钥', 'success');
+          return 'base32';
         }
+
+        return null;
       }
 
       async function handleQrImageBlob(blob) {
@@ -18069,9 +18791,12 @@ var qrcode = function() {
             openAccountDialog(null);
           }
           $('smartImportInput').value = text;
-          applyParsedTextToForm(text);
-          if (!/^otpauth/i.test(text) && !isValidBase32(text)) {
-            setErrorBox(msgBox, `识别到二维码内容，但不是有效的 2FA 密钥或 otpauth 链接：${text.slice(0, 80)}`);
+          const kind = applyParsedTextToForm(text);
+          if (kind === 'base32') {
+            showAccountStep(true);
+            $('accIssuer').focus();
+          } else if (!kind) {
+            setErrorBox(msgBox, `识别到二维码内容，但不是有效的 2FA 密钥或认证内容：${text.slice(0, 80)}`);
           }
         } catch (err) {
           if (!$('accountDialog').open) openAccountDialog(null);
@@ -18085,6 +18810,7 @@ var qrcode = function() {
         const supportedCount = items.filter((i) => i.supported).length;
         $('migrationSummary').textContent = `共解析到 ${items.length} 个账号，其中 ${supportedCount} 个为可导入的 TOTP 账号。`;
         $('migrationDefaultGroup').value = '';
+        setErrorBox($('migrationErrorBox'), '');
 
         const listEl = $('migrationList');
         const rows = items.map((item, idx) => {
@@ -18130,9 +18856,13 @@ var qrcode = function() {
       }
 
       // ================= QR EXPORT DIALOG =================
+      let qrCopyTimer = null;
       function openQrDialog(acc) {
         appState.currentQrUri = buildOtpAuthUri(acc);
         appState.qrUriRevealed = false;
+        clearTimeout(qrCopyTimer);
+        $('copyQrUriBtn').textContent = '复制链接';
+        $('qrCopyStatus').textContent = '';
         const info = $('qrTargetInfo');
         const h = document.createElement('strong');
         h.textContent = acc.issuer || '未命名平台';
@@ -18149,8 +18879,29 @@ var qrcode = function() {
       }
 
       // ================= EVENT WIRING =================
+      // 加密、解密进行中时挡住重复点击（连点会重复计算，导出会下载两份）
+      const busyGuard = (getBtn, handler) => async (event) => {
+        const btn = getBtn();
+        if (btn?.dataset.busy) { event?.preventDefault?.(); return; }
+        if (btn) { btn.dataset.busy = '1'; btn.setAttribute('aria-busy', 'true'); }
+        try { await handler(event); } finally {
+          if (btn) { delete btn.dataset.busy; btn.removeAttribute('aria-busy'); }
+        }
+      };
       // Search & Controls
-      $('searchForm').addEventListener('submit', (e) => e.preventDefault());
+      // 搜索框里按回车：复制第一个匹配账号的当前验证码
+      $('searchForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!appState.searchQuery.trim() || appState.locked) return;
+        const first = getFilteredSortedAccounts()[0];
+        if (first) handleCopyOtp(first);
+      });
+      $('emptyResetBtn').addEventListener('click', () => {
+        appState.searchQuery = '';
+        $('searchInput').value = '';
+        appState.activeFilter = 'all';
+        renderAll();
+      });
       $('searchInput').addEventListener('input', (e) => {
         appState.searchQuery = e.target.value;
         $('searchClearBtn').hidden = !appState.searchQuery;
@@ -18317,8 +19068,9 @@ var qrcode = function() {
         if (sortDrag || !event.isPrimary || event.button !== 0) return;
         const card = event.target.closest('.account-card');
         if (!card || event.target.closest('input, textarea, select, [contenteditable="true"]')) return;
-        const list = $('accountsList');
         const touch = event.pointerType !== 'mouse';
+        if (!touch && event.target.closest('.note-text, .card-actions button, .pwd-actions button')) return;
+        const list = $('accountsList');
         if (!list.hasAttribute('data-sortable')) {
           // 按名称/最近更新排序时长按，提示怎样才能拖动
           if (touch && appState.sortBy !== 'custom' && list.children.length > 1) {
@@ -18385,6 +19137,11 @@ var qrcode = function() {
 
       // Global shortcuts (IME safe)
       document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sortDrag?.active) {
+          e.preventDefault();
+          cancelDragSort();
+          return;
+        }
         if (e.isComposing || appState.locked) return;
         const activeTag = document.activeElement?.tagName;
         const inField = activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT';
@@ -18413,7 +19170,14 @@ var qrcode = function() {
         const activeTag = document.activeElement?.tagName;
         if (activeTag !== 'INPUT' && activeTag !== 'TEXTAREA' && !document.querySelector('dialog[open]')) {
           const text = e.clipboardData?.getData('text') || '';
-          if (/^otpauth(-migration)?:\/\//i.test(text.trim())) {
+          const many = countAccountLines(text);
+          if (many) {
+            e.preventDefault();
+            openAccountDialog(null);
+            rejectMultiAccount(many);
+            return;
+          }
+          if (/^otpauth(-migration)?:\/\//i.test(text.trim()) || parseDelimitedAccountText(text)) {
             e.preventDefault();
             applyParsedTextToForm(text);
           }
@@ -18435,7 +19199,53 @@ var qrcode = function() {
       });
 
       // Account Form Events
+      // 粘贴或拖入时：内容像完整的密钥、认证链接或“账号---密码---密钥”，直接进入下一步。
+      // 手动逐字输入不自动解析（输到一半跳走会存下残缺的密钥），输完按回车或点“确认导入内容”。
+      function looksConfidentImport(text) {
+        if (/^otpauth(-migration)?:\/\//i.test(text)) return true;
+        if (parseDelimitedAccountText(text)) return true;
+        // 纯字母的短文字（比如一个英文单词）和密钥分不出来：只有像真密钥的才自动跳，
+        // 即 16 位以上，或 10 位以上且含数字 2–7。其他内容停在第一步，按回车仍可继续。
+        const clean = normalizeBase32(text);
+        return isValidBase32(text) && (clean.length >= 16 || (clean.length >= 10 && /[2-7]/.test(clean)));
+      }
+      // 一次粘贴了好几个账号（每行一个）时返回个数；单个账号分行写（账号、密码、密钥各一行）返回 0
+      function countAccountLines(text) {
+        const lines = String(text || '').split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+        if (lines.length < 2) return 0;
+        const hits = lines.filter((l) => /^otpauth:\/\//i.test(l) || parseDelimitedAccountText(l)).length;
+        return hits >= 2 ? hits : 0;
+      }
+      function rejectMultiAccount(count) {
+        setErrorBox($('qrParseMsg'), `识别到 ${count} 个账号。一次只能添加一个，请每次只复制一行。`);
+      }
+      function handleImportTransfer(event, text) {
+        if (!$('accountDialog').open || appState.importStage) return;
+        const many = countAccountLines(text);
+        if (many) { event.preventDefault(); rejectMultiAccount(many); return; }
+        if (/[\r\n]/.test(text) && parseDelimitedAccountText(text)) {
+          // 账号、密码、密钥分行写的单个账号：输入框只有一行，先合成一行显示，再识别
+          event.preventDefault();
+          $('smartImportInput').value = text.split(/\r?\n/).map((part) => part.trim()).filter(Boolean).join(' --- ');
+          applyParsedTextToForm(text);
+          return;
+        }
+        // 文字要等浏览器插入输入框之后才读得到
+        setTimeout(() => {
+          if (!$('accountDialog').open || appState.importStage) return;
+          if (looksConfidentImport($('smartImportInput').value.trim())) continueImport();
+        }, 0);
+      }
       $('smartImportInput').addEventListener('input', () => setErrorBox($('qrParseMsg'), ''));
+      $('smartImportInput').addEventListener('keydown', (e) => {
+        if (e.isComposing || e.keyCode === 229) return;
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          continueImport();
+        }
+      });
+      $('smartImportInput').addEventListener('paste', (e) => handleImportTransfer(e, e.clipboardData?.getData('text') || ''));
+      $('smartImportInput').addEventListener('drop', (e) => handleImportTransfer(e, e.dataTransfer?.getData('text') || ''));
       $('accIssuer').addEventListener('input', () => {
         const typed = $('accIssuer').value.trim();
         if (appState.selectedIcon !== 'auto') {
@@ -18469,28 +19279,20 @@ var qrcode = function() {
         syncAria($('accSecret'));
       });
 
-      $('toggleAccPwdBtn').addEventListener('click', () => {
-        const inp = $('accPassword');
-        const show = inp.type === 'password';
-        inp.type = show ? 'text' : 'password';
-        $('toggleAccPwdBtn').setAttribute('aria-pressed', String(show));
-        $('toggleAccPwdBtn').textContent = show ? '隐藏' : '显示';
-      });
-
-      $('toggleAccSecretBtn').addEventListener('click', () => {
-        const inp = $('accSecret');
-        const show = inp.type === 'password';
-        inp.type = show ? 'text' : 'password';
-        $('toggleAccSecretBtn').setAttribute('aria-pressed', String(show));
-        $('toggleAccSecretBtn').textContent = show ? '隐藏' : '显示';
-      });
+      bindPasswordToggle($('toggleAccPwdBtn'), $('accPassword'));
+      bindPasswordToggle($('toggleAccSecretBtn'), $('accSecret'));
+      bindPasswordToggle($('toggleExportPwdBtn'), $('exportPwdInput'));
+      bindPasswordToggle($('toggleImportPwdBtn'), $('importPwdInput'));
+      bindPasswordToggle($('toggleCurrentMasterPwdBtn'), $('currentMasterPwd'));
+      bindPasswordToggle($('toggleNewMasterPwdBtn'), $('newMasterPwd'));
+      bindPasswordToggle($('toggleUnlockPwdBtn'), $('unlockPwdInput'));
 
       // QR Dropzone
       const dropzone = $('qrDropzone');
       const fileInput = $('qrFileInput');
       dropzone.addEventListener('click', () => fileInput.click());
       dropzone.addEventListener('keydown', (e) => {
-        if (e.isComposing) return;
+        if (e.isComposing || e.keyCode === 229) return;
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
       });
       fileInput.addEventListener('change', () => {
@@ -18584,29 +19386,39 @@ var qrcode = function() {
         const saved = await saveVault();
         if (!saved) {
           appState.editingId = record.id;
+          showAccountStep(true);
           renderAll();
           setErrorBox($('accountSaveError'), '内容仍在页面中，尚未保存。可再次提交；也可关闭窗口后重试或导出。');
           return;
         }
         $('accountDialog').close('save');
         renderAll();
-        showToast(firstRealAccount ? '已保存第一个账号，建议现在导出加密备份' : '账号已保存');
+        let savedMsg = firstRealAccount ? '已保存第一个账号，建议现在导出加密备份' : '账号已保存';
+        if (record.password && !appState.encryptedMode && !readPreference('PWD_HINT')) {
+          savedMsg = '已保存。登录密码目前没有加密，建议在“设置”里开启主密码锁';
+          writePreference('PWD_HINT', '1');
+        }
+        showToast(savedMsg);
       });
 
       // Batch Migration Form Submit
       $('migSelectAllBtn').addEventListener('click', () => {
+        setErrorBox($('migrationErrorBox'), '');
         $('migrationList').querySelectorAll('input[type="checkbox"]:not(:disabled)').forEach((c) => { c.checked = true; });
       });
       $('migDeselectAllBtn').addEventListener('click', () => {
+        setErrorBox($('migrationErrorBox'), '');
         $('migrationList').querySelectorAll('input[type="checkbox"]').forEach((c) => { c.checked = false; });
       });
+      $('migrationList').addEventListener('change', () => setErrorBox($('migrationErrorBox'), ''));
       $('migrationForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         if (!mutable()) return;
+        setErrorBox($('migrationErrorBox'), '');
         const defaultGrp = $('migrationDefaultGroup').value.trim();
         const checkedIdxs = [...$('migrationList').querySelectorAll('input[type="checkbox"]:checked')].map((c) => Number(c.dataset.migIdx));
         if (!checkedIdxs.length) {
-          showToast('请至少选择一个账号');
+          setErrorBox($('migrationErrorBox'), '请至少选择一个账号');
           return;
         }
         const existingSecrets = new Set(appState.accounts.map(tokenIdentity));
@@ -18639,7 +19451,12 @@ var qrcode = function() {
           added++;
         }
         appState.accounts = [...appState.accounts, ...additions];
-        if (!await saveVault()) { renderAll(); return; }
+        if (!await saveVault()) {
+          $('migrationDialog').close();
+          renderAll();
+          showToast('导入内容已暂留页面，但未能写入本地存储，请查看顶部提示');
+          return;
+        }
         $('migrationDialog').close('import');
         renderAll();
         showToast(skipped ? `已导入 ${added} 个账号（跳过 ${skipped} 个重复密钥）` : `已成功导入 ${added} 个账号`);
@@ -18653,7 +19470,18 @@ var qrcode = function() {
         $('qrUriText').textContent = appState.qrUriRevealed ? appState.currentQrUri : 'otpauth://totp/...（默认隐藏明文密钥）';
       });
       $('copyQrUriBtn').addEventListener('click', async () => {
-        if (await copyText(appState.currentQrUri)) showToast('已复制 otpauth:// 链接');
+        const ok = await copyText(appState.currentQrUri);
+        if (!ok) {
+          showManualCopy(appState.currentQrUri, '浏览器未允许直接复制，请选中链接后复制。');
+          return;
+        }
+        $('copyQrUriBtn').textContent = '✓ 已复制';
+        $('qrCopyStatus').textContent = '已复制 otpauth:// 链接';
+        clearTimeout(qrCopyTimer);
+        qrCopyTimer = setTimeout(() => {
+          $('copyQrUriBtn').textContent = '复制链接';
+          $('qrCopyStatus').textContent = '';
+        }, 1800);
       });
 
       // Backup & Restore
@@ -18669,23 +19497,39 @@ var qrcode = function() {
       }
 
       $('openBackupBtn').addEventListener('click', openBackup);
-      $('exportEncryptedBtn').addEventListener('click', async () => {
+      $('exportPwdInput').addEventListener('input', () => setExportFeedback(''));
+      $('exportPwdInput').addEventListener('keydown', (e) => {
+        if (e.isComposing || e.keyCode === 229) return;
+        if (e.key === 'Enter') { e.preventDefault(); $('exportPwdConfirm').focus(); }
+      });
+      $('exportPwdConfirm').addEventListener('input', () => setExportFeedback(''));
+      $('exportPwdConfirm').addEventListener('keydown', (e) => {
+        if (e.isComposing || e.keyCode === 229) return;
+        if (e.key === 'Enter') { e.preventDefault(); $('exportEncryptedBtn').click(); }
+      });
+      // “显示”按钮同时作用于两个密码框
+      $('toggleExportPwdBtn').addEventListener('click', () => { $('exportPwdConfirm').type = $('exportPwdInput').type; });
+      $('exportEncryptedBtn').addEventListener('click', busyGuard(() => $('exportEncryptedBtn'), async () => {
+        setExportFeedback('');
         const password = $('exportPwdInput').value;
-        if (password.length < 8) { showToast('请设置至少八位的备份密码'); $('exportPwdInput').focus(); return; }
+        if (password.length < 8) { setExportFeedback('请设置至少八位的备份密码'); $('exportPwdInput').focus(); return; }
+        if (password !== $('exportPwdConfirm').value) { setExportFeedback('两次输入的备份密码不一致'); $('exportPwdConfirm').focus(); return; }
         const at = new Date().toISOString();
         const payload = { version: 1, exportedAt: at, accounts: structuredClone(appState.accounts), demoDismissed: appState.demoDismissed };
         const { envelope } = await encryptEnvelope(payload, password);
         downloadJson({ app: '2fa-vault', ...envelope }, `2fa-vault-backup-${at.slice(0, 10)}.2favault.json`);
         if (appState.storageState === 'ready' && !appState.dirty) await saveVault({ exportAt: at });
         $('backupSummary').textContent = backupDescription();
-        showToast('已生成加密备份文件，请保管好文件和密码');
-      });
+        setExportFeedback('已生成加密备份文件，请保管好文件和密码', true);
+      }));
       $('exportPlainBtn').addEventListener('click', async () => {
+        setExportFeedback('');
         if (!await showConfirm({ title: '导出明文备份', message: '明文文件包含完整验证码密钥及已保存的登录密码。获得文件的人可以使用这些内容。确认导出？', okText: '导出明文', isDanger: true })) return;
         const at = new Date().toISOString();
         downloadJson({ app: '2fa-vault', version: 1, encrypted: false, exportedAt: at, accounts: structuredClone(appState.accounts), demoDismissed: appState.demoDismissed }, `2fa-vault-plain-${at.slice(0, 10)}.json`);
         if (appState.storageState === 'ready' && !appState.dirty) await saveVault({ exportAt: at });
-        showToast('已生成明文备份文件');
+        $('backupSummary').textContent = backupDescription();
+        setExportFeedback('已生成明文备份文件', true);
       });
       function resetImportFile() {
         $('importFileInput').value = '';
@@ -18693,7 +19537,7 @@ var qrcode = function() {
       }
       function syncImportFileName() {
         const file = $('importFileInput').files[0];
-        $('importFileName').textContent = file ? file.name : '未选择文件，也可以把文件拖到这里';
+        $('importFileName').textContent = file ? file.name : '选择或拖拽备份文件';
         $('importFilePicker').classList.toggle('has-file', Boolean(file));
       }
       const filePicker = $('importFilePicker');
@@ -18720,13 +19564,27 @@ var qrcode = function() {
           $('importDecryptField').hidden = data.encrypted !== true;
           $('previewImportBtn').disabled = false;
           if (data.encrypted) $('importPwdInput').focus();
+          else await previewImport();
         } catch (error) {
           if (!(error instanceof SyntaxError || error instanceof VaultDataError || error instanceof DOMException)) throw error;
           setErrorBox($('importErrorBox'), `无法读取备份：${error.message}`);
         }
       });
       $('importPwdInput').addEventListener('input', invalidateImport);
-      document.querySelectorAll('input[name="importMode"]').forEach(input => input.addEventListener('change', invalidateImport));
+      $('importPwdInput').addEventListener('keydown', (e) => {
+        if (e.isComposing || e.keyCode === 229) return;
+        if (e.key === 'Enter' && !$('previewImportBtn').disabled) {
+          e.preventDefault();
+          previewImport();
+        }
+      });
+      document.querySelectorAll('input[name="importMode"]').forEach(input => input.addEventListener('change', () => {
+        if (appState.importPreview || (appState.pendingImportData && appState.pendingImportData.encrypted !== true)) {
+          previewImport();
+        } else {
+          invalidateImport();
+        }
+      }));
       $('previewImportBtn').addEventListener('click', previewImport);
       $('allowPartialImport').addEventListener('change', () => {
         const preview = appState.importPreview;
@@ -18735,10 +19593,13 @@ var qrcode = function() {
       $('runImportBtn').addEventListener('click', runImport);
 
       // Settings & Master Password
-      function syncSettingsModalUi() {
+      function syncSettingsModalUi({ preserveStatus = false } = {}) {
         syncThemeControls();
         setErrorBox($('masterPwdError'), '');
+        if (!preserveStatus) setInlineAlert($('settingsStatus'), '');
         $('masterPwdForm').reset();
+        resetPasswordToggle($('toggleCurrentMasterPwdBtn'), $('currentMasterPwd'));
+        resetPasswordToggle($('toggleNewMasterPwdBtn'), $('newMasterPwd'));
         $('autoLockSelect').value = String(appState.autoLockMin);
         if (appState.encryptedMode) {
           $('lockFeatureDesc').textContent = '已开启主密码保护：localStorage 中的所有密钥与备注均以 AES-256-GCM 密文存储。';
@@ -18771,11 +19632,11 @@ var qrcode = function() {
       $('autoLockSelect').addEventListener('change', (e) => {
         appState.autoLockMin = Number(e.target.value) || 0;
         writePreference('AUTOLOCK', String(appState.autoLockMin));
-        showToast('已更新自动锁定设置');
+        setInlineAlert($('settingsStatus'), '已更新自动锁定设置', 'success');
       });
 
-      $('masterPwdForm').addEventListener('submit', async event => {
-        event.preventDefault(); setErrorBox($('masterPwdError'), '');
+      $('masterPwdForm').addEventListener('submit', busyGuard(() => $('saveMasterPwdBtn'), async event => {
+        event.preventDefault(); setErrorBox($('masterPwdError'), ''); setInlineAlert($('settingsStatus'), '');
         if (!mutable()) return;
         const password = $('newMasterPwd').value;
         try {
@@ -18792,19 +19653,22 @@ var qrcode = function() {
           if (readPreference('AUTOLOCK') === null) {
             appState.autoLockMin = 5; writePreference('AUTOLOCK', '5');
           }
-          syncSettingsModalUi(); showToast('主密码已生效，本地内容已加密');
+          syncSettingsModalUi({ preserveStatus: true });
+          setInlineAlert($('settingsStatus'), '主密码已生效，本地内容已加密', 'success');
         } catch (error) {
           if (!(error instanceof Error)) throw error;
           setErrorBox($('masterPwdError'), error.message);
         }
-      });
+      }));
       $('disableMasterPwdBtn').addEventListener('click', async () => {
         if (!mutable()) return;
+        setErrorBox($('masterPwdError'), ''); setInlineAlert($('settingsStatus'), '');
         try {
           if (!$('currentMasterPwd').value) throw new VaultDataError('请先输入当前主密码');
           await decryptEnvelope(JSON.parse(appState.baseRaw), $('currentMasterPwd').value);
           if (!await saveVault({ encryption: null })) { setErrorBox($('masterPwdError'), '变更尚未写入，原有加密仍然有效。'); return; }
-          syncSettingsModalUi(); showToast('已关闭主密码锁，当前数据未加密');
+          syncSettingsModalUi({ preserveStatus: true });
+          setInlineAlert($('settingsStatus'), '已关闭主密码锁，当前数据未加密', 'warn');
         } catch (error) {
           if (!(error instanceof Error)) throw error;
           setErrorBox($('masterPwdError'), error.message);
@@ -18817,13 +19681,20 @@ var qrcode = function() {
         const existingSecrets = new Set(appState.accounts.map((a) => normalizeBase32(a.secret)));
         const toAdd = demos.filter((d) => !existingSecrets.has(d.secret));
         if (!toAdd.length) {
-          showToast('示例账号已存在于列表中');
+          if ($('settingsDialog').open) setInlineAlert($('settingsStatus'), '示例账号已存在于列表中', 'warn');
+          else showToast('示例账号已存在于列表中');
           return;
         }
         appState.accounts = [...appState.accounts, ...toAdd];
-        if (!await saveVault()) { renderAll(); return; }
+        if (!await saveVault()) {
+          if ($('settingsDialog').open) $('settingsDialog').close();
+          renderAll();
+          showToast('示例账号已在页面展示，但未能写入本地存储');
+          return;
+        }
         renderAll();
-        showToast('已添加示例账号');
+        if ($('settingsDialog').open) setInlineAlert($('settingsStatus'), '已添加示例账号', 'success');
+        else showToast('已添加示例账号');
       });
 
       $('wipeAllBtn').addEventListener('click', async () => {
@@ -18839,29 +19710,45 @@ var qrcode = function() {
         appState.demoDismissed = true;
         appState.revealedPasswords.clear();
         clearUndo();
-        if (!await saveVault({ encryption: null })) { renderAll(); return; }
+        if (!await saveVault({ encryption: null })) {
+          $('settingsDialog').close('wiped');
+          renderAll();
+          showToast('列表已在页面清空，但未能写入本地存储，请查看顶部提示');
+          return;
+        }
         $('settingsDialog').close('wiped');
         renderAll();
         showToast('已清空所有本地数据');
       });
 
       // Unlock Screen Events
-      $('toggleUnlockPwdBtn').addEventListener('click', () => {
-        const inp = $('unlockPwdInput');
-        const show = inp.type === 'password';
-        inp.type = show ? 'text' : 'password';
-        $('toggleUnlockPwdBtn').setAttribute('aria-pressed', String(show));
-        $('toggleUnlockPwdBtn').textContent = show ? '隐藏' : '显示';
-      });
-
-      $('unlockForm').addEventListener('submit', async event => {
-        event.preventDefault(); $('unlockErr').classList.remove('is-visible');
+      $('unlockForm').addEventListener('submit', busyGuard(() => $('unlockForm').querySelector('button[type="submit"]'), async event => {
+        event.preventDefault(); $('unlockErr').classList.remove('is-visible'); $('reloadFromLockBtn').hidden = true;
         try {
           const raw = localStorage.getItem(KEYS.VAULT);
-          if (raw === null) throw new VaultDataError('本地保险库已被其他页面移除，请重新打开页面');
-          const result = await decryptEnvelope(validateEnvelope(JSON.parse(raw)), $('unlockPwdInput').value);
+          if (raw === null) {
+            $('reloadFromLockBtn').hidden = false;
+            throw new VaultDataError('本地保险库已被其他页面移除，请刷新此页面');
+          }
+          const parsedRaw = JSON.parse(raw);
+          if (parsedRaw && parsedRaw.encrypted === false) {
+            $('reloadFromLockBtn').hidden = false;
+            throw new VaultDataError('另一个页面已关闭主密码锁，请刷新此页面');
+          }
+          const result = await decryptEnvelope(validateEnvelope(parsedRaw), $('unlockPwdInput').value);
           const saved = validatePayload(result.data);
-          const pending = appState.lockedDraft ? validatePayload((await decryptEnvelope(appState.lockedDraft, $('unlockPwdInput').value)).data) : null;
+          let pending = null;
+          if (appState.lockedDraft) {
+            try {
+              pending = validatePayload((await decryptEnvelope(appState.lockedDraft, $('unlockPwdInput').value)).data);
+            } catch {
+              // 主密码可能已在别的页面改过：未保存的改动用旧密码加密，新密码解不开。
+              // 不直接丢弃，留在锁屏，让用户先导出（之后可用旧密码从备份恢复）或明确放弃。
+              throw new VaultDataError('密码正确，但锁屏前未保存的改动解不开（可能在别的页面改过主密码）。可先“导出未保存内容”留一份，再点“放弃未保存内容”后解锁。');
+            }
+          }
+          // 锁定期间别的页面改过数据：未保存的改动不能直接写回，否则会覆盖那边的修改
+          const changedElsewhere = raw !== appState.baseRaw;
           appState.baseRaw = raw;
           applyPayload(saved);
           appState.sessionKeyBytes = result.keyBytes; appState.sessionSalt = result.salt; appState.sessionIterations = result.iterations;
@@ -18869,9 +19756,10 @@ var qrcode = function() {
           if (pending) {
             appState.accounts = pending.accounts;
             appState.demoDismissed = pending.demoDismissed === true;
-            appState.dirty = true; appState.storageState = 'write-error'; appState.lockedDraft = null;
+            appState.dirty = true; appState.storageState = changedElsewhere ? 'conflict' : 'write-error'; appState.lockedDraft = null;
           }
           appState.locked = false; appState.lastActivityAt = Date.now();
+          resetPasswordToggle($('toggleUnlockPwdBtn'), $('unlockPwdInput'));
           $('appRoot').removeAttribute('inert'); $('lockDialog').close();
           $('unlockPwdInput').value = ''; renderAll();
         } catch (error) {
@@ -18879,6 +19767,13 @@ var qrcode = function() {
           $('unlockErrText').textContent = isStorageError(error) ? '浏览器暂时无法读取保存的数据，请检查存储权限。' : error.message;
           $('unlockErr').classList.add('is-visible'); $('unlockPwdInput').select();
         }
+      }));
+      $('reloadFromLockBtn').addEventListener('click', async () => {
+        clearUndo(); appState.lockedDraft = null; appState.encryptedMode = false; appState.locked = false;
+        appState.sessionKeyBytes = null; appState.sessionSalt = null;
+        $('unlockErr').classList.remove('is-visible');
+        $('appRoot').removeAttribute('inert'); $('lockDialog').close();
+        await loadVaultOnBoot();
       });
       $('forgotResetBtn').addEventListener('click', async () => {
         if (!await showConfirm({ title: '清空加密保险库？', message: '重置会删除当前浏览器的所有加密账号。请确认已有可用备份；重置无法找回忘记的密码。', okText: '清空并重置', isDanger: true })) return;
@@ -18895,11 +19790,12 @@ var qrcode = function() {
       });
 
       $('emptyRestoreBtn').addEventListener('click', () => { openBackup(); $('importFileInput').focus(); });
+      $('recoverBackupBtn').addEventListener('click', () => { openBackup(); $('importFileInput').focus(); });
       $('exportPendingBtn').addEventListener('click', openBackup);
       $('emptyDemoBtn').addEventListener('click', () => $('restoreDemoBtn').click());
       $('continueImportBtn').addEventListener('click', continueImport);
-      $('backToImportBtn').addEventListener('click', () => { showAccountStep(false); $('smartImportInput').focus(); });
-      $('manualEntryBtn').addEventListener('click', () => { setErrorBox($('qrParseMsg'), ''); showAccountStep(true); $('accIssuer').focus(); });
+      $('backToImportBtn').addEventListener('click', () => { setInlineAlert($('accountInlineStatus'), ''); showAccountStep(false); $('smartImportInput').focus(); });
+      $('manualEntryBtn').addEventListener('click', () => { setErrorBox($('qrParseMsg'), ''); setInlineAlert($('accountInlineStatus'), ''); showAccountStep(true); $('accIssuer').focus(); });
       $('undoDeleteBtn').addEventListener('click', undoDelete);
       $('selectCopyTextBtn').addEventListener('click', () => { $('manualCopyText').focus(); $('manualCopyText').select(); });
       $('manualCopyDialog').addEventListener('close', () => { $('manualCopyText').value = ''; });
