@@ -1833,6 +1833,34 @@
         white-space: nowrap;
       }
 
+      .input-pwd-toggle {
+        inline-size: 38px;
+        block-size: 38px;
+        border: 1px solid var(--border-strong);
+        background-color: var(--surface);
+        border-radius: 10px;
+        color: var(--text-secondary);
+        flex-shrink: 0;
+      }
+
+      .input-pwd-toggle:hover {
+        background-color: var(--surface-hover);
+        color: var(--text-primary);
+      }
+
+      .input-pwd-toggle[aria-pressed="true"] {
+        background-color: var(--surface-selected);
+        color: var(--text-primary);
+        box-shadow: var(--shadow-selected);
+      }
+
+      @media (pointer: coarse), (max-width: 640px) {
+        .input-pwd-toggle {
+          inline-size: 44px;
+          block-size: 44px;
+        }
+      }
+
       :is(.input-control, .search-input, .textarea-control, .select-control):is(:focus, :focus-visible) {
         outline: 2px solid color-mix(in srgb, var(--accent) 36%, transparent);
         outline-offset: 0;
@@ -1980,9 +2008,20 @@
         border: 1px solid color-mix(in srgb, var(--success) 32%, var(--border));
         background-color: var(--surface-subtle);
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        gap: 0.75rem;
+        gap: 0.5rem 0.75rem;
+      }
+
+      .live-preview-info {
+        min-inline-size: 0;
+        flex: 1 1 auto;
+      }
+
+      .live-preview-box .param-badge {
+        white-space: nowrap;
+        flex-shrink: 0;
       }
 
       .live-preview-code {
@@ -2007,7 +2046,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 0.75rem;
+        gap: 0.65rem;
         padding: 0.6rem 0.8rem;
         border-radius: var(--radius-md);
         border: 1px solid var(--border);
@@ -2017,8 +2056,111 @@
       .migration-item-left {
         display: flex;
         align-items: center;
+        gap: 0.6rem;
+        min-inline-size: 0;
+        flex: 1 1 auto;
+      }
+
+      .migration-item-left input[type="checkbox"] {
+        flex-shrink: 0;
+      }
+
+      .migration-badge {
+        inline-size: 32px;
+        block-size: 32px;
+        border-radius: 8px;
+        font-size: 0.75rem;
+      }
+
+      .migration-badge svg {
+        inline-size: 16px;
+        block-size: 16px;
+      }
+
+      .migration-item-info {
+        min-inline-size: 0;
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 0.1rem;
+      }
+
+      .migration-issuer {
+        font-weight: 600;
+        font-size: 0.9rem;
+        line-height: 1.3;
+        overflow-wrap: anywhere;
+      }
+
+      .migration-account {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        line-height: 1.3;
+        overflow-wrap: anywhere;
+      }
+
+      .migration-code {
+        white-space: nowrap;
+        flex-shrink: 0;
+        font-family: var(--font-mono);
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* Shared layout helpers (replacing inline styles) */
+      .dropzone-title {
+        font-size: 0.875rem;
+      }
+
+      .row-between {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .chip-actions {
+        display: flex;
+        gap: 0.45rem;
+        flex-wrap: wrap;
+      }
+
+      .qr-target-info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         gap: 0.65rem;
         min-inline-size: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .qr-target-text {
+        min-inline-size: 0;
+        text-align: start;
+      }
+
+      .master-pwd-form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .dialog-footer-split {
+        justify-content: space-between;
+      }
+
+      .btn-danger-ghost {
+        font-size: 0.8rem;
+        color: var(--danger);
+      }
+
+      .btn-danger-text {
+        color: var(--danger);
+      }
+
+      .btn-danger-text:hover {
+        background-color: var(--danger-soft);
+        color: var(--danger);
       }
 
       /* QR Display Box */
@@ -2071,6 +2213,22 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
         gap: 0.45rem;
+      }
+
+      .theme-radio-cards {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .theme-radio-cards .radio-card {
+        padding: 0.5rem 0.6rem;
+        gap: 0.42rem;
+        white-space: nowrap;
+      }
+
+      @media (max-width: 500px) {
+        .theme-radio-cards {
+          grid-template-columns: 1fr;
+        }
       }
 
       .radio-card {
@@ -2496,8 +2654,7 @@
       /* --- 添加账号：两步流程 --- */
       .setup-progress { display: flex; gap: 1rem; border-block-end: 1px solid var(--border); padding-block-end: 0.65rem; font-size: 0.8125rem; color: var(--text-muted); }
       .setup-progress .active { font-weight: 600; color: var(--text-primary); }
-      #continueImportBtn, #manualEntryBtn { inline-size: 100%; justify-content: center; }
-      #manualEntryBtn { color: var(--text-secondary); margin-block-start: -0.35rem; }
+      #manualEntryBtn { inline-size: 100%; justify-content: center; color: var(--text-secondary); margin-block-start: -0.15rem; }
       #backToImportBtn { align-self: flex-start; padding-inline: 0.25rem; color: var(--text-secondary); }
       #accountConfirmFields, .optional-fields { display: flex; flex-direction: column; gap: 0.9rem; }
       .optional-fields { padding-block-start: 0.8rem; }
@@ -2776,7 +2933,7 @@
 
       <ul id="accountsList" class="cards-list" role="list" data-view="grid"></ul>
       <div id="emptyState" class="empty-state" hidden>
-        <div class="empty-icon" aria-hidden="true">
+        <div id="emptyIcon" class="empty-icon" aria-hidden="true">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         </div>
         <h2 id="emptyTitle">还没有保存任何 2FA 账号</h2>
@@ -2794,7 +2951,7 @@
   <dialog id="manualCopyDialog" class="dialog-narrow" closedby="any" aria-labelledby="manualCopyTitle">
     <div class="dialog-header">
       <h2 id="manualCopyTitle">手动复制</h2>
-      <button type="button" class="icon-btn" data-dialog-close="manualCopyDialog" aria-label="关闭">
+      <button type="button" class="icon-btn" data-dialog-close="manualCopyDialog" aria-label="关闭窗口">
         <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
@@ -2802,6 +2959,9 @@
       <p id="manualCopyDesc" class="field-hint"></p>
       <textarea id="manualCopyText" class="textarea-control is-mono" readonly aria-label="待复制内容"></textarea>
       <button id="selectCopyTextBtn" class="btn" type="button">选中全部文本</button>
+    </div>
+    <div class="dialog-footer">
+      <button type="button" class="btn" data-dialog-close="manualCopyDialog">完成</button>
     </div>
   </dialog>
   <div id="undoBar" class="undo-bar" role="status" hidden><span id="undoMessage"></span><button id="undoDeleteBtn" class="btn" type="button">撤销删除</button><span id="undoCountdown" class="field-hint"></span></div>
@@ -2822,7 +2982,7 @@
         </div>
         <div id="quickImportBlock" class="field">
           <label for="smartImportInput">粘贴账号信息、密钥或认证链接</label>
-          <span id="smartImportHint" class="field-hint">支持直接粘贴「账号---密码---密钥」（兼容 | / : / , / 空格 等分隔符）、密钥、otpauth:// 链接、批量迁移码，或在下方上传/粘贴二维码截图。</span>
+          <span id="smartImportHint" class="field-hint">支持直接粘贴“账号---密码---密钥”（兼容 | / : / , / 空格 等分隔符）、密钥、otpauth:// 链接、批量迁移码，或在下方上传/粘贴二维码截图。</span>
           <input
             id="smartImportInput"
             class="input-control is-mono"
@@ -2835,12 +2995,11 @@
           >
           <div id="qrDropzone" class="dropzone" tabindex="0" role="button" aria-label="点击选择二维码图片，或拖拽、粘贴截图到此处">
             <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM17 17h4v4h-4zM14 20h1M20 14h1"/></svg>
-            <strong style="font-size:0.875rem;">选择二维码图片，或拖拽 / 粘贴截图</strong>
+            <strong class="dropzone-title">选择二维码图片，或拖拽 / 粘贴截图</strong>
             <span class="field-hint">图片仅在当前设备中识别，不会上传。</span>
             <input id="qrFileInput" type="file" accept="image/*" class="visually-hidden">
           </div>
           <div id="qrParseMsg" class="error-msg" role="status"></div>
-          <button id="continueImportBtn" type="button" class="btn btn-primary">确认导入内容</button>
           <button id="manualEntryBtn" type="button" class="btn btn-ghost">没有二维码？手动输入密钥</button>
         </div>
         <div id="accountConfirmFields">
@@ -2899,7 +3058,9 @@
               autocomplete="new-password"
               placeholder="可选：保存此账号对应的登录密码"
             >
-            <button id="toggleAccPwdBtn" type="button" class="btn" aria-pressed="false" aria-label="显示登录密码">显示</button>
+            <button id="toggleAccPwdBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" aria-label="显示登录密码" title="显示">
+              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
           </div>
         </div>
 
@@ -2920,17 +3081,19 @@
               aria-describedby="accSecretHint"
               data-error="accSecretErr"
             >
-            <button id="toggleAccSecretBtn" type="button" class="btn" aria-pressed="false" aria-label="显示密钥">显示</button>
+            <button id="toggleAccSecretBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" aria-label="显示密钥" title="显示">
+              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
           </div>
           <div id="accSecretErr" class="error-msg"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span id="accSecretErrText">请输入有效的 Base32 密钥（仅含字母 A-Z 与数字 2-7）。</span></div>
         </div>
 
         <div id="liveCodePreviewBox" class="live-preview-box" hidden>
-          <div>
-            <div id="livePreviewLabel" class="field-hint">实时校验 · 当前验证码</div>
+          <div class="live-preview-info">
+            <div id="livePreviewLabel" class="field-hint">实时校验</div>
             <div id="livePreviewCode" class="live-preview-code">000 000</div>
           </div>
-          <span id="livePreviewMeta" class="param-badge">30s · 6位 · SHA1</span>
+          <span id="livePreviewMeta" class="param-badge">30s · 6 位 · SHA1</span>
         </div>
 
         <details id="supplementDetails" class="adv-details">
@@ -3002,6 +3165,7 @@
       <p id="accountSaveError" class="error-msg form-save-error" role="status"></p>
       <div class="dialog-footer">
         <button type="button" class="btn" data-dialog-close="accountDialog">取消</button>
+        <button id="continueImportBtn" type="button" class="btn btn-primary">确认导入内容</button>
         <button id="saveAccountBtn" type="submit" class="btn btn-primary">保存账号</button>
       </div>
     </form>
@@ -3010,7 +3174,7 @@
   <!-- Batch Google Authenticator Migration Import Dialog -->
   <dialog id="migrationDialog" class="dialog-wide" closedby="closerequest" aria-labelledby="migrationDialogTitle">
     <div class="dialog-header">
-      <h2 id="migrationDialogTitle">批量导入 Google Authenticator 迁移账号</h2>
+      <h2 id="migrationDialogTitle">批量导入迁移账号</h2>
       <button type="button" class="icon-btn" data-dialog-close="migrationDialog" aria-label="关闭窗口">
         <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
@@ -3022,9 +3186,9 @@
           <label for="migrationDefaultGroup">统一设置导入分组（可选）</label>
           <input id="migrationDefaultGroup" class="input-control" type="text" maxlength="24" placeholder="如：迁移导入 / 个人 / 工作">
         </div>
-        <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div class="row-between">
           <span class="field-hint">勾选需要导入的账号：</span>
-          <div style="display:flex;gap:0.5rem;">
+          <div class="chip-actions">
             <button id="migSelectAllBtn" type="button" class="chip-btn">全选</button>
             <button id="migDeselectAllBtn" type="button" class="chip-btn">全不选</button>
           </div>
@@ -3048,16 +3212,16 @@
       </button>
     </div>
     <div class="dialog-body">
-      <div id="qrTargetInfo" style="text-align:center;"></div>
+      <div id="qrTargetInfo" class="qr-target-info"></div>
       <div id="qrFrame" class="qr-frame" role="img" aria-label="TOTP 二维码图像"></div>
       <div class="inline-alert is-warn">
         <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
         <span>二维码包含完整 2FA 私钥，可使用手机认证器 App 扫描迁移，请勿截图分享给他人。</span>
       </div>
       <div class="field">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div class="row-between">
           <span class="field-hint">otpauth:// 链接</span>
-          <div style="display:flex;gap:0.4rem;">
+          <div class="chip-actions">
             <button id="toggleQrUriBtn" type="button" class="chip-btn" aria-pressed="false">显示完整链接</button>
             <button id="copyQrUriBtn" type="button" class="chip-btn">复制链接</button>
             <span id="qrCopyStatus" class="visually-hidden" role="status"></span>
@@ -3067,7 +3231,7 @@
       </div>
     </div>
     <div class="dialog-footer">
-      <button type="button" class="btn btn-primary" data-dialog-close="qrDialog">完成</button>
+      <button type="button" class="btn" data-dialog-close="qrDialog">完成</button>
     </div>
   </dialog>
 
@@ -3085,10 +3249,12 @@
         <p id="backupSummary" class="field-hint"></p>
         <p class="field-hint">包含全部验证码密钥、已保存的登录密码、分组和备注。建议定期导出保存到安全位置（如加密网盘或 U 盘），防止清理浏览器缓存导致丢失。</p>
         <div class="field">
-          <label for="exportPwdInput">备份加密密码（至少八位）</label>
+          <label for="exportPwdInput">备份加密密码（至少 8 位）</label>
           <div class="input-with-action">
             <input id="exportPwdInput" class="input-control" type="password" autocomplete="new-password" placeholder="输入至少 8 位密码以加密备份">
-            <button id="toggleExportPwdBtn" type="button" class="btn" aria-pressed="false" aria-label="显示备份加密密码">显示</button>
+            <button id="toggleExportPwdBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" aria-label="显示备份加密密码" title="显示">
+              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
           </div>
         </div>
         <div class="field">
@@ -3097,7 +3263,7 @@
         </div>
         <div id="exportFeedback" class="error-msg" role="status"></div>
         <div class="action-row">
-          <button id="exportEncryptedBtn" type="button" class="btn btn-primary">导出加密备份 (.2favault.json)</button>
+          <button id="exportEncryptedBtn" type="button" class="btn btn-primary">导出加密备份（.2favault.json）</button>
           <button id="exportPlainBtn" type="button" class="btn">导出明文 JSON</button>
         </div>
       </fieldset>
@@ -3105,7 +3271,7 @@
       <fieldset class="settings-group">
         <legend>从备份文件恢复</legend>
         <div class="field">
-          <label for="importFileInput">选择备份文件 (.json / .2favault.json)</label>
+          <label for="importFileInput">选择备份文件（.json / .2favault.json）</label>
           <label id="importFilePicker" class="file-picker">
             <input id="importFileInput" type="file" accept=".json,application/json">
             <span class="btn file-picker-btn" aria-hidden="true">
@@ -3119,7 +3285,9 @@
           <label for="importPwdInput">此备份已加密，请输入备份密码</label>
           <div class="input-with-action">
             <input id="importPwdInput" class="input-control" type="password" autocomplete="off" placeholder="输入导出时设置的加密密码">
-            <button id="toggleImportPwdBtn" type="button" class="btn" aria-pressed="false" aria-label="显示备份解密密码">显示</button>
+            <button id="toggleImportPwdBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" aria-label="显示备份解密密码" title="显示">
+              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
           </div>
         </div>
         <div class="field">
@@ -3145,7 +3313,7 @@
       </fieldset>
     </div>
     <div class="dialog-footer">
-      <button type="button" class="btn" data-dialog-close="backupDialog">关闭</button>
+      <button type="button" class="btn" data-dialog-close="backupDialog">完成</button>
     </div>
   </dialog>
 
@@ -3160,7 +3328,7 @@
     <div class="dialog-body">
       <fieldset class="settings-group">
         <legend>主题外观</legend>
-        <div class="radio-cards" role="radiogroup" aria-label="选择主题外观">
+        <div class="radio-cards theme-radio-cards" role="radiogroup" aria-label="选择主题外观">
           <label class="radio-card">
             <input type="radio" name="themeChoice" value="system">
             <span id="themeSystemLabel">跟随系统</span>
@@ -3179,31 +3347,6 @@
       <fieldset class="settings-group">
         <legend>主密码锁（本地 AES-256-GCM 加密存储）</legend>
         <p id="lockFeatureDesc" class="field-hint"></p>
-        <form id="masterPwdForm" novalidate style="display:flex;flex-direction:column;gap:0.75rem;">
-          <div id="currentPwdWrap" class="field" hidden>
-            <label for="currentMasterPwd">当前主密码</label>
-            <div class="input-with-action">
-              <input id="currentMasterPwd" class="input-control" type="password" autocomplete="current-password">
-              <button id="toggleCurrentMasterPwdBtn" type="button" class="btn" aria-pressed="false" aria-label="显示当前主密码">显示</button>
-            </div>
-          </div>
-          <div id="newPwdWrap" class="field">
-            <label for="newMasterPwd" id="newMasterPwdLabel">设置主密码（至少 8 位）</label>
-            <div class="input-with-action">
-              <input id="newMasterPwd" class="input-control" type="password" minlength="8" autocomplete="new-password" placeholder="设置解锁密码">
-              <button id="toggleNewMasterPwdBtn" type="button" class="btn" aria-pressed="false" aria-label="显示新主密码">显示</button>
-            </div>
-          </div>
-          <div id="confirmPwdWrap" class="field">
-            <label for="confirmMasterPwd">确认主密码</label>
-            <input id="confirmMasterPwd" class="input-control" type="password" minlength="8" autocomplete="new-password" placeholder="再次输入主密码">
-          </div>
-          <div id="masterPwdError" class="error-msg" role="status"></div>
-          <div class="action-row">
-            <button id="saveMasterPwdBtn" type="submit" class="btn btn-primary">开启主密码锁</button>
-            <button id="disableMasterPwdBtn" type="button" class="btn btn-danger" hidden>关闭主密码锁</button>
-          </div>
-        </form>
         <div id="autoLockWrap" class="field" hidden>
           <label for="autoLockSelect">无操作自动锁定时间</label>
           <div class="select-wrap">
@@ -3216,6 +3359,40 @@
             <svg class="select-chevron" aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
         </div>
+        <div id="masterPwdLockedActions" class="action-row" hidden>
+          <button id="toggleChangeMasterPwdBtn" type="button" class="btn" aria-expanded="false" aria-controls="masterPwdForm">修改主密码</button>
+          <button id="toggleDisableMasterPwdBtn" type="button" class="btn btn-ghost btn-danger-text" aria-expanded="false" aria-controls="masterPwdForm">关闭主密码锁</button>
+        </div>
+        <form id="masterPwdForm" class="master-pwd-form" novalidate>
+          <div id="currentPwdWrap" class="field" hidden>
+            <label for="currentMasterPwd">当前主密码</label>
+            <div class="input-with-action">
+              <input id="currentMasterPwd" class="input-control" type="password" autocomplete="current-password">
+              <button id="toggleCurrentMasterPwdBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" aria-label="显示当前主密码" title="显示">
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <div id="newPwdWrap" class="field">
+            <label for="newMasterPwd" id="newMasterPwdLabel">设置主密码（至少 8 位）</label>
+            <div class="input-with-action">
+              <input id="newMasterPwd" class="input-control" type="password" minlength="8" autocomplete="new-password" placeholder="设置解锁密码">
+              <button id="toggleNewMasterPwdBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" aria-label="显示新主密码" title="显示">
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <div id="confirmPwdWrap" class="field">
+            <label for="confirmMasterPwd">确认主密码</label>
+            <input id="confirmMasterPwd" class="input-control" type="password" minlength="8" autocomplete="new-password" placeholder="再次输入主密码">
+          </div>
+          <div id="masterPwdError" class="error-msg" role="status"></div>
+          <div class="action-row">
+            <button id="saveMasterPwdBtn" type="submit" class="btn btn-primary">开启主密码锁</button>
+            <button id="disableMasterPwdBtn" type="button" class="btn btn-danger" hidden>确认关闭主密码锁</button>
+            <button id="cancelMasterPwdBtn" type="button" class="btn" hidden>取消</button>
+          </div>
+        </form>
       </fieldset>
 
       <fieldset class="settings-group">
@@ -3228,7 +3405,7 @@
       <div id="settingsStatus" class="inline-alert" role="status" hidden></div>
     </div>
     <div class="dialog-footer">
-      <button type="button" class="btn btn-primary" data-dialog-close="settingsDialog">完成</button>
+      <button type="button" class="btn" data-dialog-close="settingsDialog">完成</button>
     </div>
   </dialog>
 
@@ -3274,7 +3451,9 @@
               placeholder="请输入主密码"
               data-error="unlockErr"
             >
-            <button id="toggleUnlockPwdBtn" type="button" class="btn" aria-pressed="false" aria-label="显示密码">显示</button>
+            <button id="toggleUnlockPwdBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" aria-label="显示密码" title="显示">
+              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
           </div>
           <div id="unlockErr" class="error-msg"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span id="unlockErrText">密码错误，请重试。</span></div>
         </div>
@@ -3284,8 +3463,8 @@
         <button id="exportLockedDraftBtn" class="btn" type="button">导出未保存内容</button>
         <button id="discardLockedDraftBtn" class="btn btn-ghost" type="button">放弃未保存内容</button>
       </div>
-      <div class="dialog-footer" style="justify-content:space-between;">
-        <button id="forgotResetBtn" type="button" class="btn btn-ghost" style="font-size:0.8rem;color:var(--danger);">忘记密码并重置</button>
+      <div class="dialog-footer dialog-footer-split">
+        <button id="forgotResetBtn" type="button" class="btn btn-ghost btn-danger-ghost">忘记密码并重置</button>
         <div class="action-row">
           <button id="reloadFromLockBtn" type="button" class="btn" hidden>刷新页面</button>
           <button type="submit" class="btn btn-primary">解锁</button>
@@ -17070,20 +17249,34 @@ var qrcode = function() {
         scheduleToastHide();
       }
 
+      const eyeShowSpec = () => [
+        { tag: 'path', attrs: { d: 'M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z' } },
+        { tag: 'circle', attrs: { cx: '12', cy: '12', r: '3' } },
+      ];
+      const eyeHideSpec = () => [
+        { tag: 'path', attrs: { d: 'M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24' } },
+        { tag: 'line', attrs: { x1: '1', y1: '1', x2: '23', y2: '23' } },
+      ];
+
+      function setPasswordToggleUi(btn, show) {
+        btn.setAttribute('aria-pressed', String(show));
+        btn.title = show ? '隐藏' : '显示';
+        btn.replaceChildren(svgIcon(show ? eyeHideSpec() : eyeShowSpec(), 16, 1.75));
+      }
+
       function resetPasswordToggle(btn, input) {
         if (!btn || !input) return;
         input.type = 'password';
-        btn.setAttribute('aria-pressed', 'false');
-        btn.textContent = '显示';
+        setPasswordToggleUi(btn, false);
       }
 
       function bindPasswordToggle(btn, input) {
         if (!btn || !input) return;
+        setPasswordToggleUi(btn, input.type !== 'password');
         btn.addEventListener('click', () => {
           const show = input.type === 'password';
           input.type = show ? 'text' : 'password';
-          btn.setAttribute('aria-pressed', String(show));
-          btn.textContent = show ? '隐藏' : '显示';
+          setPasswordToggleUi(btn, show);
         });
       }
 
@@ -17203,8 +17396,9 @@ var qrcode = function() {
 
       function syncThemeControls() {
         const stored = getStoredTheme();
+        const sysShort = darkMedia.matches ? '深色' : '浅色';
         const sysState = darkMedia.matches ? '当前深色' : '当前浅色';
-        $('themeSystemLabel').textContent = `跟随系统（${sysState}）`;
+        $('themeSystemLabel').textContent = `跟随系统（${sysShort}）`;
         document.querySelectorAll('input[name="themeChoice"]').forEach((r) => {
           r.checked = r.value === stored;
         });
@@ -17930,7 +18124,7 @@ var qrcode = function() {
             const chk = svgIcon(checkIcoSpec(), 13, 2);
             chk.classList.add('inline-copy-ico');
             accCopySlot.replaceChildren(chk);
-            showToast(`已复制账号：${acc.account}`);
+            showToast(`已复制 ${displayName} 账号`);
             clearTimeout(accCopyTimer);
             accCopyTimer = setTimeout(() => {
               accBtn.classList.remove('is-copied');
@@ -17970,15 +18164,6 @@ var qrcode = function() {
           };
           syncPwdMask();
           pwdValBtn.append(keyIco, pwdText);
-
-          const eyeShowSpec = () => [
-            { tag: 'path', attrs: { d: 'M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z' } },
-            { tag: 'circle', attrs: { cx: '12', cy: '12', r: '3' } },
-          ];
-          const eyeHideSpec = () => [
-            { tag: 'path', attrs: { d: 'M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24' } },
-            { tag: 'line', attrs: { x1: '1', y1: '1', x2: '23', y2: '23' } },
-          ];
 
           const pwdToggleBtn = document.createElement('button');
           pwdToggleBtn.type = 'button';
@@ -18206,17 +18391,18 @@ var qrcode = function() {
         $('accountConfirmFields').hidden = !confirm;
         $('backToImportBtn').hidden = Boolean(appState.editingId);
         $('setupProgress').hidden = Boolean(appState.editingId);
+        $('continueImportBtn').hidden = confirm;
         $('saveAccountBtn').hidden = !confirm;
         $('stepImportLabel').classList.toggle('active', !confirm);
         $('stepConfirmLabel').classList.toggle('active', confirm);
       }
       function continueImport() {
         const text = $('smartImportInput').value.trim();
-        if (!text) { setErrorBox($('qrParseMsg'), '请选择二维码图片，或粘贴「账号---密码---密钥」、密钥或认证链接。'); return; }
+        if (!text) { setErrorBox($('qrParseMsg'), '请选择二维码图片，或粘贴“账号---密码---密钥”、密钥或认证链接。'); return; }
         const kind = applyParsedTextToForm(text);
         if (kind === 'migration' || kind === 'otpauth' || kind === 'delimited' || kind === 'error') return;
         if (kind === 'base32') { showAccountStep(true); $('accIssuer').focus(); }
-        else setErrorBox($('qrParseMsg'), '未识别到有效的密钥、认证链接或「账号---密码---密钥」格式。');
+        else setErrorBox($('qrParseMsg'), '未识别到有效的密钥、认证链接或“账号---密码---密钥”格式。');
       }
       function mutable() {
         if (['conflict', 'read-error'].includes(appState.storageState)) {
@@ -18250,11 +18436,11 @@ var qrcode = function() {
             entry.zoneEl.classList.remove('is-copied'); entry.copyHint.textContent = '点击复制';
           }, 1800));
         }
-        showToast(`已复制 ${acc.issuer || '账号'}${isNext ? ' 下一周期' : ''}验证码`);
+        showToast(`已复制 ${acc.issuer || '账号'}${isNext ? ' 下一周期' : ''} 验证码`);
       }
       async function deleteAccount(acc) {
         if (!mutable()) return;
-        const ok = await showConfirm({ title: '删除账号', message: `删除「${acc.issuer || '账号'}」${acc.account ? `（${acc.account}）` : ''}？删除后十秒内可以撤销。`, okText: '删除账号', isDanger: true });
+        const ok = await showConfirm({ title: '删除账号', message: `删除“${acc.issuer || '账号'}”${acc.account ? `（${acc.account}）` : ''}？删除后 10 秒内可以撤销。`, okText: '删除账号', isDanger: true });
         if (!ok || !mutable()) return;
         const index = appState.accounts.findIndex(a => a.id === acc.id);
         appState.accounts = appState.accounts.filter(a => a.id !== acc.id);
@@ -18402,13 +18588,26 @@ var qrcode = function() {
         if (visible.length === 0) {
           listEl.replaceChildren();
           emptyEl.hidden = false;
+          const emptyIconEl = $('emptyIcon');
           if (appState.accounts.length > 0) {
+            if (emptyIconEl) {
+              emptyIconEl.replaceChildren(svgIcon([
+                { tag: 'circle', attrs: { cx: '11', cy: '11', r: '7' } },
+                { tag: 'line', attrs: { x1: '20', y1: '20', x2: '16.65', y2: '16.65' } },
+              ], 22, 1.65));
+            }
             $('emptyTitle').textContent = '没有匹配的账号';
             $('emptyDesc').textContent = '换个关键词，或清除搜索和筛选后查看全部账号。';
             $('emptyAddBtn').hidden = true;
             $('emptyRestoreBtn').hidden = true; $('emptyDemoBtn').hidden = true;
             $('emptyResetBtn').hidden = false;
           } else {
+            if (emptyIconEl) {
+              emptyIconEl.replaceChildren(svgIcon([
+                { tag: 'rect', attrs: { x: '3', y: '11', width: '18', height: '11', rx: '2' } },
+                { tag: 'path', attrs: { d: 'M7 11V7a5 5 0 0 1 10 0v4' } },
+              ], 22, 1.65));
+            }
             $('emptyTitle').textContent = '让你的验证码，有个固定的位置';
             $('emptyDesc').textContent = '添加第一个账号，或从加密备份恢复。数据保存在当前浏览器，支持离线取码。';
             $('emptyAddBtn').hidden = false;
@@ -18594,9 +18793,9 @@ var qrcode = function() {
         try {
           const code = generateTOTP({ secret, algorithm: algo, digits, period });
           $('livePreviewCode').textContent = formatOtpCode(code);
-          $('livePreviewMeta').textContent = `${period}s · ${digits}位 · ${algo}`;
+          $('livePreviewMeta').textContent = `${period}s · ${digits} 位 · ${algo}`;
           const left = period - (Math.floor(Date.now() / 1000) % period);
-          $('livePreviewLabel').textContent = `实时校验 · 当前验证码 · ${left} 秒后更新`;
+          $('livePreviewLabel').textContent = `实时校验 · ${left} 秒后更新`;
           box.hidden = false;
         } catch {
           box.hidden = true;
@@ -18826,18 +19025,31 @@ var qrcode = function() {
           cb.checked = item.supported;
           cb.disabled = !item.supported;
 
+          const badge = document.createElement('div');
+          badge.className = 'issuer-badge migration-badge';
+          badge.setAttribute('aria-hidden', 'true');
+          renderBadgeContent(badge, { issuer: item.issuer || '', account: item.account || '', icon: 'auto', color: 'auto' }, 16);
+
           const info = document.createElement('div');
+          info.className = 'migration-item-info';
           const nameLine = document.createElement('div');
-          nameLine.style.fontWeight = '600';
-          nameLine.textContent = item.issuer + (item.account ? ` · ${item.account}` : '');
+          nameLine.className = 'migration-issuer';
+          nameLine.textContent = item.issuer || '未命名平台';
+          info.appendChild(nameLine);
+          if (item.account) {
+            const accLine = document.createElement('div');
+            accLine.className = 'migration-account';
+            accLine.textContent = item.account;
+            info.appendChild(accLine);
+          }
           const subLine = document.createElement('div');
           subLine.className = 'field-hint';
-          subLine.textContent = item.supported ? `${item.digits}位 · ${item.algorithm}` : `不可导入：${item.reason}`;
-          info.append(nameLine, subLine);
-          left.append(cb, info);
+          subLine.textContent = item.supported ? `${item.digits} 位 · ${item.algorithm}` : `不可导入：${item.reason}`;
+          info.appendChild(subLine);
+          left.append(cb, badge, info);
 
           const codeBadge = document.createElement('span');
-          codeBadge.className = 'param-badge';
+          codeBadge.className = 'param-badge migration-code';
           if (item.supported) {
             try {
               codeBadge.textContent = formatOtpCode(generateTOTP(item));
@@ -18864,12 +19076,19 @@ var qrcode = function() {
         $('copyQrUriBtn').textContent = '复制链接';
         $('qrCopyStatus').textContent = '';
         const info = $('qrTargetInfo');
+        const badge = document.createElement('div');
+        badge.className = 'issuer-badge';
+        badge.setAttribute('aria-hidden', 'true');
+        renderBadgeContent(badge, acc, 18);
+        const textWrap = document.createElement('div');
+        textWrap.className = 'qr-target-text';
         const h = document.createElement('strong');
         h.textContent = acc.issuer || '未命名平台';
         const sub = document.createElement('div');
         sub.className = 'field-hint';
         sub.textContent = acc.account || '（无账号名称）';
-        info.replaceChildren(h, sub);
+        textWrap.append(h, sub);
+        info.replaceChildren(badge, textWrap);
 
         $('qrFrame').replaceChildren(createQrSvgElement(appState.currentQrUri));
         $('toggleQrUriBtn').setAttribute('aria-pressed', 'false');
@@ -19368,7 +19587,7 @@ var qrcode = function() {
 
         const duplicate = appState.accounts.find(a => a.id !== record.id && tokenIdentity(a) === tokenIdentity(record));
         if (duplicate) {
-          const open = await showConfirm({ title: '此验证码密钥已存在', message: `已保存在「${duplicate.issuer}」${duplicate.account ? `（${duplicate.account}）` : ''}。可以查看并编辑已有账号。`, okText: '查看已有账号', isDanger: false });
+          const open = await showConfirm({ title: '此验证码密钥已存在', message: `已保存在“${duplicate.issuer}”${duplicate.account ? `（${duplicate.account}）` : ''}。可以查看并编辑已有账号。`, okText: '查看已有账号', isDanger: false });
           if (open) { $('accountDialog').close(); openAccountDialog(duplicate); }
           return;
         }
@@ -19512,7 +19731,7 @@ var qrcode = function() {
       $('exportEncryptedBtn').addEventListener('click', busyGuard(() => $('exportEncryptedBtn'), async () => {
         setExportFeedback('');
         const password = $('exportPwdInput').value;
-        if (password.length < 8) { setExportFeedback('请设置至少八位的备份密码'); $('exportPwdInput').focus(); return; }
+        if (password.length < 8) { setExportFeedback('请设置至少 8 位的备份密码'); $('exportPwdInput').focus(); return; }
         if (password !== $('exportPwdConfirm').value) { setExportFeedback('两次输入的备份密码不一致'); $('exportPwdConfirm').focus(); return; }
         const at = new Date().toISOString();
         const payload = { version: 1, exportedAt: at, accounts: structuredClone(appState.accounts), demoDismissed: appState.demoDismissed };
@@ -19593,30 +19812,81 @@ var qrcode = function() {
       $('runImportBtn').addEventListener('click', runImport);
 
       // Settings & Master Password
-      function syncSettingsModalUi({ preserveStatus = false } = {}) {
-        syncThemeControls();
+      let masterPwdPanelMode = 'setup';
+      function setMasterPwdPanelMode(mode, { focus = false } = {}) {
+        masterPwdPanelMode = mode;
         setErrorBox($('masterPwdError'), '');
-        if (!preserveStatus) setInlineAlert($('settingsStatus'), '');
         $('masterPwdForm').reset();
         resetPasswordToggle($('toggleCurrentMasterPwdBtn'), $('currentMasterPwd'));
         resetPasswordToggle($('toggleNewMasterPwdBtn'), $('newMasterPwd'));
-        $('autoLockSelect').value = String(appState.autoLockMin);
-        if (appState.encryptedMode) {
-          $('lockFeatureDesc').textContent = '已开启主密码保护：localStorage 中的所有密钥与备注均以 AES-256-GCM 密文存储。';
-          $('currentPwdWrap').hidden = false;
-          $('newMasterPwdLabel').textContent = '新主密码（至少 8 位）';
-          $('saveMasterPwdBtn').textContent = '修改主密码';
-          $('disableMasterPwdBtn').hidden = false;
-          $('autoLockWrap').hidden = false;
-        } else {
-          $('lockFeatureDesc').textContent = '当前未开启主密码锁，打开网页即可直接查看验证码；开启后将自动把本地存储加密为密文。';
+        $('toggleChangeMasterPwdBtn').setAttribute('aria-expanded', String(mode === 'change'));
+        $('toggleDisableMasterPwdBtn').setAttribute('aria-expanded', String(mode === 'disable'));
+
+        if (mode === 'collapsed') {
+          $('masterPwdLockedActions').hidden = false;
+          $('masterPwdForm').hidden = true;
+          return;
+        }
+        $('masterPwdLockedActions').hidden = true;
+        $('masterPwdForm').hidden = false;
+        if (mode === 'setup') {
           $('currentPwdWrap').hidden = true;
+          $('newPwdWrap').hidden = false;
+          $('confirmPwdWrap').hidden = false;
           $('newMasterPwdLabel').textContent = '设置主密码（至少 8 位）';
+          $('saveMasterPwdBtn').hidden = false;
           $('saveMasterPwdBtn').textContent = '开启主密码锁';
           $('disableMasterPwdBtn').hidden = true;
-          $('autoLockWrap').hidden = true;
+          $('cancelMasterPwdBtn').hidden = true;
+        } else if (mode === 'change') {
+          $('currentPwdWrap').hidden = false;
+          $('newPwdWrap').hidden = false;
+          $('confirmPwdWrap').hidden = false;
+          $('newMasterPwdLabel').textContent = '新主密码（至少 8 位）';
+          $('saveMasterPwdBtn').hidden = false;
+          $('saveMasterPwdBtn').textContent = '保存新主密码';
+          $('disableMasterPwdBtn').hidden = true;
+          $('cancelMasterPwdBtn').hidden = false;
+          if (focus) $('currentMasterPwd').focus();
+        } else if (mode === 'disable') {
+          $('currentPwdWrap').hidden = false;
+          $('newPwdWrap').hidden = true;
+          $('confirmPwdWrap').hidden = true;
+          $('saveMasterPwdBtn').hidden = true;
+          $('disableMasterPwdBtn').hidden = false;
+          $('cancelMasterPwdBtn').hidden = false;
+          if (focus) $('currentMasterPwd').focus();
         }
       }
+
+      function syncSettingsModalUi({ preserveStatus = false } = {}) {
+        syncThemeControls();
+        if (!preserveStatus) setInlineAlert($('settingsStatus'), '');
+        $('autoLockSelect').value = String(appState.autoLockMin);
+        if (appState.encryptedMode) {
+          $('lockFeatureDesc').textContent = '已开启主密码保护：浏览器本地存储中的所有密钥与备注均以 AES-256-GCM 密文存储。';
+          $('autoLockWrap').hidden = false;
+          setMasterPwdPanelMode('collapsed');
+        } else {
+          $('lockFeatureDesc').textContent = '当前未开启主密码锁，打开网页即可直接查看验证码；开启后将自动把本地存储加密为密文。';
+          $('autoLockWrap').hidden = true;
+          setMasterPwdPanelMode('setup');
+        }
+      }
+
+      $('toggleChangeMasterPwdBtn').addEventListener('click', () => {
+        setInlineAlert($('settingsStatus'), '');
+        setMasterPwdPanelMode('change', { focus: true });
+      });
+      $('toggleDisableMasterPwdBtn').addEventListener('click', () => {
+        setInlineAlert($('settingsStatus'), '');
+        setMasterPwdPanelMode('disable', { focus: true });
+      });
+      $('cancelMasterPwdBtn').addEventListener('click', () => {
+        const returnTo = masterPwdPanelMode === 'disable' ? $('toggleDisableMasterPwdBtn') : $('toggleChangeMasterPwdBtn');
+        setMasterPwdPanelMode('collapsed');
+        returnTo.focus();
+      });
 
       $('openSettingsBtn').addEventListener('click', () => {
         syncSettingsModalUi();
@@ -19636,7 +19906,9 @@ var qrcode = function() {
       });
 
       $('masterPwdForm').addEventListener('submit', busyGuard(() => $('saveMasterPwdBtn'), async event => {
-        event.preventDefault(); setErrorBox($('masterPwdError'), ''); setInlineAlert($('settingsStatus'), '');
+        event.preventDefault();
+        if (masterPwdPanelMode === 'disable') { $('disableMasterPwdBtn').click(); return; }
+        setErrorBox($('masterPwdError'), ''); setInlineAlert($('settingsStatus'), '');
         if (!mutable()) return;
         const password = $('newMasterPwd').value;
         try {
@@ -19644,7 +19916,7 @@ var qrcode = function() {
             if (!$('currentMasterPwd').value) throw new VaultDataError('请先输入当前主密码');
             await decryptEnvelope(JSON.parse(appState.baseRaw), $('currentMasterPwd').value);
           }
-          if (password.length < 8) throw new VaultDataError('新主密码至少需要八位，建议使用较长口令');
+          if (password.length < 8) throw new VaultDataError('新主密码至少需要 8 位，建议使用较长口令');
           if (password !== $('confirmMasterPwd').value) throw new VaultDataError('两次输入的密码不一致');
           const { keyBytes, salt, iterations } = await encryptEnvelope({}, password);
           if (!await saveVault({ encryption: { keyBytes, salt, iterations } })) {
