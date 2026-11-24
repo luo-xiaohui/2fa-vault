@@ -122,22 +122,13 @@
         --cta-hover-dark: #e4e4e7;
         --cta-fg-dark: #09090b;
 
-        --brand-mark-bg-light: #0a0a0c;
-        --brand-mark-fg-light: #ffffff;
-        --brand-mark-bg-dark: #1a1a21;
-        --brand-mark-fg-dark: #ffffff;
-
         /* Restrained Accent (Telemetry Rings, Focus & Links Only) */
         --accent-light: #2f75c3;
         --accent-dark: #5d98f5;
         --accent-text-light: #2560a3;
         --accent-text-dark: #7db0f8;
-        --accent-hover-light: #2560a3;
-        --accent-hover-dark: #7db0f8;
         --accent-soft-light: rgba(47, 117, 195, 0.08);
         --accent-soft-dark: rgba(93, 152, 245, 0.14);
-        --tag-border-light: rgba(10, 10, 12, 0.10);
-        --tag-border-dark: rgba(255, 255, 255, 0.11);
 
         --success-light: #3d7a2a;
         --success-dark: #7aae66;
@@ -210,13 +201,9 @@
         --cta-bg: var(--cta-bg-light);
         --cta-hover: var(--cta-hover-light);
         --cta-fg: var(--cta-fg-light);
-        --brand-mark-bg: var(--brand-mark-bg-light);
-        --brand-mark-fg: var(--brand-mark-fg-light);
         --accent: var(--accent-light);
         --accent-text: var(--accent-text-light);
-        --accent-hover: var(--accent-hover-light);
         --accent-soft: var(--accent-soft-light);
-        --tag-border: var(--tag-border-light);
         --success: var(--success-light);
         --success-soft: var(--success-soft-light);
         --warn: var(--warn-light);
@@ -249,13 +236,9 @@
           --cta-bg: var(--cta-bg-dark);
           --cta-hover: var(--cta-hover-dark);
           --cta-fg: var(--cta-fg-dark);
-          --brand-mark-bg: var(--brand-mark-bg-dark);
-          --brand-mark-fg: var(--brand-mark-fg-dark);
           --accent: var(--accent-dark);
           --accent-text: var(--accent-text-dark);
-          --accent-hover: var(--accent-hover-dark);
           --accent-soft: var(--accent-soft-dark);
-          --tag-border: var(--tag-border-dark);
           --success: var(--success-dark);
           --success-soft: var(--success-soft-dark);
           --warn: var(--warn-dark);
@@ -288,13 +271,9 @@
         --cta-bg: var(--cta-bg-dark);
         --cta-hover: var(--cta-hover-dark);
         --cta-fg: var(--cta-fg-dark);
-        --brand-mark-bg: var(--brand-mark-bg-dark);
-        --brand-mark-fg: var(--brand-mark-fg-dark);
         --accent: var(--accent-dark);
         --accent-text: var(--accent-text-dark);
-        --accent-hover: var(--accent-hover-dark);
         --accent-soft: var(--accent-soft-dark);
-        --tag-border: var(--tag-border-dark);
         --success: var(--success-dark);
         --success-soft: var(--success-soft-dark);
         --warn: var(--warn-dark);
@@ -327,13 +306,9 @@
           --cta-bg: light-dark(var(--cta-bg-light), var(--cta-bg-dark));
           --cta-hover: light-dark(var(--cta-hover-light), var(--cta-hover-dark));
           --cta-fg: light-dark(var(--cta-fg-light), var(--cta-fg-dark));
-          --brand-mark-bg: light-dark(var(--brand-mark-bg-light), var(--brand-mark-bg-dark));
-          --brand-mark-fg: light-dark(var(--brand-mark-fg-light), var(--brand-mark-fg-dark));
           --accent: light-dark(var(--accent-light), var(--accent-dark));
           --accent-text: light-dark(var(--accent-text-light), var(--accent-text-dark));
-          --accent-hover: light-dark(var(--accent-hover-light), var(--accent-hover-dark));
           --accent-soft: light-dark(var(--accent-soft-light), var(--accent-soft-dark));
-          --tag-border: light-dark(var(--tag-border-light), var(--tag-border-dark));
           --success: light-dark(var(--success-light), var(--success-dark));
           --success-soft: light-dark(var(--success-soft-light), var(--success-soft-dark));
           --warn: light-dark(var(--warn-light), var(--warn-dark));
@@ -341,11 +316,8 @@
           --danger: light-dark(var(--danger-light), var(--danger-dark));
           --danger-soft: light-dark(var(--danger-soft-light), var(--danger-soft-dark));
           --ring-track: light-dark(var(--ring-track-light), var(--ring-track-dark));
-          --shadow-card: light-dark(var(--shadow-card-light), var(--shadow-card-dark));
-          --shadow-selected: light-dark(var(--shadow-selected-light), var(--shadow-selected-dark));
           --glass: light-dark(var(--glass-light), var(--glass-dark));
           --dialog-glass: light-dark(var(--dialog-glass-light), var(--dialog-glass-dark));
-          --glass-shadow: light-dark(var(--glass-shadow-light), var(--glass-shadow-dark));
           --backdrop: light-dark(var(--backdrop-light), var(--backdrop-dark));
         }
       }
@@ -366,12 +338,9 @@
           --text-muted: GrayText;
           --cta-bg: Highlight;
           --cta-fg: HighlightText;
-          --brand-mark-bg: Highlight;
-          --brand-mark-fg: HighlightText;
           --accent: Highlight;
           --accent-text: LinkText;
           --accent-soft: Canvas;
-          --tag-border: CanvasText;
           --success: CanvasText;
           --warn: CanvasText;
           --danger: CanvasText;
@@ -1025,12 +994,6 @@
         overflow-wrap: anywhere;
       }
 
-      .pin-indicator {
-        color: var(--warn);
-        display: inline-flex;
-        align-items: center;
-      }
-
       .demo-tag {
         flex-shrink: 0;
         white-space: nowrap;
@@ -1086,7 +1049,7 @@
         border-radius: 6px;
         flex-shrink: 0;
         color: var(--text-muted);
-        opacity: 0.45;
+        opacity: 0.72;
         transition: opacity 120ms ease, background-color 120ms ease, color 120ms ease;
       }
 
@@ -1285,7 +1248,7 @@
 
       @media (hover: hover) {
         .card-actions .icon-btn:not([aria-pressed="true"]) {
-          opacity: 0.38;
+          opacity: 0.72;
         }
         .account-card:hover .card-actions .icon-btn,
         .account-card:focus-within .card-actions .icon-btn {
@@ -1860,10 +1823,17 @@
         box-shadow: var(--shadow-selected);
       }
 
+      .input-align-action {
+        inline-size: calc(100% - 38px - 0.45rem);
+      }
+
       @media (pointer: coarse), (max-width: 640px) {
         .input-pwd-toggle {
           inline-size: 44px;
           block-size: 44px;
+        }
+        .input-align-action {
+          inline-size: calc(100% - 44px - 0.45rem);
         }
       }
 
@@ -2377,6 +2347,8 @@
 
         .cards-list[data-view="list"] .note-text.is-clamped {
           display: -webkit-box;
+          -webkit-line-clamp: 2;
+          line-clamp: 2;
         }
 
         .cards-list[data-view="list"] .note-expand-btn {
@@ -2568,13 +2540,13 @@
         .identity-text { display: flex; flex-direction: column; gap: 0.2rem; }
         .account-copy-btn { position: relative; min-block-size: 0; padding-block: 0; margin-block-start: 0; }
         .account-copy-btn .inline-copy-slot { block-size: 20px; }
-        .account-copy-btn::after { content: ''; position: absolute; inset: -6px 0 -8px; }
+        .account-copy-btn::after { content: ''; position: absolute; inset: -6px 0 -3px; }
         .tag-chip { position: relative; }
         .tag-chip::after { content: ''; position: absolute; inset: -9px -4px; }
         /* 密码行的“显示”“复制”按钮保持 24px 外观，用透明层把点击区扩到约 42×40px */
         .pwd-actions { gap: 1rem; }
         .password-row .icon-btn { position: relative; }
-        .password-row .icon-btn::after { content: ''; position: absolute; inset: -7px -8px -11px; }
+        .password-row .icon-btn::after { content: ''; position: absolute; inset: -5px -8px -11px; }
       }
 
       /* --- 顶栏 --- */
@@ -2673,7 +2645,10 @@
       .import-preview { border: 1px solid var(--border); padding: 0.75rem; border-radius: var(--radius-sm); font-size: 0.8125rem; }
       #importRows { max-block-size: 240px; overflow-y: auto; margin-block: 0.6rem; }
       #importRows li { padding: 0.4rem 0; border-block-end: 1px solid var(--border); overflow-wrap: anywhere; }
-      .undo-bar { position: fixed; z-index: 40; inset-block-end: max(1rem, env(safe-area-inset-bottom)); inset-inline: 50% auto; transform: translateX(-50%); display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5rem; max-inline-size: calc(100vw - 1.5rem); inline-size: max-content; padding: 0.5rem 0.8rem; border: 1px solid var(--card-edge); border-radius: var(--radius-md); background: var(--surface); box-shadow: var(--glass-shadow); font-size: 0.8125rem; }
+      .undo-bar { position: fixed; z-index: 40; inset-block-end: max(1rem, env(safe-area-inset-bottom)); inset-inline: 50% auto; transform: translateX(-50%); display: flex; flex-wrap: nowrap; align-items: center; justify-content: center; gap: 0.5rem; max-inline-size: calc(100vw - 1.5rem); inline-size: max-content; padding: 0.5rem 0.8rem; border: 1px solid var(--card-edge); border-radius: var(--radius-md); background: var(--surface); box-shadow: var(--glass-shadow); font-size: 0.8125rem; }
+      #undoMessage { min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      #undoBar > button, #undoCountdown { flex-shrink: 0; }
+      body:has(#undoBar:not([hidden])) .app-main { padding-block-end: 6rem; }
       body:has(#undoBar:not([hidden])) .toast { inset-block-end: 6rem; }
       #manualCopyText { user-select: text; min-block-size: 72px; font-size: 1.1rem; }
       #qrTargetInfo { overflow-wrap: anywhere; min-inline-size: 0; }
@@ -2698,6 +2673,15 @@
       @media (max-width: 389px) {
         .topbar-actions:has(#lockNowBtn:not([hidden])) { gap: 0.15rem; }
         .topbar-actions:has(#lockNowBtn:not([hidden])) .btn { inline-size: 40px; min-inline-size: 40px; }
+      }
+      @media (max-width: 359px) {
+        .topbar-inner:has(#lockNowBtn:not([hidden])) { gap: 0.3rem; }
+        .topbar-inner:has(#lockNowBtn:not([hidden])) .brand { min-inline-size: 0; flex-shrink: 1; }
+        .topbar-inner:has(#lockNowBtn:not([hidden])) .brand-text { min-inline-size: 0; }
+        .topbar-inner:has(#lockNowBtn:not([hidden])) #lockStatusPill { display: none; }
+        .topbar-actions:has(#lockNowBtn:not([hidden])) { gap: 0.125rem; }
+        .topbar-actions:has(#lockNowBtn:not([hidden])) .btn { position: relative; inline-size: 36px; block-size: 36px; min-inline-size: 36px; min-block-size: 36px; }
+        .topbar-actions:has(#lockNowBtn:not([hidden])) .btn::after { content: ''; position: absolute; inset: -4px; }
       }
 
       /* --- 备份恢复：选择文件，和其他输入框同款 --- */
@@ -2997,7 +2981,7 @@
             class="input-control is-mono"
             type="text"
             data-i18n-placeholder="account.smartImport.placeholder"
-            placeholder="如 user@example.com---密码---密钥，或 otpauth://..."
+            placeholder="账号---密码---密钥 或 otpauth://…"
             autocorrect="off"
             autocapitalize="none"
             spellcheck="false"
@@ -3007,7 +2991,7 @@
             <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM17 17h4v4h-4zM14 20h1M20 14h1"/></svg>
             <strong class="dropzone-title" data-i18n="account.dropzone.title">选择二维码图片，或拖拽 / 粘贴截图</strong>
             <span class="field-hint" data-i18n="account.dropzone.hint">图片仅在当前设备中识别，不会上传。</span>
-            <input id="qrFileInput" type="file" accept="image/*" class="visually-hidden">
+            <input id="qrFileInput" type="file" accept="image/*" class="visually-hidden" tabindex="-1" aria-hidden="true">
           </div>
           <div id="qrParseMsg" class="error-msg" role="status"></div>
           <button id="manualEntryBtn" type="button" class="btn btn-ghost" data-i18n="account.manualEntry">没有二维码？手动输入密钥</button>
@@ -3171,7 +3155,8 @@
             </div>
             <div class="field">
               <label for="accPeriod" data-i18n="account.period.label">周期（秒）</label>
-              <input id="accPeriod" class="input-control" type="number" min="5" max="300" step="1" value="30" required>
+              <input id="accPeriod" class="input-control" type="number" min="5" max="300" step="1" value="30" required data-error="accPeriodErr">
+              <div id="accPeriodErr" class="error-msg"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span data-i18n="account.period.error">周期需为 5–300 之间的整数秒。</span></div>
             </div>
           </div>
         </details>
@@ -3274,7 +3259,7 @@
         </div>
         <div class="field">
           <label for="exportPwdConfirm" data-i18n="backup.export.confirmLabel">再次输入备份密码</label>
-          <input id="exportPwdConfirm" class="input-control" type="password" autocomplete="new-password" data-i18n-placeholder="backup.export.confirmPlaceholder" placeholder="再输一次，防止输错后备份解不开">
+          <input id="exportPwdConfirm" class="input-control input-align-action" type="password" autocomplete="new-password" data-i18n-placeholder="backup.export.confirmPlaceholder" placeholder="再输一次，防止输错后备份解不开">
         </div>
         <div id="exportFeedback" class="error-msg" role="status"></div>
         <div class="action-row">
@@ -3417,7 +3402,7 @@
           </div>
           <div id="confirmPwdWrap" class="field">
             <label for="confirmMasterPwd" data-i18n="settings.lock.confirmLabel">确认主密码</label>
-            <input id="confirmMasterPwd" class="input-control" type="password" minlength="8" autocomplete="new-password" data-i18n-placeholder="settings.lock.confirmPlaceholder" placeholder="再次输入主密码">
+            <input id="confirmMasterPwd" class="input-control input-align-action" type="password" minlength="8" autocomplete="new-password" data-i18n-placeholder="settings.lock.confirmPlaceholder" placeholder="再次输入主密码">
           </div>
           <div id="masterPwdError" class="error-msg" role="status"></div>
           <div class="action-row">
@@ -3431,7 +3416,7 @@
       <fieldset class="settings-group">
         <legend data-i18n="settings.data.legend">数据管理</legend>
         <div class="action-row">
-          <button id="restoreDemoBtn" type="button" class="btn" data-i18n="settings.data.addDemo">添加示例演示账号</button>
+          <button id="restoreDemoBtn" type="button" class="btn" data-i18n="settings.data.addDemo">添加示例账号</button>
           <button id="wipeAllBtn" type="button" class="btn btn-danger" data-i18n="settings.data.wipeAll">清空账号数据</button>
         </div>
       </fieldset>
@@ -16053,10 +16038,10 @@ var qrcode = function() {
           'undo.deleted': '已删除 {name}',
           'undo.countdown': '{sec} 秒',
           'undo.expired': '撤销时间已结束',
+          'undo.exists': '账号已存在，无需撤销',
           'undo.restored': '已恢复账号',
 
           'card.digitsShort': '{digits}位',
-          'card.digitsBadge': '{digits} 位',
           'card.copyAccountAria': '复制账号 {account}',
           'card.copyAccountTitle': '{account} · 点击复制',
           'card.copiedAccount': '已复制 {name} 账号',
@@ -16070,13 +16055,15 @@ var qrcode = function() {
           'card.hidePwdTitle': '隐藏密码',
           'card.copiedPwd': '已复制 {name} 登录密码',
           'card.copyOtpAria': '复制 {name} 当前验证码',
+          'card.copyOtpWithCodeAria': '复制 {name} 当前验证码 {code}',
           'card.copyNextAria': '复制 {name} 下一周期验证码',
+          'card.copyNextWithCodeAria': '复制 {name} 下一周期验证码 {code}',
           'card.clickToCopy': '点击复制',
           'card.copied': '✓ 已复制',
           'card.copiedNext': '✓ 已复制下期',
           'card.nextLabel': '下期',
           'card.copiedOtpToast': '已复制 {name} 验证码',
-          'card.copiedNextOtpToast': '已复制 {name} 下一周期 验证码',
+          'card.copiedNextOtpToast': '已复制 {name} 下一周期验证码',
           'card.pinAria': '置顶 {name}',
           'card.unpinAria': '取消置顶 {name}',
           'card.qrAria': '导出 {name} 二维码',
@@ -16094,8 +16081,8 @@ var qrcode = function() {
           'account.step1': '1 导入',
           'account.step2': '2 确认账号',
           'account.smartImport.label': '粘贴账号信息、密钥或认证链接',
-          'account.smartImport.hint': '支持直接粘贴“账号---密码---密钥”（兼容 | / : / , / 空格 等分隔符）、密钥、otpauth:// 链接、批量迁移码，或在下方上传/粘贴二维码截图。',
-          'account.smartImport.placeholder': '如 user@example.com---密码---密钥，或 otpauth://...',
+          'account.smartImport.hint': '支持直接粘贴“账号---密码---密钥”（兼容 |、:、,、空格等分隔符）、密钥、otpauth:// 链接、批量迁移码，或在下方上传 / 粘贴二维码截图。',
+          'account.smartImport.placeholder': '账号---密码---密钥 或 otpauth://…',
           'account.dropzone.aria': '点击选择二维码图片，或拖拽、粘贴截图到此处',
           'account.dropzone.title': '选择二维码图片，或拖拽 / 粘贴截图',
           'account.dropzone.hint': '图片仅在当前设备中识别，不会上传。',
@@ -16137,9 +16124,11 @@ var qrcode = function() {
           'account.digits.6': '6 位（默认）',
           'account.digits.8': '8 位',
           'account.period.label': '周期（秒）',
+          'account.period.error': '周期需为 5–300 之间的整数秒。',
           'account.import.emptyErr': '请选择二维码图片，或粘贴“账号---密码---密钥”、密钥或认证链接。',
           'account.import.invalidErr': '未识别到有效的密钥、认证链接或“账号---密码---密钥”格式。',
           'account.import.multiLineErr': '识别到 {count} 个账号。一次只能添加一个，请每次只复制一行。',
+          'account.import.ambiguousOrder': '识别到 4 段内容，请核对平台、账号、密码的顺序；若第 3 段其实是备注，请移到备注里。',
           'account.import.otpauthOk': '已解析链接，请确认平台和账号后保存',
           'account.import.base32Ok': '已规范化 Base32 密钥',
           'account.import.qrInvalid': '识别到二维码内容，但不是有效的 2FA 密钥或认证内容：{snippet}',
@@ -16172,10 +16161,16 @@ var qrcode = function() {
           'migration.selectNoneErr': '请至少选择一个账号',
           'migration.unsavedToast': '导入内容已暂留页面，但未能写入本地存储，请查看顶部提示',
           'migration.imported': '已成功导入 {added} 个账号',
-          'migration.importedSkipped': '已导入 {added} 个账号（跳过 {skipped} 个重复密钥）',
+          'migration.importedOne': '已成功导入 1 个账号',
+          'migration.importedBase': '已导入 {added} 个账号',
+          'migration.importedBaseOne': '已导入 1 个账号',
+          'migration.skippedDup': '{skipped} 个重复密钥',
+          'migration.skippedDupOne': '1 个重复密钥',
+          'migration.importedWithSkipped': '{base}（跳过 {skip}）',
           'migration.reasonHotp': 'HOTP 暂不支持',
           'migration.reasonMd5': 'MD5 算法不支持',
           'migration.reasonNoSecret': '无密钥',
+          'migration.reasonUnknown': '不支持的参数',
 
           'qr.title': '导出账号二维码',
           'qr.frameAria': 'TOTP 二维码图像',
@@ -16232,7 +16227,14 @@ var qrcode = function() {
           'backup.import.replaceInvalidNote': ' {invalid} 个无效项不会导入。',
           'backup.import.replaceOk': '确认覆盖',
           'backup.import.unsavedErr': '导入内容仍在页面中，尚未写入。请关闭窗口，处理顶部提示后重试或导出。',
-          'backup.import.doneToast': '已导入 {imported} 个账号，跳过 {dup} 个重复、{invalid} 个无效项',
+          'backup.import.doneBase': '已导入 {imported} 个账号',
+          'backup.import.doneBaseOne': '已导入 1 个账号',
+          'backup.import.doneSkipDup': '{dup} 个重复',
+          'backup.import.doneSkipDupOne': '1 个重复',
+          'backup.import.doneSkipInvalid': '{invalid} 个无效项',
+          'backup.import.doneSkipInvalidOne': '1 个无效项',
+          'backup.import.doneWithSkips': '{base}，跳过 {skips}',
+          'backup.import.doneSkipJoin': '、',
 
           'settings.title': '外观与安全设置',
           'settings.theme.legend': '主题外观',
@@ -16259,8 +16261,8 @@ var qrcode = function() {
           'settings.lang.switched': '已切换为简体中文',
           'settings.lang.switchedAuto': '已切换为跟随系统语言（中文）',
           'settings.lock.legend': '主密码锁（本地 AES-256-GCM 加密存储）',
-          'settings.lock.descEnabled': '已开启主密码保护：浏览器本地存储中的所有密钥与备注均以 AES-256-GCM 密文存储。',
-          'settings.lock.descDisabled': '当前未开启主密码锁，打开网页即可直接查看验证码；开启后将自动把本地存储加密为密文。',
+          'settings.lock.descEnabled': '已开启主密码保护：浏览器本地存储中的所有密钥、登录密码与备注均以 AES-256-GCM 密文存储。',
+          'settings.lock.descDisabled': '当前未开启主密码锁，打开网页即可直接查看验证码；开启后将自动把本地存储加密为密文。注意：在 Chrome、Edge 里直接打开本地文件时，你打开的其他本地网页也能读取这里未加密的数据；保存真实账号后建议开启。',
           'settings.lock.autoLockLabel': '无操作自动锁定时间',
           'settings.lock.autoLock0': '不自动锁定（仅关闭标签页或手动锁定）',
           'settings.lock.autoLock5': '5 分钟',
@@ -16288,10 +16290,10 @@ var qrcode = function() {
           'settings.lock.disableFailErr': '变更尚未写入，原有加密仍然有效。',
           'settings.lock.disabledWarn': '已关闭主密码锁，当前数据未加密',
           'settings.data.legend': '数据管理',
-          'settings.data.addDemo': '添加示例演示账号',
+          'settings.data.addDemo': '添加示例账号',
           'settings.data.wipeAll': '清空账号数据',
           'settings.data.wipeTitle': '清空全部本地数据',
-          'settings.data.wipeMsg': '此操作将永久清除当前浏览器保存的所有 2FA 账号、备注和加密设置且不可撤销！确定继续吗？',
+          'settings.data.wipeMsg': '此操作将永久清除当前浏览器保存的所有 2FA 账号、登录密码、备注和加密设置且不可撤销！确定继续吗？',
           'settings.data.wipeOk': '确认清空',
           'settings.data.wipeUnsaved': '列表已在页面清空，但未能写入本地存储，请查看顶部提示',
           'settings.data.wipeOkToast': '已清空所有本地数据',
@@ -16336,7 +16338,7 @@ var qrcode = function() {
           'toast.handleBannerFirst': '请先处理页面顶部的数据提示',
           'toast.handleBannerInDialog': '数据有异常，请先关闭窗口，处理页面顶部的提示',
           'toast.otpGenErr': '密钥格式异常，无法生成验证码',
-          'toast.sortDragHint': '切换到“置顶与自定义”排序后，可长按拖动调整顺序',
+          'toast.sortDragHint': '切换到“{sort}”排序后，可长按拖动调整顺序',
 
           'err.base32Invalid': '无效的 Base32 密钥格式',
           'err.secretShort': '密钥长度不足',
@@ -16470,10 +16472,10 @@ var qrcode = function() {
           'undo.deleted': 'Deleted {name}',
           'undo.countdown': '{sec}s',
           'undo.expired': 'Undo window expired',
+          'undo.exists': 'Account already exists — nothing to undo',
           'undo.restored': 'Account restored',
 
           'card.digitsShort': '{digits}-digit',
-          'card.digitsBadge': '{digits}-digit',
           'card.copyAccountAria': 'Copy account {account}',
           'card.copyAccountTitle': '{account} · Click to copy',
           'card.copiedAccount': 'Copied {name} account',
@@ -16487,7 +16489,9 @@ var qrcode = function() {
           'card.hidePwdTitle': 'Hide password',
           'card.copiedPwd': 'Copied {name} password',
           'card.copyOtpAria': 'Copy current code for {name}',
+          'card.copyOtpWithCodeAria': 'Copy current code for {name}: {code}',
           'card.copyNextAria': 'Copy next code for {name}',
+          'card.copyNextWithCodeAria': 'Copy next code for {name}: {code}',
           'card.clickToCopy': 'Click to copy',
           'card.copied': '✓ Copied',
           'card.copiedNext': '✓ Copied next',
@@ -16527,7 +16531,7 @@ var qrcode = function() {
           'account.name.label': 'Account / Email',
           'account.name.placeholder': 'e.g. name@example.com',
           'account.password.label': 'Login Password (optional, saved in vault)',
-          'account.password.placeholder': 'Optional: save login password for this account',
+          'account.password.placeholder': 'Optional',
           'account.password.toggleAria': 'Show login password',
           'account.secret.label': 'Base32 Secret Key *',
           'account.secret.hint': 'Spaces and hyphens are stripped automatically (at least 2 chars, A-Z or 2-7).',
@@ -16554,9 +16558,11 @@ var qrcode = function() {
           'account.digits.6': '6 digits (Default)',
           'account.digits.8': '8 digits',
           'account.period.label': 'Period (sec)',
+          'account.period.error': 'Period must be a whole number between 5 and 300 seconds.',
           'account.import.emptyErr': 'Choose a QR image, or paste "account---password---secret", a key, or an otpauth URI.',
           'account.import.invalidErr': 'Could not recognize a valid secret key, otpauth URI, or "account---password---secret" format.',
           'account.import.multiLineErr': 'Detected {count} accounts. Only one account can be added at a time — paste one line per import.',
+          'account.import.ambiguousOrder': 'Detected 4 parts — please check the service, account, and password order; if the 3rd part is a note, move it to Notes.',
           'account.import.otpauthOk': 'URI parsed — confirm service & account details to save',
           'account.import.base32Ok': 'Base32 secret normalized',
           'account.import.qrInvalid': 'QR decoded, but content is not a valid 2FA secret or URI: {snippet}',
@@ -16588,11 +16594,17 @@ var qrcode = function() {
           'migration.itemUnsupported': 'Unsupported: {reason}',
           'migration.selectNoneErr': 'Select at least one account to import',
           'migration.unsavedToast': 'Imported accounts are on this page but could not be saved — check the banner above',
-          'migration.imported': 'Imported {added} account(s)',
-          'migration.importedSkipped': 'Imported {added} account(s) (skipped {skipped} duplicate)',
+          'migration.imported': 'Imported {added} accounts',
+          'migration.importedOne': 'Imported 1 account',
+          'migration.importedBase': 'Imported {added} accounts',
+          'migration.importedBaseOne': 'Imported 1 account',
+          'migration.skippedDup': '{skipped} duplicates',
+          'migration.skippedDupOne': '1 duplicate',
+          'migration.importedWithSkipped': '{base} (skipped {skip})',
           'migration.reasonHotp': 'HOTP unsupported',
           'migration.reasonMd5': 'MD5 unsupported',
           'migration.reasonNoSecret': 'No secret',
+          'migration.reasonUnknown': 'Unsupported parameters',
 
           'qr.title': 'Export Account QR Code',
           'qr.frameAria': 'TOTP QR code image',
@@ -16609,10 +16621,10 @@ var qrcode = function() {
           'backup.export.legend': 'Export Backup File',
           'backup.export.desc': 'Includes all 2FA secrets, saved login passwords, groups, and notes. Export periodically to safe offline storage in case browser data is cleared.',
           'backup.export.pwdLabel': 'Backup Encryption Password (min 8 chars)',
-          'backup.export.pwdPlaceholder': 'Enter at least 8 characters to encrypt backup',
+          'backup.export.pwdPlaceholder': 'At least 8 characters',
           'backup.export.pwdToggleAria': 'Show backup encryption password',
           'backup.export.confirmLabel': 'Confirm Backup Password',
-          'backup.export.confirmPlaceholder': 'Re-enter password to prevent typos',
+          'backup.export.confirmPlaceholder': 'Re-enter password',
           'backup.export.encryptedBtn': 'Export Encrypted (.2favault.json)',
           'backup.export.plainBtn': 'Export Plain JSON',
           'backup.export.pwdShortErr': 'Backup password must be at least 8 characters',
@@ -16629,7 +16641,7 @@ var qrcode = function() {
           'backup.import.legend': 'Restore from Backup',
           'backup.import.fileLabel': 'Select Backup File (.json / .2favault.json)',
           'backup.import.chooseBtn': 'Choose File',
-          'backup.import.filePlaceholder': 'Choose or drop backup file',
+          'backup.import.filePlaceholder': 'Choose or drop a file',
           'backup.import.pwdLabel': 'Encrypted backup — enter backup password',
           'backup.import.pwdPlaceholder': 'Password used when exporting',
           'backup.import.pwdToggleAria': 'Show backup decryption password',
@@ -16649,7 +16661,14 @@ var qrcode = function() {
           'backup.import.replaceInvalidNote': ' {invalid} invalid item(s) will be skipped.',
           'backup.import.replaceOk': 'Replace List',
           'backup.import.unsavedErr': 'Imported items are on this page but not yet saved. Close this dialog and use the banner to retry or export.',
-          'backup.import.doneToast': 'Imported {imported} account(s), skipped {dup} duplicate and {invalid} invalid',
+          'backup.import.doneBase': 'Imported {imported} accounts',
+          'backup.import.doneBaseOne': 'Imported 1 account',
+          'backup.import.doneSkipDup': '{dup} duplicates',
+          'backup.import.doneSkipDupOne': '1 duplicate',
+          'backup.import.doneSkipInvalid': '{invalid} invalid',
+          'backup.import.doneSkipInvalidOne': '1 invalid',
+          'backup.import.doneWithSkips': '{base}, skipped {skips}',
+          'backup.import.doneSkipJoin': ' and ',
 
           'settings.title': 'Appearance & Security',
           'settings.theme.legend': 'Appearance',
@@ -16677,7 +16696,7 @@ var qrcode = function() {
           'settings.lang.switchedAuto': 'Switched to Auto (English)',
           'settings.lock.legend': 'Master Password Lock (Local AES-256-GCM)',
           'settings.lock.descEnabled': 'Master password enabled: all secrets, passwords, and notes are encrypted with AES-256-GCM in browser local storage.',
-          'settings.lock.descDisabled': 'Master password is off. Opening this page shows codes immediately; enable to encrypt local storage.',
+          'settings.lock.descDisabled': 'Master password is off. Opening this page shows codes immediately; enable to encrypt local storage. Note: when opened directly as a local file in Chrome or Edge, other local HTML pages you open can read unencrypted data here—enabling this is recommended once you save real accounts.',
           'settings.lock.autoLockLabel': 'Auto-Lock After Inactivity',
           'settings.lock.autoLock0': 'Never (lock manually or when tab closes)',
           'settings.lock.autoLock5': '5 minutes',
@@ -16708,7 +16727,7 @@ var qrcode = function() {
           'settings.data.addDemo': 'Add Demo Accounts',
           'settings.data.wipeAll': 'Clear All Data',
           'settings.data.wipeTitle': 'Clear All Local Data',
-          'settings.data.wipeMsg': 'This permanently deletes all 2FA accounts, notes, and encryption settings stored in this browser and cannot be undone. Continue?',
+          'settings.data.wipeMsg': 'This permanently deletes all 2FA accounts, login passwords, notes, and encryption settings stored in this browser and cannot be undone. Continue?',
           'settings.data.wipeOk': 'Clear All',
           'settings.data.wipeUnsaved': 'Cleared on page, but could not write to local storage — check the banner above',
           'settings.data.wipeOkToast': 'All local data cleared',
@@ -16753,7 +16772,7 @@ var qrcode = function() {
           'toast.handleBannerFirst': 'Please resolve the storage banner at the top first',
           'toast.handleBannerInDialog': 'Storage issue detected — close this dialog and resolve the banner at the top',
           'toast.otpGenErr': 'Invalid secret format — unable to generate code',
-          'toast.sortDragHint': 'Switch sort order to "Pinned & Custom" to drag and reorder accounts',
+          'toast.sortDragHint': 'Switch to "{sort}" sorting to drag and reorder accounts',
 
           'err.base32Invalid': 'Invalid Base32 secret format',
           'err.secretShort': 'Secret key is too short',
@@ -17427,12 +17446,12 @@ var qrcode = function() {
         return pbkdf2Sha256Js(pwBytes, saltBytes, iterations, 32);
       }
 
-      async function encryptEnvelope(plaintextObj, password, preDerivedKeyBytes = null) {
+      async function encryptEnvelope(plaintextObj, password) {
         const salt = crypto.getRandomValues(new Uint8Array(16));
         const iv = crypto.getRandomValues(new Uint8Array(12));
         // 新加密的内容（新设主密码、导出加密备份）用 60 万次；旧数据按自己记录的次数解开，旧版本也照样能读
         const iterations = 600000;
-        const keyBytes = preDerivedKeyBytes || await deriveAesKeyBytes(password, salt, iterations);
+        const keyBytes = await deriveAesKeyBytes(password, salt, iterations);
         const ptBytes = te.encode(JSON.stringify(plaintextObj));
         let ctBytes;
         if (globalThis.crypto?.subtle) {
@@ -17643,13 +17662,24 @@ var qrcode = function() {
           const prefix = parsedAccount.slice(0, cIdx).trim();
           const rest = parsedAccount.slice(cIdx + 1).trim();
           if (!parsedIssuer) parsedIssuer = prefix;
-          parsedAccount = rest || prefix;
+          parsedAccount = rest;
         }
         const algoMap = { 0: 'SHA1', 1: 'SHA1', 2: 'SHA256', 3: 'SHA512', 4: 'MD5' };
+        const validType = typeCode === 0 || typeCode === 2;
+        const validAlgo = algoCode >= 0 && algoCode <= 3;
+        const validDigits = digitCode >= 0 && digitCode <= 2;
         const algorithm = algoMap[algoCode] || 'SHA1';
         const digits = digitCode === 2 ? 8 : 6;
-        const supported = (typeCode === 0 || typeCode === 2) && algorithm !== 'MD5' && secretBytes.length > 0;
-        const reason = typeCode === 1 ? t('migration.reasonHotp') : algorithm === 'MD5' ? t('migration.reasonMd5') : !secretBytes.length ? t('migration.reasonNoSecret') : '';
+        const supported = validType && validAlgo && validDigits && secretBytes.length > 0;
+        const reason = typeCode === 1
+          ? t('migration.reasonHotp')
+          : algoCode === 4
+            ? t('migration.reasonMd5')
+            : !secretBytes.length
+              ? t('migration.reasonNoSecret')
+              : (!validType || !validAlgo || !validDigits)
+                ? t('migration.reasonUnknown')
+                : '';
         return {
           issuer: parsedIssuer || t('common.unnamed'),
           account: parsedAccount,
@@ -17759,7 +17789,7 @@ var qrcode = function() {
 
       function splitProtectedText(text, splitter, { unquoteCsv = false } = {}) {
         const placeholders = [];
-        const masked = text.replace(/otpauth:\/\/[^\t|｜;；\r\n]+?(?=(?:\s*(?:[-_=|:;/#~*+—]{2,}|[|｜;；\t\r\n])|$))/gi, (m) => {
+        const masked = text.replace(/otpauth:\/\/[^\s|｜;；\t\r\n]+?(?=(?:\s|[|｜;；\t\r\n]|([-_=|:;/#~*+—])\1{2,}|$))/gi, (m) => {
           const key = `\u0000OTP${placeholders.length}\u0000`;
           placeholders.push(m);
           return key;
@@ -17781,7 +17811,7 @@ var qrcode = function() {
         if (parts.some((p) => !p)) return null;
         if (FIELD_LABEL_ONLY_RE.test(parts[0])) return null;
 
-        const buildResult = ({ issuer = '', account = '', password = '', secretMatch, noteParts = [] }) => {
+        const buildResult = ({ issuer = '', account = '', password = '', secretMatch, noteParts = [], ambiguous = false }) => {
           const otp = secretMatch.otpauth;
           const cleanIssuer = issuer ? stripFieldLabel(issuer, ISSUER_LABEL_RE) : (otp?.issuer || '');
           const cleanAccount = account ? stripFieldLabel(account, ACCOUNT_LABEL_RE) : (otp?.account || '');
@@ -17796,8 +17826,49 @@ var qrcode = function() {
             algorithm: otp?.algorithm || 'SHA1',
             digits: otp?.digits || 6,
             period: otp?.period || 30,
+            ambiguous,
           };
         };
+
+        // Any part with an explicit non-secret field label: map labeled parts directly to their fields
+        const hasNonSecretLabel = parts.some((p) => ISSUER_LABEL_RE.test(p) || ACCOUNT_LABEL_RE.test(p) || PASSWORD_LABEL_RE.test(p));
+        if (hasNonSecretLabel) {
+          let issuer = '';
+          let account = '';
+          let password = '';
+          let secretMatch = null;
+          const unlabeled = [];
+          for (const part of parts) {
+            if (!issuer && ISSUER_LABEL_RE.test(part)) issuer = part;
+            else if (!account && ACCOUNT_LABEL_RE.test(part)) account = part;
+            else if (!password && PASSWORD_LABEL_RE.test(part)) password = part;
+            else if (!secretMatch && SECRET_LABEL_RE.test(part)) {
+              const m = extractSecretFromToken(part, { minLen: strict ? 10 : 8 });
+              if (m) secretMatch = m;
+              else unlabeled.push(part);
+            } else {
+              unlabeled.push(part);
+            }
+          }
+          if (!secretMatch) {
+            for (let i = unlabeled.length - 1; i >= 0; i--) {
+              const m = extractSecretFromToken(unlabeled[i], { minLen: strict ? 10 : 8 });
+              if (m && (!strict || isStrongSecretMatch(m))) {
+                secretMatch = m;
+                unlabeled.splice(i, 1);
+                break;
+              }
+            }
+          }
+          if (secretMatch && (!strict || isStrongSecretMatch(secretMatch))) {
+            if (!account && !secretMatch.otpauth?.account && unlabeled.length) {
+              account = unlabeled.shift();
+            }
+            const res = buildResult({ issuer, account, password, secretMatch, noteParts: unlabeled });
+            if (res) return res;
+          }
+          return null;
+        }
 
         if (parts.length === 2) {
           if (!allowTwoPart) return null;
@@ -17829,8 +17900,14 @@ var qrcode = function() {
         if (!chosen) return null;
 
         const { idx: secretIdx, match: sMatch } = chosen;
-        if (parts.length === 4 && secretIdx === 3 && !isLikelyEmail(parts[0]) && (isExactPlatformName(parts[0]) || isLikelyEmail(parts[1]))) {
-          return buildResult({ issuer: parts[0], account: parts[1], password: parts[2], secretMatch: sMatch });
+        if (parts.length === 4 && secretIdx === 3) {
+          if (isLikelyEmail(parts[0]) || isLikelyEmail(parts[2])) {
+            return buildResult({ account: parts[0], password: parts[1], secretMatch: sMatch, noteParts: [parts[2]] });
+          }
+          if (isExactPlatformName(parts[0]) || isLikelyEmail(parts[1])) {
+            return buildResult({ issuer: parts[0], account: parts[1], password: parts[2], secretMatch: sMatch });
+          }
+          return buildResult({ issuer: parts[0], account: parts[1], password: parts[2], secretMatch: sMatch, ambiguous: true });
         }
         const extraNotes = [
           ...parts.slice(2, secretIdx),
@@ -17847,6 +17924,8 @@ var qrcode = function() {
         // Multi-line single-account snippet (e.g. account\npassword\nsecret)
         if (/[\r\n]/.test(text)) {
           const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+          const strongSecretLines = lines.filter((l) => isStrongSecretMatch(extractSecretFromToken(l))).length;
+          if (strongSecretLines >= 2) return null;
           if (lines.length >= 2 && lines.length <= 5) {
             const multiRes = mapDelimitedParts(lines, { strict: false, allowTwoPart: true });
             if (multiRes) return multiRes;
@@ -18048,7 +18127,6 @@ var qrcode = function() {
         viewMode: ['list', 'grid'].includes(preferences.VIEW) ? preferences.VIEW : (matchMedia('(max-width: 700px)').matches ? 'list' : 'grid'),
         autoLockMin: preferences.AUTOLOCK === null || preferences.AUTOLOCK === undefined ? 5 : Number(preferences.AUTOLOCK),
         storageState: startupStorageError ? 'unavailable' : 'ready',
-        storageMessage: '',
         baseRaw: null,
         rawRecovery: null,
         dirty: false,
@@ -18086,18 +18164,30 @@ var qrcode = function() {
         return `${h.slice(0,8)}-${h.slice(8,12)}-${h.slice(12,16)}-${h.slice(16,20)}-${h.slice(20)}`;
       }
 
+      const PLATFORM_PRESET_MATCHERS = PLATFORM_PRESETS.map((p) => ({
+        preset: p,
+        nameLower: p.name.toLowerCase(),
+        aliasRes: p.aliases.map((a) => new RegExp(`(^|[^a-z0-9])${escapeRegExp(a)}($|[^a-z0-9])`)),
+      }));
+      const platformPresetCache = new Map();
+
       function resolvePlatformPreset(issuer, explicitIcon = 'auto') {
-        if (explicitIcon && explicitIcon !== 'auto') {
-          const direct = PLATFORM_PRESETS.find((p) => p.id === explicitIcon);
-          if (direct) return direct;
-        }
         const q = String(issuer || '').trim().toLowerCase();
-        if (!q) return null;
-        // 别名按整词匹配：GitHub Enterprise、Xbox Live 能认出，Deliveroo、Bitget、Ghost 不会被误认成 Microsoft、Telegram、GitHub
-        const asWord = (a) => new RegExp(`(^|[^a-z0-9])${escapeRegExp(a)}($|[^a-z0-9])`).test(q);
-        return PLATFORM_PRESETS.find((p) =>
-          p.name.toLowerCase() === q || p.aliases.some(asWord)
-        ) || null;
+        const cacheKey = `${explicitIcon || 'auto'}|${q}`;
+        if (platformPresetCache.has(cacheKey)) return platformPresetCache.get(cacheKey);
+        let found = null;
+        if (explicitIcon && explicitIcon !== 'auto') {
+          found = PLATFORM_PRESETS.find((p) => p.id === explicitIcon) || null;
+        }
+        if (!found && q) {
+          // 别名按整词匹配：GitHub Enterprise、Xbox Live 能认出，Deliveroo、Bitget、Ghost 不会被误认成 Microsoft、Telegram、GitHub
+          const entry = PLATFORM_PRESET_MATCHERS.find((m) =>
+            m.nameLower === q || m.aliasRes.some((re) => re.test(q))
+          );
+          found = entry ? entry.preset : null;
+        }
+        platformPresetCache.set(cacheKey, found);
+        return found;
       }
 
       function computeBadgeColor(acc) {
@@ -18240,31 +18330,21 @@ var qrcode = function() {
       }
 
       function syncExecCopy(text) {
+        const prev = document.activeElement;
+        const host = prev?.closest?.('dialog[open]') || [...document.querySelectorAll('dialog[open]')].at(-1) || document.body;
+        const ta = Object.assign(document.createElement('textarea'), { value: text, readOnly: true });
+        ta.style.cssText = 'position:fixed;inset:0 auto auto 0;width:1px;height:1px;font-size:16px;opacity:0;pointer-events:none';
+        host.appendChild(ta);
         try {
-          const prevFocus = document.activeElement;
-          const ta = document.createElement('textarea');
-          ta.value = text;
-          ta.setAttribute('readonly', '');
-          ta.style.position = 'fixed';
-          ta.style.top = '0';
-          ta.style.left = '0';
-          ta.style.width = '1px';
-          ta.style.height = '1px';
-          ta.style.fontSize = '16px';
-          ta.style.pointerEvents = 'none';
-          ta.style.opacity = '0';
-          document.body.appendChild(ta);
           ta.focus({ preventScroll: true });
           ta.select();
-          ta.setSelectionRange(0, text.length);
-          const ok = document.execCommand('copy');
-          ta.remove();
-          if (prevFocus && typeof prevFocus.focus === 'function') {
-            prevFocus.focus({ preventScroll: true });
-          }
-          return ok;
+          ta.setSelectionRange(0, ta.value.length);
+          return document.activeElement === ta && ta.selectionStart === 0 && ta.selectionEnd === ta.value.length && document.execCommand('copy');
         } catch {
           return false;
+        } finally {
+          ta.remove();
+          prev?.focus?.({ preventScroll: true });
         }
       }
 
@@ -18650,8 +18730,9 @@ var qrcode = function() {
         $('exportPendingBtn').hidden = state === 'read-error' || appState.locked;
         $('downloadRawBtn').hidden = appState.rawRecovery === null;
         $('reloadVaultBtn').hidden = !['read-error', 'conflict', 'unavailable', 'write-error'].includes(state);
-        // 有真实账号但从未导出过备份时，在备份入口上显示提醒圆点
-        const needsBackup = !appState.locked && !appState.lastExport && appState.accounts.some(a => !a.isDemo);
+        // 有真实账号但从未导出过，或上次导出后有新增账号时，在备份入口上显示提醒圆点
+        const hasReal = appState.accounts.some(a => !a.isDemo);
+        const needsBackup = !appState.locked && hasReal && (!appState.lastExport || appState.accounts.some(a => !a.isDemo && (a.createdAt || 0) > Date.parse(appState.lastExport.at)));
         document.querySelectorAll('[data-backup-dot]').forEach((dot) => { dot.hidden = !needsBackup; });
         $('openAddBtn').disabled = state === 'read-error' || state === 'conflict';
         $('emptyAddBtn').disabled = $('openAddBtn').disabled;
@@ -18664,8 +18745,11 @@ var qrcode = function() {
           if (raw === null) localStorage.removeItem(KEYS.VAULT);
           else localStorage.setItem(KEYS.VAULT, raw);
         };
-        if (navigator.locks) await navigator.locks.request('2fa-vault-write', write);
-        else write();
+        if (navigator.locks) {
+          let ran = false;
+          try { await navigator.locks.request('2fa-vault-write', () => { ran = true; write(); }); }
+          catch (e) { if (ran || e?.name !== 'SecurityError') throw e; write(); }
+        } else write();
       }
       async function saveVault(options = {}) {
         if (appState.locked) return false;
@@ -18802,6 +18886,7 @@ var qrcode = function() {
         resetPasswordToggle($('toggleImportPwdBtn'), $('importPwdInput'));
         resetPasswordToggle($('toggleCurrentMasterPwdBtn'), $('currentMasterPwd'));
         resetPasswordToggle($('toggleNewMasterPwdBtn'), $('newMasterPwd'));
+        $('confirmMasterPwd').type = 'password';
         appState.locked = true;
         appState.accounts = [];
         appState.sessionKeyBytes = null;
@@ -18873,7 +18958,8 @@ var qrcode = function() {
         return filtered.toSorted((a, b) => {
           if (Boolean(a.pinned) !== Boolean(b.pinned)) return a.pinned ? -1 : 1;
           if (appState.sortBy === 'name') {
-            return (a.issuer || '').localeCompare(b.issuer || '', 'zh-CN');
+            const loc = getActiveLocale();
+            return (a.issuer || '').localeCompare(b.issuer || '', loc) || (a.account || '').localeCompare(b.account || '', loc);
           }
           if (appState.sortBy === 'recent') {
             return (b.updatedAt || 0) - (a.updatedAt || 0);
@@ -19223,11 +19309,13 @@ var qrcode = function() {
             const expBtn = document.createElement('button');
             expBtn.type = 'button';
             expBtn.className = 'note-expand-btn';
+            expBtn.setAttribute('aria-expanded', String(expanded));
             expBtn.textContent = expanded ? t('common.collapse') : t('common.expand');
             expBtn.addEventListener('click', () => {
               if (appState.expandedNotes.has(acc.id)) appState.expandedNotes.delete(acc.id);
               else appState.expandedNotes.add(acc.id);
               renderAccounts();
+              $('accountsList').querySelector(`[data-id="${CSS.escape(acc.id)}"] .note-expand-btn`)?.focus({ preventScroll: true });
             });
             box.appendChild(expBtn);
           }
@@ -19351,6 +19439,7 @@ var qrcode = function() {
 
         appState.cardNodes.set(acc.id, {
           acc,
+          displayName,
           zoneEl: zone,
           codeBtn,
           digitsEl,
@@ -19361,6 +19450,8 @@ var qrcode = function() {
           ringSec: rSec,
           circumference,
           lastStep: -1,
+          lastRemSec: -1,
+          lastExpiring: null,
         });
 
         return li;
@@ -19451,7 +19542,12 @@ var qrcode = function() {
         if (Date.now() >= appState.undoDeletion.until) { clearUndo(); showToast(t('undo.expired')); return; }
         const { acc, index } = appState.undoDeletion;
         clearUndo();
-        appState.accounts.splice(index, 0, acc);
+        if (appState.accounts.some(a => a.id === acc.id || tokenIdentity(a) === tokenIdentity(acc))) {
+          showToast(t('undo.exists'));
+          return;
+        }
+        const safeIdx = Math.max(0, Math.min(index, appState.accounts.length));
+        appState.accounts.splice(safeIdx, 0, acc);
         if (!await saveVault()) { renderAll(); return; }
         renderAll(); showToast(t('undo.restored'));
       }
@@ -19479,19 +19575,37 @@ var qrcode = function() {
         $('backupSummary').textContent = backupDescription();
         $('backupDialog').showModal();
       }
+      let importPreviewSeq = 0;
       function invalidateImport() {
+        importPreviewSeq++;
         appState.importPreview = null;
         $('importPreview').hidden = true;
         $('runImportBtn').disabled = true;
         $('allowPartialImport').checked = false;
       }
+      function formatBackupImportToast(imported, dup, invalid) {
+        const base = imported === 1 ? t('backup.import.doneBaseOne') : t('backup.import.doneBase', { imported });
+        const skips = [];
+        if (dup > 0) skips.push(dup === 1 ? t('backup.import.doneSkipDupOne') : t('backup.import.doneSkipDup', { dup }));
+        if (invalid > 0) skips.push(invalid === 1 ? t('backup.import.doneSkipInvalidOne') : t('backup.import.doneSkipInvalid', { invalid }));
+        if (!skips.length) return base;
+        return t('backup.import.doneWithSkips', { base, skips: skips.join(t('backup.import.doneSkipJoin')) });
+      }
+      function formatMigrationToast(added, skipped) {
+        if (!skipped) return added === 1 ? t('migration.importedOne') : t('migration.imported', { added });
+        const base = added === 1 ? t('migration.importedBaseOne') : t('migration.importedBase', { added });
+        const skip = skipped === 1 ? t('migration.skippedDupOne') : t('migration.skippedDup', { skipped });
+        return t('migration.importedWithSkipped', { base, skip });
+      }
       const tokenIdentity = account => [account.secret, account.algorithm, account.digits, account.period].join(':');
       async function previewImport() {
         invalidateImport(); setErrorBox($('importErrorBox'), '');
+        const seq = ++importPreviewSeq;
         const data = appState.pendingImportData;
         if (!data) return;
         try {
           const payload = data.encrypted === true ? (await decryptEnvelope(validateEnvelope(data), $('importPwdInput').value)).data : data;
+          if (seq !== importPreviewSeq || !$('backupDialog').open) return;
           if (!payload || !Array.isArray(payload.accounts) || (payload.version !== undefined && payload.version !== 1)) throw new VaultDataError(t('err.backupAccountsOrVer'));
           const mode = document.querySelector('input[name="importMode"]:checked').value;
           const seen = new Set(mode === 'merge' ? appState.accounts.map(tokenIdentity) : []);
@@ -19515,15 +19629,19 @@ var qrcode = function() {
           $('importPreview').hidden = false;
           $('runImportBtn').disabled = (valid.length === 0 && (mode === 'merge' || invalid > 0)) || invalid > 0;
         } catch (error) {
+          if (seq !== importPreviewSeq || !$('backupDialog').open) return;
           if (!(error instanceof Error)) throw error;
           setErrorBox($('importErrorBox'), error.message);
         }
       }
       async function runImport() {
+        if (appState.storageState === 'conflict') { setErrorBox($('importErrorBox'), t('toast.handleBannerInDialog')); return; }
         const preview = appState.importPreview;
         if (!preview || (preview.invalid && (preview.valid.length === 0 || !$('allowPartialImport').checked))) return;
         if (preview.mode === 'replace') {
           if (!await showConfirm({ title: t('backup.import.replaceTitle'), message: t('backup.import.replaceMsg', { valid: preview.valid.length, invalidNote: preview.invalid ? t('backup.import.replaceInvalidNote', { invalid: preview.invalid }) : '' }), okText: t('backup.import.replaceOk'), isDanger: true })) return;
+          if (appState.storageState === 'conflict') { setErrorBox($('importErrorBox'), t('toast.handleBannerInDialog')); return; }
+          clearUndo();
         }
         const usedIds = new Set(preview.mode === 'merge' ? appState.accounts.map(a => a.id) : []);
         const imported = preview.valid.map(account => {
@@ -19536,7 +19654,7 @@ var qrcode = function() {
         renderAll();
         if (!saved) { setErrorBox($('importErrorBox'), t('backup.import.unsavedErr')); return; }
         $('backupDialog').close();
-        showToast(t('backup.import.doneToast', { imported: imported.length, dup: preview.duplicate, invalid: preview.invalid }));
+        showToast(formatBackupImportToast(imported.length, preview.duplicate, preview.invalid));
       }
 
       function renderAccounts() {
@@ -19634,7 +19752,7 @@ var qrcode = function() {
         const now = Date.now();
         const epochSec = Math.floor(now / 1000);
         for (const entry of appState.cardNodes.values()) {
-          const { acc, zoneEl, codeBtn, digitsEl, nextBtn, nextDigits, ringProg, ringSec, circumference } = entry;
+          const { acc, displayName, zoneEl, codeBtn, digitsEl, nextBtn, nextDigits, ringProg, ringSec, circumference } = entry;
           const period = Math.max(5, Number(acc.period) || 30);
           const step = Math.floor(epochSec / period);
           const remMs = period * 1000 - (now % (period * 1000));
@@ -19646,19 +19764,29 @@ var qrcode = function() {
               const nxt = generateTOTP({ ...acc, period, timestampMs: now, stepOffset: 1 });
               codeBtn.dataset.rawCode = code;
               digitsEl.textContent = formatOtpCode(code);
-              nextBtn.dataset.rawCode = nxt;
               nextDigits.textContent = formatOtpCode(nxt);
+              codeBtn.setAttribute('aria-label', t('card.copyOtpWithCodeAria', { name: displayName, code }));
+              nextBtn.setAttribute('aria-label', t('card.copyNextWithCodeAria', { name: displayName, code: nxt }));
             } catch {
               codeBtn.dataset.rawCode = '';
               digitsEl.textContent = t('card.secretError');
               nextDigits.textContent = '---';
+              codeBtn.setAttribute('aria-label', t('card.copyOtpAria', { name: displayName }));
+              nextBtn.setAttribute('aria-label', t('card.copyNextAria', { name: displayName }));
             }
           }
           const ratio = Math.max(0, Math.min(1, remMs / (period * 1000)));
-          ringSec.textContent = `${remSec}s`;
+          if (entry.lastRemSec !== remSec) {
+            entry.lastRemSec = remSec;
+            ringSec.textContent = `${remSec}s`;
+          }
           ringProg.setAttribute('stroke-dashoffset', String(circumference * (1 - ratio)));
-          zoneEl.classList.toggle('is-expiring', remSec <= 5);
-          nextBtn.classList.toggle('is-expiring', remSec <= 5);
+          const expiring = remSec <= 5;
+          if (entry.lastExpiring !== expiring) {
+            entry.lastExpiring = expiring;
+            zoneEl.classList.toggle('is-expiring', expiring);
+            nextBtn.classList.toggle('is-expiring', expiring);
+          }
         }
         if ((force || lastPreviewSec !== epochSec) && $('accountDialog').open && appState.importStage) {
           lastPreviewSec = epochSec;
@@ -19705,6 +19833,7 @@ var qrcode = function() {
 
       async function clearDemoAccounts() {
         if (!mutable()) return;
+        clearUndo();
         appState.accounts = appState.accounts.filter((a) => !a.isDemo);
         appState.demoDismissed = true;
         if (!await saveVault()) { renderAll(); return; }
@@ -19833,7 +19962,7 @@ var qrcode = function() {
 
         // Clear validation visuals
         [...form.elements].forEach((el) => {
-          el.classList?.remove('user-invalid-fallback', 'user-valid-fallback');
+          el.classList?.remove('user-invalid-fallback');
           if (el.setCustomValidity) el.setCustomValidity('');
           syncAria(el);
         });
@@ -19868,6 +19997,29 @@ var qrcode = function() {
         el.classList.add('is-visible');
       }
 
+      function resetConfirmFields() {
+        $('accIssuer').value = '';
+        $('accName').value = '';
+        $('accPassword').value = '';
+        $('accNote').value = '';
+        $('accGroup').value = '';
+        $('accPinned').checked = false;
+        $('accAlgo').value = 'SHA1';
+        $('accDigits').value = '6';
+        $('accPeriod').value = '30';
+        appState.selectedIcon = 'auto';
+        $('supplementDetails').open = false;
+        $('accountForm').querySelector('.adv-details:not(#supplementDetails)').open = false;
+        setInlineAlert($('accountInlineStatus'), '');
+        resetPasswordToggle($('toggleAccPwdBtn'), $('accPassword'));
+        resetPasswordToggle($('toggleAccSecretBtn'), $('accSecret'));
+        [$('accIssuer'), $('accSecret'), $('accPeriod')].forEach((el) => {
+          el.classList.remove('user-invalid-fallback');
+          el.setCustomValidity('');
+          syncAria(el);
+        });
+      }
+
       function applyParsedTextToForm(raw, { quietBase32 = false } = {}) {
         const text = String(raw || '').trim();
         const msgBox = $('qrParseMsg');
@@ -19890,9 +20042,9 @@ var qrcode = function() {
           try {
             const parsed = parseOtpAuthUri(text);
             if (!$('accountDialog').open) openAccountDialog(null);
+            if (!appState.editingId) resetConfirmFields();
             $('accIssuer').value = parsed.issuer || t('common.unnamed');
             $('accName').value = parsed.account || '';
-            if (!appState.editingId) $('accPassword').value = '';
             $('accSecret').value = parsed.secret;
             $('accAlgo').value = parsed.algorithm;
             $('accDigits').value = String(parsed.digits);
@@ -19902,6 +20054,7 @@ var qrcode = function() {
             syncAria($('accSecret'));
             renderPlatformQuickChips();
             updateIssuerIconPreview();
+            renderGroupQuickChips();
             updateAccountLivePreview();
             setInlineAlert($('accountInlineStatus'), t('account.import.otpauthOk'), 'success');
             showAccountStep(true);
@@ -19916,6 +20069,7 @@ var qrcode = function() {
         const delimited = parseDelimitedAccountText(text);
         if (delimited) {
           if (!$('accountDialog').open) openAccountDialog(null);
+          if (!appState.editingId) resetConfirmFields();
           $('accIssuer').value = delimited.issuer || '';
           $('accName').value = delimited.account || '';
           $('accPassword').value = delimited.password || '';
@@ -19926,30 +20080,33 @@ var qrcode = function() {
           if (delimited.note) {
             $('accNote').value = delimited.note;
             $('supplementDetails').open = true;
-          } else if (!appState.editingId) {
-            $('accNote').value = '';
           }
           appState.selectedIcon = 'auto';
           $('accSecret').setCustomValidity('');
           syncAria($('accSecret'));
           renderPlatformQuickChips();
           updateIssuerIconPreview();
+          renderGroupQuickChips();
           updateAccountLivePreview();
-          const importedFields = [];
-          if (delimited.issuer) importedFields.push(t('account.import.fieldIssuer'));
-          if (delimited.account) importedFields.push(t('account.import.fieldAccount'));
-          if (delimited.password) importedFields.push(t('account.import.fieldPassword'));
-          importedFields.push(t('account.import.fieldSecret'));
-          if (delimited.note) importedFields.push(t('account.import.fieldNote'));
-          const lastField = importedFields.pop();
-          const isEn = getActiveLocale() === 'en';
-          const summaryText = importedFields.length
-            ? (isEn
-                ? (importedFields.length === 1 ? `${importedFields[0]} and ${lastField}` : `${importedFields.join(', ')}, and ${lastField}`)
-                : `${importedFields.join('、')}与${lastField}`)
-            : lastField;
-          const tailHint = delimited.issuer ? t('account.import.tailConfirm') : t('account.import.tailNeedIssuer');
-          setInlineAlert($('accountInlineStatus'), t('account.import.delimitedOk', { fields: summaryText, tail: tailHint }), 'success');
+          if (delimited.ambiguous) {
+            setInlineAlert($('accountInlineStatus'), t('account.import.ambiguousOrder'), 'warn');
+          } else {
+            const importedFields = [];
+            if (delimited.issuer) importedFields.push(t('account.import.fieldIssuer'));
+            if (delimited.account) importedFields.push(t('account.import.fieldAccount'));
+            if (delimited.password) importedFields.push(t('account.import.fieldPassword'));
+            importedFields.push(t('account.import.fieldSecret'));
+            if (delimited.note) importedFields.push(t('account.import.fieldNote'));
+            const lastField = importedFields.pop();
+            const isEn = getActiveLocale() === 'en';
+            const summaryText = importedFields.length
+              ? (isEn
+                  ? (importedFields.length === 1 ? `${importedFields[0]} and ${lastField}` : `${importedFields.join(', ')}, and ${lastField}`)
+                  : `${importedFields.join('、')}与${lastField}`)
+              : lastField;
+            const tailHint = delimited.issuer ? t('account.import.tailConfirm') : t('account.import.tailNeedIssuer');
+            setInlineAlert($('accountInlineStatus'), t('account.import.delimitedOk', { fields: summaryText, tail: tailHint }), 'success');
+          }
           showAccountStep(true);
           $('accIssuer').focus();
           return 'delimited';
@@ -19964,9 +20121,13 @@ var qrcode = function() {
           new Set(wsTokens.map((t) => t.length)).size > 1;
         if (!looksLikeProse && (singleSecret || isValidBase32(text))) {
           if (!$('accountDialog').open) openAccountDialog(null);
+          if (!appState.editingId) resetConfirmFields();
           $('accSecret').value = singleSecret ? singleSecret.secret : normalizeBase32(text);
           $('accSecret').setCustomValidity('');
           syncAria($('accSecret'));
+          renderPlatformQuickChips();
+          updateIssuerIconPreview();
+          renderGroupQuickChips();
           updateAccountLivePreview();
           if (!quietBase32) setInlineAlert($('accountInlineStatus'), t('account.import.base32Ok'), 'success');
           return 'base32';
@@ -20288,7 +20449,7 @@ var qrcode = function() {
           // 按名称/最近更新排序时长按，提示怎样才能拖动
           if (touch && appState.sortBy !== 'custom' && list.children.length > 1) {
             sortDrag = { hintOnly: true, pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, active: false, raf: 0,
-              timer: setTimeout(() => { sortDrag = null; showToast(t('toast.sortDragHint')); }, 500) };
+              timer: setTimeout(() => { sortDrag = null; showToast(t('toast.sortDragHint', { sort: t('sort.custom') })); }, 500) };
           }
           return;
         }
@@ -20371,17 +20532,19 @@ var qrcode = function() {
 
       // Global paste for QR screenshots & otpauth links
       document.addEventListener('paste', (e) => {
-        if (appState.locked) return;
+        if (appState.locked || ['conflict', 'read-error'].includes(appState.storageState)) return;
+        const openDialog = document.querySelector('dialog[open]');
         const items = [...(e.clipboardData?.items || [])];
         const imgItem = items.find((it) => it.type.startsWith('image/'));
         if (imgItem) {
+          if (openDialog && (openDialog.id !== 'accountDialog' || appState.importStage)) return;
           e.preventDefault();
           const file = imgItem.getAsFile();
           if (file) handleQrImageBlob(file);
           return;
         }
         const activeTag = document.activeElement?.tagName;
-        if (activeTag !== 'INPUT' && activeTag !== 'TEXTAREA' && !document.querySelector('dialog[open]')) {
+        if (activeTag !== 'INPUT' && activeTag !== 'TEXTAREA' && !openDialog) {
           const text = e.clipboardData?.getData('text') || '';
           const many = countAccountLines(text);
           if (many) {
@@ -20426,7 +20589,7 @@ var qrcode = function() {
       function countAccountLines(text) {
         const lines = String(text || '').split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
         if (lines.length < 2) return 0;
-        const hits = lines.filter((l) => /^otpauth:\/\//i.test(l) || parseDelimitedAccountText(l)).length;
+        const hits = lines.filter((l) => /^otpauth:\/\//i.test(l) || parseDelimitedAccountText(l) || isStrongSecretMatch(extractSecretFromToken(l))).length;
         return hits >= 2 ? hits : 0;
       }
       function rejectMultiAccount(count) {
@@ -20461,6 +20624,11 @@ var qrcode = function() {
       $('smartImportInput').addEventListener('drop', (e) => handleImportTransfer(e, e.dataTransfer?.getData('text') || ''));
       $('accIssuer').addEventListener('input', () => {
         const typed = $('accIssuer').value.trim();
+        if (typed) {
+          $('accIssuer').setCustomValidity('');
+          $('accIssuer').classList.remove('user-invalid-fallback');
+        }
+        syncAria($('accIssuer'));
         if (appState.selectedIcon !== 'auto') {
           const curPreset = PLATFORM_PRESETS.find((p) => p.id === appState.selectedIcon);
           const autoMatch = resolvePlatformPreset(typed, 'auto');
@@ -20476,6 +20644,11 @@ var qrcode = function() {
       ['accSecret', 'accAlgo', 'accDigits', 'accPeriod'].forEach((id) => {
         $(id).addEventListener('input', updateAccountLivePreview);
         $(id).addEventListener('change', updateAccountLivePreview);
+      });
+
+      $('accPeriod').addEventListener('input', () => {
+        if ($('accPeriod').validity.valid) $('accPeriod').classList.remove('user-invalid-fallback');
+        syncAria($('accPeriod'));
       });
 
       $('accSecret').addEventListener('input', () => {
@@ -20520,6 +20693,8 @@ var qrcode = function() {
         if (e.dataTransfer?.files?.[0]) handleQrImageBlob(e.dataTransfer.files[0]);
       });
 
+      const nextOrder = () => Math.max(-1, ...appState.accounts.map((a) => a.order ?? -1)) + 1;
+
       // Save Account Submit
       $('accountForm').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -20550,7 +20725,9 @@ var qrcode = function() {
               syncAria(el);
             }
           });
-          form.querySelector(':invalid')?.focus();
+          const firstInvalid = form.querySelector(':invalid');
+          firstInvalid?.closest('details')?.setAttribute('open', '');
+          firstInvalid?.focus();
           return;
         }
 
@@ -20574,7 +20751,7 @@ var qrcode = function() {
           color: prevAcc?.color || 'auto',
           icon: appState.selectedIcon || 'auto',
           isDemo: false,
-          order: appState.accounts.length,
+          order: nextOrder(),
           createdAt: now,
           updatedAt: now,
         };
@@ -20638,6 +20815,7 @@ var qrcode = function() {
         let added = 0;
         let skipped = 0;
         const now = Date.now();
+        let ord = nextOrder();
         const additions = [];
         for (const idx of checkedIdxs) {
           const item = appState.pendingMigrationItems[idx];
@@ -20657,7 +20835,7 @@ var qrcode = function() {
             period: 30,
             color: 'auto',
             isDemo: false,
-            order: appState.accounts.length + additions.length,
+            order: ord++,
             createdAt: now,
             updatedAt: now,
           });
@@ -20672,7 +20850,7 @@ var qrcode = function() {
         }
         $('migrationDialog').close('import');
         renderAll();
-        showToast(skipped ? t('migration.importedSkipped', { added, skipped }) : t('migration.imported', { added }));
+        showToast(formatMigrationToast(added, skipped));
       });
 
       // QR Dialog Buttons
@@ -20698,6 +20876,10 @@ var qrcode = function() {
           $('qrCopyStatus').textContent = '';
         }, 1800);
       });
+
+      function localDateStamp(d = new Date()) {
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      }
 
       // Backup & Restore
       function downloadJson(obj, filename) {
@@ -20732,7 +20914,7 @@ var qrcode = function() {
         const at = new Date().toISOString();
         const payload = { version: 1, exportedAt: at, accounts: structuredClone(appState.accounts), demoDismissed: appState.demoDismissed };
         const { envelope } = await encryptEnvelope(payload, password);
-        downloadJson({ app: '2fa-vault', ...envelope }, `2fa-vault-backup-${at.slice(0, 10)}.2favault.json`);
+        downloadJson({ app: '2fa-vault', ...envelope }, `2fa-vault-backup-${localDateStamp()}.2favault.json`);
         if (appState.storageState === 'ready' && !appState.dirty) await saveVault({ exportAt: at });
         $('backupSummary').textContent = backupDescription();
         setExportFeedback(t('backup.export.encryptedOk'), true);
@@ -20741,7 +20923,7 @@ var qrcode = function() {
         setExportFeedback('');
         if (!await showConfirm({ title: t('backup.export.plainConfirmTitle'), message: t('backup.export.plainConfirmMsg'), okText: t('backup.export.plainConfirmOk'), isDanger: true })) return;
         const at = new Date().toISOString();
-        downloadJson({ app: '2fa-vault', version: 1, encrypted: false, exportedAt: at, accounts: structuredClone(appState.accounts), demoDismissed: appState.demoDismissed }, `2fa-vault-plain-${at.slice(0, 10)}.json`);
+        downloadJson({ app: '2fa-vault', version: 1, encrypted: false, exportedAt: at, accounts: structuredClone(appState.accounts), demoDismissed: appState.demoDismissed }, `2fa-vault-plain-${localDateStamp()}.json`);
         if (appState.storageState === 'ready' && !appState.dirty) await saveVault({ exportAt: at });
         $('backupSummary').textContent = backupDescription();
         setExportFeedback(t('backup.export.plainOk'), true);
@@ -20785,27 +20967,28 @@ var qrcode = function() {
           setErrorBox($('importErrorBox'), t('backup.import.readErr', { msg: error.message }));
         }
       });
+      const guardedPreviewImport = busyGuard(() => $('previewImportBtn'), previewImport);
       $('importPwdInput').addEventListener('input', invalidateImport);
       $('importPwdInput').addEventListener('keydown', (e) => {
         if (e.isComposing || e.keyCode === 229) return;
         if (e.key === 'Enter' && !$('previewImportBtn').disabled) {
           e.preventDefault();
-          previewImport();
+          guardedPreviewImport();
         }
       });
       document.querySelectorAll('input[name="importMode"]').forEach(input => input.addEventListener('change', () => {
         if (appState.importPreview || (appState.pendingImportData && appState.pendingImportData.encrypted !== true)) {
-          previewImport();
+          guardedPreviewImport();
         } else {
           invalidateImport();
         }
       }));
-      $('previewImportBtn').addEventListener('click', previewImport);
+      $('previewImportBtn').addEventListener('click', guardedPreviewImport);
       $('allowPartialImport').addEventListener('change', () => {
         const preview = appState.importPreview;
         $('runImportBtn').disabled = !preview || (preview.valid.length === 0 && (preview.mode === 'merge' || preview.invalid > 0)) || (preview.invalid > 0 && !$('allowPartialImport').checked);
       });
-      $('runImportBtn').addEventListener('click', runImport);
+      $('runImportBtn').addEventListener('click', busyGuard(() => $('runImportBtn'), runImport));
 
       // Settings & Master Password
       let masterPwdPanelMode = 'setup';
@@ -20815,6 +20998,7 @@ var qrcode = function() {
         $('masterPwdForm').reset();
         resetPasswordToggle($('toggleCurrentMasterPwdBtn'), $('currentMasterPwd'));
         resetPasswordToggle($('toggleNewMasterPwdBtn'), $('newMasterPwd'));
+        $('confirmMasterPwd').type = 'password';
         $('toggleChangeMasterPwdBtn').setAttribute('aria-expanded', String(mode === 'change'));
         $('toggleDisableMasterPwdBtn').setAttribute('aria-expanded', String(mode === 'disable'));
 
@@ -20908,9 +21092,26 @@ var qrcode = function() {
         setInlineAlert($('settingsStatus'), t('settings.lock.autoLockUpdated'), 'success');
       });
 
+      $('toggleNewMasterPwdBtn').addEventListener('click', () => { $('confirmMasterPwd').type = $('newMasterPwd').type; });
+
+      const disableMasterPwd = busyGuard(() => $('disableMasterPwdBtn'), async () => {
+        if (!mutable()) return;
+        setErrorBox($('masterPwdError'), ''); setInlineAlert($('settingsStatus'), '');
+        try {
+          if (!$('currentMasterPwd').value) throw new VaultDataError(t('settings.lock.needCurrentErr'));
+          await decryptEnvelope(JSON.parse(appState.baseRaw), $('currentMasterPwd').value);
+          if (!await saveVault({ encryption: null })) { setErrorBox($('masterPwdError'), t('settings.lock.disableFailErr')); return; }
+          syncSettingsModalUi({ preserveStatus: true });
+          setInlineAlert($('settingsStatus'), t('settings.lock.disabledWarn'), 'warn');
+        } catch (error) {
+          if (!(error instanceof Error)) throw error;
+          setErrorBox($('masterPwdError'), error.message);
+        }
+      });
+
       $('masterPwdForm').addEventListener('submit', busyGuard(() => $('saveMasterPwdBtn'), async event => {
         event.preventDefault();
-        if (masterPwdPanelMode === 'disable') { $('disableMasterPwdBtn').click(); return; }
+        if (masterPwdPanelMode === 'disable') { await disableMasterPwd(); return; }
         setErrorBox($('masterPwdError'), ''); setInlineAlert($('settingsStatus'), '');
         if (!mutable()) return;
         const password = $('newMasterPwd').value;
@@ -20935,26 +21136,14 @@ var qrcode = function() {
           setErrorBox($('masterPwdError'), error.message);
         }
       }));
-      $('disableMasterPwdBtn').addEventListener('click', async () => {
-        if (!mutable()) return;
-        setErrorBox($('masterPwdError'), ''); setInlineAlert($('settingsStatus'), '');
-        try {
-          if (!$('currentMasterPwd').value) throw new VaultDataError(t('settings.lock.needCurrentErr'));
-          await decryptEnvelope(JSON.parse(appState.baseRaw), $('currentMasterPwd').value);
-          if (!await saveVault({ encryption: null })) { setErrorBox($('masterPwdError'), t('settings.lock.disableFailErr')); return; }
-          syncSettingsModalUi({ preserveStatus: true });
-          setInlineAlert($('settingsStatus'), t('settings.lock.disabledWarn'), 'warn');
-        } catch (error) {
-          if (!(error instanceof Error)) throw error;
-          setErrorBox($('masterPwdError'), error.message);
-        }
-      });
+      $('disableMasterPwdBtn').addEventListener('click', disableMasterPwd);
 
       $('restoreDemoBtn').addEventListener('click', async () => {
         if (!mutable()) return;
         const demos = createDemoAccounts();
         const existingSecrets = new Set(appState.accounts.map((a) => normalizeBase32(a.secret)));
-        const toAdd = demos.filter((d) => !existingSecrets.has(d.secret));
+        let ord = nextOrder();
+        const toAdd = demos.filter((d) => !existingSecrets.has(d.secret)).map((d) => ({ ...d, order: ord++ }));
         if (!toAdd.length) {
           if ($('settingsDialog').open) setInlineAlert($('settingsStatus'), t('demo.exists'), 'warn');
           else showToast(t('demo.exists'));
@@ -20983,6 +21172,9 @@ var qrcode = function() {
         if (!ok) return;
         appState.accounts = [];
         appState.demoDismissed = true;
+        appState.lastExport = null;
+        appState.contentRevision = null;
+        appState.expandedNotes.clear();
         appState.revealedPasswords.clear();
         clearUndo();
         if (!await saveVault({ encryption: null })) {
@@ -21056,6 +21248,7 @@ var qrcode = function() {
           await writeSnapshot(null, appState.baseRaw);
         } catch (error) {
           if (!(error instanceof VaultConflictError) && !isStorageError(error)) throw error;
+          $('reloadFromLockBtn').hidden = false;
           $('unlockErrText').textContent = t('lock.reset.fail'); $('unlockErr').classList.add('is-visible'); return;
         }
         clearUndo(); appState.lockedDraft = null; appState.encryptedMode = false; appState.locked = false;

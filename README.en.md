@@ -15,6 +15,7 @@ A **single-file, zero-network, completely offline** browser-based 2FA (TOTP) aut
 ### Offline Security & Reliability
 - **Single-File & Zero Network**: Bundles offline QR decoding (`jsQR`), QR generation (`qrcode-generator`), and dual Web Crypto + pure-JS cryptographic engines so everything works offline and over `file://`.
 - **Optional Master Password Lock**: Protects secrets, login passwords, and notes in browser local storage using `AES-256-GCM` with `PBKDF2-HMAC-SHA256` (600,000 iterations), supporting inactivity auto-lock and instant manual lock.
+- **Local `file://` Storage Isolation Note**: When opened directly as a local file in Chrome or Edge, all local HTML pages share the same `localStorage`, so unencrypted data can be read by other local pages you open. Enabling **Master Password Lock** in **Settings** is strongly recommended once you save real accounts.
 - **Data Integrity Safeguards**:
   - Distinguishes read errors, unavailable storage, write failures, and multi-tab write conflicts; preserves original data on errors with raw export and retry options.
   - Confirmation prompt before deleting accounts plus a 10-second Undo bar.
