@@ -10,6 +10,12 @@
       if (t === 'light' || t === 'dark') {
         document.querySelector('meta[name="color-scheme"]').setAttribute('content', t);
       }
+      const savedLang = localStorage.getItem('vault2fa_v1_lang');
+      const navLang = (navigator.languages && navigator.languages[0]) || navigator.language || 'zh-CN';
+      const activeLang = (savedLang === 'zh-CN' || savedLang === 'en')
+        ? savedLang
+        : (String(navLang).toLowerCase().startsWith('zh') ? 'zh-CN' : 'en');
+      document.documentElement.lang = activeLang;
     } catch {}
   </script>
   <title>2FA Vault</title>
@@ -2830,25 +2836,25 @@
         </div>
 
         <div class="topbar-actions">
-          <button id="lockNowBtn" type="button" class="btn" aria-label="立即锁定保险库" title="立即锁定" hidden>
+          <button id="lockNowBtn" type="button" class="btn" data-i18n-aria-label="topbar.lock.aria" data-i18n-title="topbar.lock.title" aria-label="立即锁定保险库" title="立即锁定" hidden>
             <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>锁定</span>
+            <span data-i18n="topbar.lock">锁定</span>
           </button>
-          <button id="quickThemeBtn" type="button" class="btn btn-icon-pill" aria-label="切换外观主题" title="切换外观主题">
+          <button id="quickThemeBtn" type="button" class="btn btn-icon-pill" data-i18n-aria-label="topbar.theme.aria" data-i18n-title="topbar.theme.aria" aria-label="切换外观主题" title="切换外观主题">
             <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
           </button>
-          <button id="openBackupBtn" type="button" class="btn">
+          <button id="openBackupBtn" type="button" class="btn" data-i18n-aria-label="topbar.backup" aria-label="备份">
             <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            <span>备份</span>
+            <span data-i18n="topbar.backup">备份</span>
             <span class="attention-dot" data-backup-dot hidden></span>
           </button>
-          <button id="openSettingsBtn" type="button" class="btn">
+          <button id="openSettingsBtn" type="button" class="btn" data-i18n-aria-label="topbar.settings" aria-label="设置">
             <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            <span>设置</span>
+            <span data-i18n="topbar.settings">设置</span>
           </button>
-          <button id="openAddBtn" type="button" class="btn btn-primary">
+          <button id="openAddBtn" type="button" class="btn btn-primary" data-i18n-aria-label="topbar.add" aria-label="添加账号">
             <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            <span>添加账号</span>
+            <span data-i18n="topbar.add">添加账号</span>
           </button>
         </div>
       </div>
@@ -2862,24 +2868,25 @@
           <p id="storageDesc"></p>
         </div>
         <div class="banner-actions">
-          <button id="recoverBackupBtn" class="btn btn-primary" type="button">从备份恢复</button>
-          <button id="retrySaveBtn" class="btn" type="button">重试保存</button>
-          <button id="exportPendingBtn" class="btn" type="button">导出当前内容</button>
-          <button id="downloadRawBtn" class="btn" type="button">导出原始数据</button>
-          <button id="reloadVaultBtn" class="btn" type="button">重新加载</button>
+          <button id="recoverBackupBtn" class="btn btn-primary" type="button" data-i18n="storage.recover">从备份恢复</button>
+          <button id="retrySaveBtn" class="btn" type="button" data-i18n="storage.retry">重试保存</button>
+          <button id="exportPendingBtn" class="btn" type="button" data-i18n="storage.exportCurrent">导出当前内容</button>
+          <button id="downloadRawBtn" class="btn" type="button" data-i18n="storage.exportRaw">导出原始数据</button>
+          <button id="reloadVaultBtn" class="btn" type="button" data-i18n="storage.reload">重新加载</button>
         </div>
       </section>
-      <section class="controls-bar" aria-label="筛选与视图控制">
+      <section class="controls-bar" data-i18n-aria-label="controls.aria" aria-label="筛选与视图控制">
         <div class="search-row">
           <search class="search-box">
             <form id="searchForm">
-              <label for="searchInput" class="visually-hidden">搜索平台、账号、备注或分组</label>
+              <label for="searchInput" class="visually-hidden" data-i18n="search.label">搜索平台、账号、备注或分组</label>
               <div class="search-wrap">
                 <svg class="search-icon" aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                 <input
                   id="searchInput"
                   class="search-input"
                   type="search"
+                  data-i18n-placeholder="search.placeholder"
                   placeholder="搜索账号或平台"
                   autocorrect="off"
                   autocapitalize="none"
@@ -2887,7 +2894,7 @@
                 >
                 <span id="searchKbdHint" class="search-kbd" aria-hidden="true">/</span>
                 <span id="searchCount" class="search-count" aria-live="polite" hidden></span>
-                <button id="searchClearBtn" type="button" class="icon-btn search-clear" aria-label="清除搜索关键词" hidden>
+                <button id="searchClearBtn" type="button" class="icon-btn search-clear" data-i18n-aria-label="search.clear.aria" aria-label="清除搜索关键词" hidden>
                   <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>
               </div>
@@ -2895,40 +2902,40 @@
           </search>
 
           <div class="view-sort-group">
-            <label for="sortSelect" class="visually-hidden">排序方式</label>
+            <label for="sortSelect" class="visually-hidden" data-i18n="sort.label">排序方式</label>
             <div class="select-wrap">
               <select id="sortSelect" class="select-control">
-                <option value="custom">置顶与自定义</option>
-                <option value="name">名称 A–Z</option>
-                <option value="recent">最近更新</option>
+                <option value="custom" data-i18n="sort.custom">置顶与自定义</option>
+                <option value="name" data-i18n="sort.name">名称 A–Z</option>
+                <option value="recent" data-i18n="sort.recent">最近更新</option>
               </select>
               <svg class="select-chevron" aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
             </div>
 
-            <div class="segmented" role="group" aria-label="视图模式">
+            <div class="segmented" role="group" data-i18n-aria-label="view.aria" aria-label="视图模式">
               <button id="viewGridBtn" type="button" aria-pressed="true" data-view="grid">
                 <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/></svg>
-                <span>卡片</span>
+                <span data-i18n="view.grid">卡片</span>
               </button>
               <button id="viewListBtn" type="button" aria-pressed="false" data-view="list">
                 <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>
-                <span>列表</span>
+                <span data-i18n="view.list">列表</span>
               </button>
             </div>
           </div>
         </div>
 
         <div class="filter-row">
-          <div id="groupPills" class="group-pills" role="group" aria-label="分组筛选"></div>
+          <div id="groupPills" class="group-pills" role="group" data-i18n-aria-label="filter.aria" aria-label="分组筛选"></div>
         </div>
       </section>
 
       <div id="demoBanner" class="demo-banner" hidden>
         <div class="demo-banner-msg">
           <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8a2 2 0 0 0 1.28 1.28L21 12l-5.82 1.92a2 2 0 0 0-1.28 1.28L12 21l-1.9-5.8a2 2 0 0 0-1.28-1.28L3 12l5.82-1.92a2 2 0 0 0 1.28-1.28L12 3z"/></svg>
-          <span>当前为示例账号，可上传二维码导入。<span class="desktop-import-hint">也可按 <kbd>Cmd+V / Ctrl+V</kbd> 粘贴截图。</span></span>
+          <span id="demoBannerText">当前为示例账号，可上传二维码导入。<span class="desktop-import-hint">也可按 <kbd>Cmd+V / Ctrl+V</kbd> 粘贴截图。</span></span>
         </div>
-        <button id="clearDemoBtn" type="button" class="chip-btn">清空示例</button>
+        <button id="clearDemoBtn" type="button" class="chip-btn" data-i18n="demo.clear">清空示例</button>
       </div>
 
       <ul id="accountsList" class="cards-list" role="list" data-view="grid"></ul>
@@ -2939,10 +2946,10 @@
         <h2 id="emptyTitle">还没有保存任何 2FA 账号</h2>
         <p id="emptyDesc" class="field-hint">点击右上角“+”添加账号，支持上传或粘贴二维码截图导入。</p>
         <div class="empty-actions">
-          <button id="emptyAddBtn" type="button" class="btn btn-primary">添加第一个账号</button>
-          <button id="emptyRestoreBtn" class="btn" type="button">从备份恢复</button>
-          <button id="emptyDemoBtn" class="btn btn-ghost" type="button">体验示例</button>
-          <button id="emptyResetBtn" class="btn" type="button" hidden>清除搜索和筛选</button>
+          <button id="emptyAddBtn" type="button" class="btn btn-primary" data-i18n="empty.addFirst">添加第一个账号</button>
+          <button id="emptyRestoreBtn" class="btn" type="button" data-i18n="storage.recover">从备份恢复</button>
+          <button id="emptyDemoBtn" class="btn btn-ghost" type="button" data-i18n="empty.tryDemo">体验示例</button>
+          <button id="emptyResetBtn" class="btn" type="button" data-i18n="empty.resetFilters" hidden>清除搜索和筛选</button>
         </div>
       </div>
     </main>
@@ -2950,70 +2957,71 @@
 
   <dialog id="manualCopyDialog" class="dialog-narrow" closedby="any" aria-labelledby="manualCopyTitle">
     <div class="dialog-header">
-      <h2 id="manualCopyTitle">手动复制</h2>
-      <button type="button" class="icon-btn" data-dialog-close="manualCopyDialog" aria-label="关闭窗口">
+      <h2 id="manualCopyTitle" data-i18n="manualCopy.title">手动复制</h2>
+      <button type="button" class="icon-btn" data-dialog-close="manualCopyDialog" data-i18n-aria-label="common.closeWindow" aria-label="关闭窗口">
         <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
     <div class="dialog-body">
       <p id="manualCopyDesc" class="field-hint"></p>
-      <textarea id="manualCopyText" class="textarea-control is-mono" readonly aria-label="待复制内容"></textarea>
-      <button id="selectCopyTextBtn" class="btn" type="button">选中全部文本</button>
+      <textarea id="manualCopyText" class="textarea-control is-mono" readonly data-i18n-aria-label="manualCopy.textAria" aria-label="待复制内容"></textarea>
+      <button id="selectCopyTextBtn" class="btn" type="button" data-i18n="manualCopy.selectAll">选中全部文本</button>
     </div>
     <div class="dialog-footer">
-      <button type="button" class="btn" data-dialog-close="manualCopyDialog">完成</button>
+      <button type="button" class="btn" data-dialog-close="manualCopyDialog" data-i18n="common.done">完成</button>
     </div>
   </dialog>
-  <div id="undoBar" class="undo-bar" role="status" hidden><span id="undoMessage"></span><button id="undoDeleteBtn" class="btn" type="button">撤销删除</button><span id="undoCountdown" class="field-hint"></span></div>
+  <div id="undoBar" class="undo-bar" role="status" hidden><span id="undoMessage"></span><button id="undoDeleteBtn" class="btn" type="button" data-i18n="undo.btn">撤销删除</button><span id="undoCountdown" class="field-hint"></span></div>
 
   <!-- Add / Edit Account Dialog -->
   <dialog id="accountDialog" closedby="closerequest" aria-labelledby="accountDialogTitle">
     <div class="dialog-header">
-      <h2 id="accountDialogTitle">添加 2FA 账号</h2>
-      <button type="button" class="icon-btn" data-dialog-close="accountDialog" aria-label="关闭窗口">
+      <h2 id="accountDialogTitle" data-i18n="account.addTitle">添加 2FA 账号</h2>
+      <button type="button" class="icon-btn" data-dialog-close="accountDialog" data-i18n-aria-label="common.closeWindow" aria-label="关闭窗口">
         <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
     <form id="accountForm" novalidate>
       <div class="dialog-body">
-        <div id="setupProgress" class="setup-progress" aria-label="添加步骤">
-          <span id="stepImportLabel" class="active">1 导入</span>
-          <span id="stepConfirmLabel">2 确认账号</span>
+        <div id="setupProgress" class="setup-progress" data-i18n-aria-label="account.stepsAria" aria-label="添加步骤">
+          <span id="stepImportLabel" class="active" data-i18n="account.step1">1 导入</span>
+          <span id="stepConfirmLabel" data-i18n="account.step2">2 确认账号</span>
         </div>
         <div id="quickImportBlock" class="field">
-          <label for="smartImportInput">粘贴账号信息、密钥或认证链接</label>
-          <span id="smartImportHint" class="field-hint">支持直接粘贴“账号---密码---密钥”（兼容 | / : / , / 空格 等分隔符）、密钥、otpauth:// 链接、批量迁移码，或在下方上传/粘贴二维码截图。</span>
+          <label for="smartImportInput" data-i18n="account.smartImport.label">粘贴账号信息、密钥或认证链接</label>
+          <span id="smartImportHint" class="field-hint" data-i18n="account.smartImport.hint">支持直接粘贴“账号---密码---密钥”（兼容 | / : / , / 空格 等分隔符）、密钥、otpauth:// 链接、批量迁移码，或在下方上传/粘贴二维码截图。</span>
           <input
             id="smartImportInput"
             class="input-control is-mono"
             type="text"
+            data-i18n-placeholder="account.smartImport.placeholder"
             placeholder="如 user@example.com---密码---密钥，或 otpauth://..."
             autocorrect="off"
             autocapitalize="none"
             spellcheck="false"
             aria-describedby="smartImportHint"
           >
-          <div id="qrDropzone" class="dropzone" tabindex="0" role="button" aria-label="点击选择二维码图片，或拖拽、粘贴截图到此处">
+          <div id="qrDropzone" class="dropzone" tabindex="0" role="button" data-i18n-aria-label="account.dropzone.aria" aria-label="点击选择二维码图片，或拖拽、粘贴截图到此处">
             <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM17 17h4v4h-4zM14 20h1M20 14h1"/></svg>
-            <strong class="dropzone-title">选择二维码图片，或拖拽 / 粘贴截图</strong>
-            <span class="field-hint">图片仅在当前设备中识别，不会上传。</span>
+            <strong class="dropzone-title" data-i18n="account.dropzone.title">选择二维码图片，或拖拽 / 粘贴截图</strong>
+            <span class="field-hint" data-i18n="account.dropzone.hint">图片仅在当前设备中识别，不会上传。</span>
             <input id="qrFileInput" type="file" accept="image/*" class="visually-hidden">
           </div>
           <div id="qrParseMsg" class="error-msg" role="status"></div>
-          <button id="manualEntryBtn" type="button" class="btn btn-ghost">没有二维码？手动输入密钥</button>
+          <button id="manualEntryBtn" type="button" class="btn btn-ghost" data-i18n="account.manualEntry">没有二维码？手动输入密钥</button>
         </div>
         <div id="accountConfirmFields">
-        <button id="backToImportBtn" class="btn btn-ghost" type="button">← 返回导入</button>
+        <button id="backToImportBtn" class="btn btn-ghost" type="button" data-i18n="account.backToImport">← 返回导入</button>
         <div id="accountInlineStatus" class="inline-alert is-success" role="status" hidden></div>
 
         <div class="field">
-          <label>常用平台预设（点击快速填入并匹配图标）</label>
-          <div id="platformQuickChips" class="quick-chips" role="group" aria-label="常用平台快捷选择"></div>
+          <label data-i18n="account.presets.label">常用平台预设（点击快速填入并匹配图标）</label>
+          <div id="platformQuickChips" class="quick-chips" role="group" data-i18n-aria-label="account.presets.aria" aria-label="常用平台快捷选择"></div>
         </div>
 
         <div class="field-row">
           <div class="field">
-            <label for="accIssuer">平台 / 服务名称 *</label>
+            <label for="accIssuer" data-i18n="account.issuer.label">平台 / 服务名称 *</label>
             <div class="input-with-prefix">
               <div id="accIssuerIconPreview" class="issuer-badge" aria-hidden="true">2F</div>
               <input
@@ -3023,21 +3031,23 @@
                 type="text"
                 required
                 maxlength="60"
+                data-i18n-placeholder="account.issuer.placeholder"
                 placeholder="如 Google、ChatGPT"
                 data-error="accIssuerErr"
               >
             </div>
-            <div id="accIssuerErr" class="error-msg"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>请填写平台或服务名称。</span></div>
+            <div id="accIssuerErr" class="error-msg"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span data-i18n="account.issuer.error">请填写平台或服务名称。</span></div>
           </div>
 
           <div class="field">
-            <label for="accName">账号 / 邮箱</label>
+            <label for="accName" data-i18n="account.name.label">账号 / 邮箱</label>
             <input
               id="accName"
               name="account"
               class="input-control"
               type="text"
               maxlength="100"
+              data-i18n-placeholder="account.name.placeholder"
               placeholder="如 name@example.com"
               autocorrect="off"
               autocapitalize="none"
@@ -3047,7 +3057,7 @@
         </div>
 
         <div class="field">
-          <label for="accPassword">登录密码（可选，随保险库保存）</label>
+          <label for="accPassword" data-i18n="account.password.label">登录密码（可选，随保险库保存）</label>
           <div class="input-with-action">
             <input
               id="accPassword"
@@ -3056,17 +3066,18 @@
               type="password"
               maxlength="256"
               autocomplete="new-password"
+              data-i18n-placeholder="account.password.placeholder"
               placeholder="可选：保存此账号对应的登录密码"
             >
-            <button id="toggleAccPwdBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" aria-label="显示登录密码" title="显示">
+            <button id="toggleAccPwdBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" data-i18n-aria-label="account.password.toggleAria" aria-label="显示登录密码" title="显示">
               <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
           </div>
         </div>
 
         <div class="field">
-          <label for="accSecret">Base32 密钥 *</label>
-          <span id="accSecretHint" class="field-hint">自动去除空格与短横线并转为大写（至少 2 位 A-Z 或 2-7）。</span>
+          <label for="accSecret" data-i18n="account.secret.label">Base32 密钥 *</label>
+          <span id="accSecretHint" class="field-hint" data-i18n="account.secret.hint">自动去除空格与短横线并转为大写（至少 2 位 A-Z 或 2-7）。</span>
           <div class="input-with-action">
             <input
               id="accSecret"
@@ -3081,63 +3092,65 @@
               aria-describedby="accSecretHint"
               data-error="accSecretErr"
             >
-            <button id="toggleAccSecretBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" aria-label="显示密钥" title="显示">
+            <button id="toggleAccSecretBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" data-i18n-aria-label="account.secret.toggleAria" aria-label="显示密钥" title="显示">
               <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
           </div>
-          <div id="accSecretErr" class="error-msg"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span id="accSecretErrText">请输入有效的 Base32 密钥（仅含字母 A-Z 与数字 2-7）。</span></div>
+          <div id="accSecretErr" class="error-msg"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span id="accSecretErrText" data-i18n="account.secret.error">请输入有效的 Base32 密钥（仅含字母 A-Z 与数字 2-7）。</span></div>
         </div>
 
         <div id="liveCodePreviewBox" class="live-preview-box" hidden>
           <div class="live-preview-info">
-            <div id="livePreviewLabel" class="field-hint">实时校验</div>
+            <div id="livePreviewLabel" class="field-hint" data-i18n="account.livePreview.label">实时校验</div>
             <div id="livePreviewCode" class="live-preview-code">000 000</div>
           </div>
           <span id="livePreviewMeta" class="param-badge">30s · 6 位 · SHA1</span>
         </div>
 
         <details id="supplementDetails" class="adv-details">
-          <summary>补充信息 · 备注、分组与置顶</summary>
+          <summary data-i18n="account.supplement.summary">补充信息 · 备注、分组与置顶</summary>
           <div class="optional-fields">
 
         <div class="field">
-          <label for="accNote">账号备注（用途、关联信息、恢复提示等）</label>
+          <label for="accNote" data-i18n="account.note.label">账号备注（用途、关联信息、恢复提示等）</label>
           <textarea
             id="accNote"
             name="note"
             class="textarea-control"
             maxlength="1000"
+            data-i18n-placeholder="account.note.placeholder"
             placeholder="例如：主号，绑定 138****0000；备用恢复码已存于密码本…"
           ></textarea>
         </div>
 
         <div class="field">
-          <label for="accGroup">分组标签</label>
-          <div id="groupQuickChips" class="quick-chips" aria-label="常用分组快捷选择"></div>
+          <label for="accGroup" data-i18n="account.group.label">分组标签</label>
+          <div id="groupQuickChips" class="quick-chips" data-i18n-aria-label="account.group.aria" aria-label="常用分组快捷选择"></div>
           <input
             id="accGroup"
             name="group"
             class="input-control"
             type="text"
             maxlength="24"
+            data-i18n-placeholder="account.group.placeholder"
             placeholder="输入或点击上方标签（留空则不分组）"
           >
         </div>
 
         <label class="checkbox-row">
           <input id="accPinned" name="pinned" type="checkbox">
-          <span>置顶此账号（始终显示在列表最前方）</span>
+          <span data-i18n="account.pinned.label">置顶此账号（始终显示在列表最前方）</span>
         </label>
 
         </div></details>
         <details class="adv-details">
-          <summary>高级 TOTP 参数（算法 / 位数 / 刷新周期）</summary>
+          <summary data-i18n="account.advanced.summary">高级 TOTP 参数（算法 / 位数 / 刷新周期）</summary>
           <div class="field-row">
             <div class="field">
-              <label for="accAlgo">哈希算法</label>
+              <label for="accAlgo" data-i18n="account.algo.label">哈希算法</label>
               <div class="select-wrap">
                 <select id="accAlgo" class="select-control">
-                  <option value="SHA1">SHA-1（通用默认）</option>
+                  <option value="SHA1" data-i18n="account.algo.sha1">SHA-1（通用默认）</option>
                   <option value="SHA256">SHA-256</option>
                   <option value="SHA512">SHA-512</option>
                 </select>
@@ -3145,17 +3158,17 @@
               </div>
             </div>
             <div class="field">
-              <label for="accDigits">验证码位数</label>
+              <label for="accDigits" data-i18n="account.digits.label">验证码位数</label>
               <div class="select-wrap">
                 <select id="accDigits" class="select-control">
-                  <option value="6">6 位（默认）</option>
-                  <option value="8">8 位</option>
+                  <option value="6" data-i18n="account.digits.6">6 位（默认）</option>
+                  <option value="8" data-i18n="account.digits.8">8 位</option>
                 </select>
                 <svg class="select-chevron" aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
               </div>
             </div>
             <div class="field">
-              <label for="accPeriod">周期（秒）</label>
+              <label for="accPeriod" data-i18n="account.period.label">周期（秒）</label>
               <input id="accPeriod" class="input-control" type="number" min="5" max="300" step="1" value="30" required>
             </div>
           </div>
@@ -3164,9 +3177,9 @@
       </div>
       <p id="accountSaveError" class="error-msg form-save-error" role="status"></p>
       <div class="dialog-footer">
-        <button type="button" class="btn" data-dialog-close="accountDialog">取消</button>
-        <button id="continueImportBtn" type="button" class="btn btn-primary">确认导入内容</button>
-        <button id="saveAccountBtn" type="submit" class="btn btn-primary">保存账号</button>
+        <button type="button" class="btn" data-dialog-close="accountDialog" data-i18n="common.cancel">取消</button>
+        <button id="continueImportBtn" type="button" class="btn btn-primary" data-i18n="account.continueImport">确认导入内容</button>
+        <button id="saveAccountBtn" type="submit" class="btn btn-primary" data-i18n="account.save">保存账号</button>
       </div>
     </form>
   </dialog>
@@ -3174,8 +3187,8 @@
   <!-- Batch Google Authenticator Migration Import Dialog -->
   <dialog id="migrationDialog" class="dialog-wide" closedby="closerequest" aria-labelledby="migrationDialogTitle">
     <div class="dialog-header">
-      <h2 id="migrationDialogTitle">批量导入迁移账号</h2>
-      <button type="button" class="icon-btn" data-dialog-close="migrationDialog" aria-label="关闭窗口">
+      <h2 id="migrationDialogTitle" data-i18n="migration.title">批量导入迁移账号</h2>
+      <button type="button" class="icon-btn" data-dialog-close="migrationDialog" data-i18n-aria-label="common.closeWindow" aria-label="关闭窗口">
         <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
@@ -3183,22 +3196,22 @@
       <div class="dialog-body">
         <p id="migrationSummary" class="field-hint"></p>
         <div class="field">
-          <label for="migrationDefaultGroup">统一设置导入分组（可选）</label>
-          <input id="migrationDefaultGroup" class="input-control" type="text" maxlength="24" placeholder="如：迁移导入 / 个人 / 工作">
+          <label for="migrationDefaultGroup" data-i18n="migration.groupLabel">统一设置导入分组（可选）</label>
+          <input id="migrationDefaultGroup" class="input-control" type="text" maxlength="24" data-i18n-placeholder="migration.groupPlaceholder" placeholder="如：迁移导入 / 个人 / 工作">
         </div>
         <div class="row-between">
-          <span class="field-hint">勾选需要导入的账号：</span>
+          <span class="field-hint" data-i18n="migration.selectHint">勾选需要导入的账号：</span>
           <div class="chip-actions">
-            <button id="migSelectAllBtn" type="button" class="chip-btn">全选</button>
-            <button id="migDeselectAllBtn" type="button" class="chip-btn">全不选</button>
+            <button id="migSelectAllBtn" type="button" class="chip-btn" data-i18n="migration.selectAll">全选</button>
+            <button id="migDeselectAllBtn" type="button" class="chip-btn" data-i18n="migration.deselectAll">全不选</button>
           </div>
         </div>
         <div id="migrationList" class="migration-list"></div>
         <div id="migrationErrorBox" class="error-msg" role="status"></div>
       </div>
       <div class="dialog-footer">
-        <button type="button" class="btn" data-dialog-close="migrationDialog">取消</button>
-        <button id="confirmMigrationBtn" type="submit" class="btn btn-primary">导入选中账号</button>
+        <button type="button" class="btn" data-dialog-close="migrationDialog" data-i18n="common.cancel">取消</button>
+        <button id="confirmMigrationBtn" type="submit" class="btn btn-primary" data-i18n="migration.confirm">导入选中账号</button>
       </div>
     </form>
   </dialog>
@@ -3206,24 +3219,24 @@
   <!-- Show QR Code Dialog -->
   <dialog id="qrDialog" class="dialog-narrow" closedby="any" aria-labelledby="qrDialogTitle">
     <div class="dialog-header">
-      <h2 id="qrDialogTitle">导出账号二维码</h2>
-      <button type="button" class="icon-btn" data-dialog-close="qrDialog" aria-label="关闭窗口">
+      <h2 id="qrDialogTitle" data-i18n="qr.title">导出账号二维码</h2>
+      <button type="button" class="icon-btn" data-dialog-close="qrDialog" data-i18n-aria-label="common.closeWindow" aria-label="关闭窗口">
         <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
     <div class="dialog-body">
       <div id="qrTargetInfo" class="qr-target-info"></div>
-      <div id="qrFrame" class="qr-frame" role="img" aria-label="TOTP 二维码图像"></div>
+      <div id="qrFrame" class="qr-frame" role="img" data-i18n-aria-label="qr.frameAria" aria-label="TOTP 二维码图像"></div>
       <div class="inline-alert is-warn">
         <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        <span>二维码包含完整 2FA 私钥，可使用手机认证器 App 扫描迁移，请勿截图分享给他人。</span>
+        <span data-i18n="qr.warning">二维码包含完整 2FA 私钥，可使用手机认证器 App 扫描迁移，请勿截图分享给他人。</span>
       </div>
       <div class="field">
         <div class="row-between">
-          <span class="field-hint">otpauth:// 链接</span>
+          <span class="field-hint" data-i18n="qr.uriLabel">otpauth:// 链接</span>
           <div class="chip-actions">
-            <button id="toggleQrUriBtn" type="button" class="chip-btn" aria-pressed="false">显示完整链接</button>
-            <button id="copyQrUriBtn" type="button" class="chip-btn">复制链接</button>
+            <button id="toggleQrUriBtn" type="button" class="chip-btn" aria-pressed="false" data-i18n="qr.showUri">显示完整链接</button>
+            <button id="copyQrUriBtn" type="button" class="chip-btn" data-i18n="qr.copyUri">复制链接</button>
             <span id="qrCopyStatus" class="visually-hidden" role="status"></span>
           </div>
         </div>
@@ -3231,195 +3244,213 @@
       </div>
     </div>
     <div class="dialog-footer">
-      <button type="button" class="btn" data-dialog-close="qrDialog">完成</button>
+      <button type="button" class="btn" data-dialog-close="qrDialog" data-i18n="common.done">完成</button>
     </div>
   </dialog>
 
   <!-- Backup & Restore Dialog -->
   <dialog id="backupDialog" closedby="closerequest" aria-labelledby="backupDialogTitle">
     <div class="dialog-header">
-      <h2 id="backupDialogTitle">备份与恢复</h2>
-      <button type="button" class="icon-btn" data-dialog-close="backupDialog" aria-label="关闭窗口">
+      <h2 id="backupDialogTitle" data-i18n="backup.title">备份与恢复</h2>
+      <button type="button" class="icon-btn" data-dialog-close="backupDialog" data-i18n-aria-label="common.closeWindow" aria-label="关闭窗口">
         <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
     <div class="dialog-body">
       <fieldset class="settings-group">
-        <legend>导出备份文件</legend>
+        <legend data-i18n="backup.export.legend">导出备份文件</legend>
         <p id="backupSummary" class="field-hint"></p>
-        <p class="field-hint">包含全部验证码密钥、已保存的登录密码、分组和备注。建议定期导出保存到安全位置（如加密网盘或 U 盘），防止清理浏览器缓存导致丢失。</p>
+        <p class="field-hint" data-i18n="backup.export.desc">包含全部验证码密钥、已保存的登录密码、分组和备注。建议定期导出保存到安全位置（如加密网盘或 U 盘），防止清理浏览器缓存导致丢失。</p>
         <div class="field">
-          <label for="exportPwdInput">备份加密密码（至少 8 位）</label>
+          <label for="exportPwdInput" data-i18n="backup.export.pwdLabel">备份加密密码（至少 8 位）</label>
           <div class="input-with-action">
-            <input id="exportPwdInput" class="input-control" type="password" autocomplete="new-password" placeholder="输入至少 8 位密码以加密备份">
-            <button id="toggleExportPwdBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" aria-label="显示备份加密密码" title="显示">
+            <input id="exportPwdInput" class="input-control" type="password" autocomplete="new-password" data-i18n-placeholder="backup.export.pwdPlaceholder" placeholder="输入至少 8 位密码以加密备份">
+            <button id="toggleExportPwdBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" data-i18n-aria-label="backup.export.pwdToggleAria" aria-label="显示备份加密密码" title="显示">
               <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
           </div>
         </div>
         <div class="field">
-          <label for="exportPwdConfirm">再次输入备份密码</label>
-          <input id="exportPwdConfirm" class="input-control" type="password" autocomplete="new-password" placeholder="再输一次，防止输错后备份解不开">
+          <label for="exportPwdConfirm" data-i18n="backup.export.confirmLabel">再次输入备份密码</label>
+          <input id="exportPwdConfirm" class="input-control" type="password" autocomplete="new-password" data-i18n-placeholder="backup.export.confirmPlaceholder" placeholder="再输一次，防止输错后备份解不开">
         </div>
         <div id="exportFeedback" class="error-msg" role="status"></div>
         <div class="action-row">
-          <button id="exportEncryptedBtn" type="button" class="btn btn-primary">导出加密备份（.2favault.json）</button>
-          <button id="exportPlainBtn" type="button" class="btn">导出明文 JSON</button>
+          <button id="exportEncryptedBtn" type="button" class="btn btn-primary" data-i18n="backup.export.encryptedBtn">导出加密备份（.2favault.json）</button>
+          <button id="exportPlainBtn" type="button" class="btn" data-i18n="backup.export.plainBtn">导出明文 JSON</button>
         </div>
       </fieldset>
 
       <fieldset class="settings-group">
-        <legend>从备份文件恢复</legend>
+        <legend data-i18n="backup.import.legend">从备份文件恢复</legend>
         <div class="field">
-          <label for="importFileInput">选择备份文件（.json / .2favault.json）</label>
+          <label for="importFileInput" data-i18n="backup.import.fileLabel">选择备份文件（.json / .2favault.json）</label>
           <label id="importFilePicker" class="file-picker">
             <input id="importFileInput" type="file" accept=".json,application/json">
             <span class="btn file-picker-btn" aria-hidden="true">
               <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              <span>选择文件</span>
+              <span data-i18n="backup.import.chooseBtn">选择文件</span>
             </span>
-            <span id="importFileName" class="file-picker-name">选择或拖拽备份文件</span>
+            <span id="importFileName" class="file-picker-name" data-i18n="backup.import.filePlaceholder">选择或拖拽备份文件</span>
           </label>
         </div>
         <div id="importDecryptField" class="field" hidden>
-          <label for="importPwdInput">此备份已加密，请输入备份密码</label>
+          <label for="importPwdInput" data-i18n="backup.import.pwdLabel">此备份已加密，请输入备份密码</label>
           <div class="input-with-action">
-            <input id="importPwdInput" class="input-control" type="password" autocomplete="off" placeholder="输入导出时设置的加密密码">
-            <button id="toggleImportPwdBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" aria-label="显示备份解密密码" title="显示">
+            <input id="importPwdInput" class="input-control" type="password" autocomplete="off" data-i18n-placeholder="backup.import.pwdPlaceholder" placeholder="输入导出时设置的加密密码">
+            <button id="toggleImportPwdBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" data-i18n-aria-label="backup.import.pwdToggleAria" aria-label="显示备份解密密码" title="显示">
               <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
           </div>
         </div>
         <div class="field">
-          <label>导入方式</label>
+          <label data-i18n="backup.import.modeLabel">导入方式</label>
           <div class="radio-cards">
-            <label class="radio-card"><input type="radio" name="importMode" value="merge" checked><span>合并（跳过重复密钥）</span></label>
-            <label class="radio-card"><input type="radio" name="importMode" value="replace"><span>覆盖现有列表</span></label>
+            <label class="radio-card"><input type="radio" name="importMode" value="merge" checked><span data-i18n="backup.import.merge">合并（跳过重复密钥）</span></label>
+            <label class="radio-card"><input type="radio" name="importMode" value="replace"><span data-i18n="backup.import.replace">覆盖现有列表</span></label>
           </div>
         </div>
         <div id="importErrorBox" class="error-msg" role="status"></div>
         <div class="action-row">
-          <button id="previewImportBtn" class="btn" type="button" disabled>校验并预览</button>
-          <button id="runImportBtn" type="button" class="btn btn-primary" disabled>开始恢复导入</button>
+          <button id="previewImportBtn" class="btn" type="button" disabled data-i18n="backup.import.previewBtn">校验并预览</button>
+          <button id="runImportBtn" type="button" class="btn btn-primary" disabled data-i18n="backup.import.runBtn">开始恢复导入</button>
         </div>
         <div id="importPreview" class="import-preview" hidden>
           <strong id="importSummary"></strong>
           <ul id="importRows"></ul>
           <label class="checkbox-row" id="allowPartialWrap" hidden>
             <input id="allowPartialImport" type="checkbox">
-            <span>已查看无效记录，仅导入有效项</span>
+            <span data-i18n="backup.import.allowPartial">已查看无效记录，仅导入有效项</span>
           </label>
         </div>
       </fieldset>
     </div>
     <div class="dialog-footer">
-      <button type="button" class="btn" data-dialog-close="backupDialog">完成</button>
+      <button type="button" class="btn" data-dialog-close="backupDialog" data-i18n="common.done">完成</button>
     </div>
   </dialog>
 
   <!-- Settings & Security Dialog -->
   <dialog id="settingsDialog" closedby="closerequest" aria-labelledby="settingsDialogTitle">
     <div class="dialog-header">
-      <h2 id="settingsDialogTitle">外观与安全设置</h2>
-      <button type="button" class="icon-btn" data-dialog-close="settingsDialog" aria-label="关闭窗口">
+      <h2 id="settingsDialogTitle" data-i18n="settings.title">外观与安全设置</h2>
+      <button type="button" class="icon-btn" data-dialog-close="settingsDialog" data-i18n-aria-label="common.closeWindow" aria-label="关闭窗口">
         <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
     <div class="dialog-body">
       <fieldset class="settings-group">
-        <legend>主题外观</legend>
-        <div class="radio-cards theme-radio-cards" role="radiogroup" aria-label="选择主题外观">
+        <legend data-i18n="settings.theme.legend">主题外观</legend>
+        <div class="radio-cards theme-radio-cards" role="radiogroup" data-i18n-aria-label="settings.theme.aria" aria-label="选择主题外观">
           <label class="radio-card">
             <input type="radio" name="themeChoice" value="system">
             <span id="themeSystemLabel">跟随系统</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="themeChoice" value="light">
-            <span>浅色模式</span>
+            <span data-i18n="settings.theme.light">浅色模式</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="themeChoice" value="dark">
-            <span>深色模式</span>
+            <span data-i18n="settings.theme.dark">深色模式</span>
           </label>
         </div>
       </fieldset>
 
       <fieldset class="settings-group">
-        <legend>主密码锁（本地 AES-256-GCM 加密存储）</legend>
+        <legend data-i18n="settings.lang.legend">界面语言</legend>
+        <div class="radio-cards theme-radio-cards" role="radiogroup" data-i18n-aria-label="settings.lang.aria" aria-label="选择界面语言">
+          <label class="radio-card">
+            <input type="radio" name="langChoice" value="auto">
+            <span id="langSystemLabel">跟随系统</span>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="langChoice" value="zh-CN">
+            <span lang="zh-CN">简体中文</span>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="langChoice" value="en">
+            <span lang="en">English</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="settings-group">
+        <legend data-i18n="settings.lock.legend">主密码锁（本地 AES-256-GCM 加密存储）</legend>
         <p id="lockFeatureDesc" class="field-hint"></p>
         <div id="autoLockWrap" class="field" hidden>
-          <label for="autoLockSelect">无操作自动锁定时间</label>
+          <label for="autoLockSelect" data-i18n="settings.lock.autoLockLabel">无操作自动锁定时间</label>
           <div class="select-wrap">
             <select id="autoLockSelect" class="select-control">
-              <option value="0">不自动锁定（仅关闭标签页或手动锁定）</option>
-              <option value="5">5 分钟</option>
-              <option value="15">15 分钟</option>
-              <option value="30">30 分钟</option>
+              <option value="0" data-i18n="settings.lock.autoLock0">不自动锁定（仅关闭标签页或手动锁定）</option>
+              <option value="5" data-i18n="settings.lock.autoLock5">5 分钟</option>
+              <option value="15" data-i18n="settings.lock.autoLock15">15 分钟</option>
+              <option value="30" data-i18n="settings.lock.autoLock30">30 分钟</option>
             </select>
             <svg class="select-chevron" aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
         </div>
         <div id="masterPwdLockedActions" class="action-row" hidden>
-          <button id="toggleChangeMasterPwdBtn" type="button" class="btn" aria-expanded="false" aria-controls="masterPwdForm">修改主密码</button>
-          <button id="toggleDisableMasterPwdBtn" type="button" class="btn btn-ghost btn-danger-text" aria-expanded="false" aria-controls="masterPwdForm">关闭主密码锁</button>
+          <button id="toggleChangeMasterPwdBtn" type="button" class="btn" aria-expanded="false" aria-controls="masterPwdForm" data-i18n="settings.lock.changeBtn">修改主密码</button>
+          <button id="toggleDisableMasterPwdBtn" type="button" class="btn btn-ghost btn-danger-text" aria-expanded="false" aria-controls="masterPwdForm" data-i18n="settings.lock.disableBtn">关闭主密码锁</button>
         </div>
         <form id="masterPwdForm" class="master-pwd-form" novalidate>
           <div id="currentPwdWrap" class="field" hidden>
-            <label for="currentMasterPwd">当前主密码</label>
+            <label for="currentMasterPwd" data-i18n="settings.lock.currentLabel">当前主密码</label>
             <div class="input-with-action">
               <input id="currentMasterPwd" class="input-control" type="password" autocomplete="current-password">
-              <button id="toggleCurrentMasterPwdBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" aria-label="显示当前主密码" title="显示">
+              <button id="toggleCurrentMasterPwdBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" data-i18n-aria-label="settings.lock.currentToggleAria" aria-label="显示当前主密码" title="显示">
                 <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
               </button>
             </div>
           </div>
           <div id="newPwdWrap" class="field">
-            <label for="newMasterPwd" id="newMasterPwdLabel">设置主密码（至少 8 位）</label>
+            <label for="newMasterPwd" id="newMasterPwdLabel" data-i18n="settings.lock.setupLabel">设置主密码（至少 8 位）</label>
             <div class="input-with-action">
-              <input id="newMasterPwd" class="input-control" type="password" minlength="8" autocomplete="new-password" placeholder="设置解锁密码">
-              <button id="toggleNewMasterPwdBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" aria-label="显示新主密码" title="显示">
+              <input id="newMasterPwd" class="input-control" type="password" minlength="8" autocomplete="new-password" data-i18n-placeholder="settings.lock.newPlaceholder" placeholder="设置解锁密码">
+              <button id="toggleNewMasterPwdBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" data-i18n-aria-label="settings.lock.newToggleAria" aria-label="显示新主密码" title="显示">
                 <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
               </button>
             </div>
           </div>
           <div id="confirmPwdWrap" class="field">
-            <label for="confirmMasterPwd">确认主密码</label>
-            <input id="confirmMasterPwd" class="input-control" type="password" minlength="8" autocomplete="new-password" placeholder="再次输入主密码">
+            <label for="confirmMasterPwd" data-i18n="settings.lock.confirmLabel">确认主密码</label>
+            <input id="confirmMasterPwd" class="input-control" type="password" minlength="8" autocomplete="new-password" data-i18n-placeholder="settings.lock.confirmPlaceholder" placeholder="再次输入主密码">
           </div>
           <div id="masterPwdError" class="error-msg" role="status"></div>
           <div class="action-row">
-            <button id="saveMasterPwdBtn" type="submit" class="btn btn-primary">开启主密码锁</button>
-            <button id="disableMasterPwdBtn" type="button" class="btn btn-danger" hidden>确认关闭主密码锁</button>
-            <button id="cancelMasterPwdBtn" type="button" class="btn" hidden>取消</button>
+            <button id="saveMasterPwdBtn" type="submit" class="btn btn-primary" data-i18n="settings.lock.enableBtn">开启主密码锁</button>
+            <button id="disableMasterPwdBtn" type="button" class="btn btn-danger" hidden data-i18n="settings.lock.confirmDisableBtn">确认关闭主密码锁</button>
+            <button id="cancelMasterPwdBtn" type="button" class="btn" hidden data-i18n="common.cancel">取消</button>
           </div>
         </form>
       </fieldset>
 
       <fieldset class="settings-group">
-        <legend>数据管理</legend>
+        <legend data-i18n="settings.data.legend">数据管理</legend>
         <div class="action-row">
-          <button id="restoreDemoBtn" type="button" class="btn">添加示例演示账号</button>
-          <button id="wipeAllBtn" type="button" class="btn btn-danger">清空账号数据</button>
+          <button id="restoreDemoBtn" type="button" class="btn" data-i18n="settings.data.addDemo">添加示例演示账号</button>
+          <button id="wipeAllBtn" type="button" class="btn btn-danger" data-i18n="settings.data.wipeAll">清空账号数据</button>
         </div>
       </fieldset>
       <div id="settingsStatus" class="inline-alert" role="status" hidden></div>
     </div>
     <div class="dialog-footer">
-      <button type="button" class="btn" data-dialog-close="settingsDialog">完成</button>
+      <button type="button" class="btn" data-dialog-close="settingsDialog" data-i18n="common.done">完成</button>
     </div>
   </dialog>
 
   <!-- Confirmation Dialog -->
   <dialog id="confirmDialog" class="dialog-narrow" closedby="closerequest" aria-labelledby="confirmTitle">
     <div class="dialog-header">
-      <h2 id="confirmTitle">确认操作</h2>
+      <h2 id="confirmTitle" data-i18n="confirm.defaultTitle">确认操作</h2>
     </div>
     <div class="dialog-body">
       <p id="confirmMessage"></p>
     </div>
     <form method="dialog" class="dialog-footer">
-      <button value="cancel" class="btn" autofocus>取消</button>
-      <button id="confirmOkBtn" value="confirm" class="btn btn-danger">确认</button>
+      <button value="cancel" class="btn" autofocus data-i18n="common.cancel">取消</button>
+      <button id="confirmOkBtn" value="confirm" class="btn btn-danger" data-i18n="common.confirm">确认</button>
     </form>
   </dialog>
 
@@ -3434,12 +3465,12 @@
               <path d="M12 11.8l2.75 4.05L12 21.2l-2.75-5.35L12 11.8z" fill="currentColor" opacity="0.52"/>
             </svg>
           </div>
-          <h1 id="lockDialogTitle">解锁 2FA Vault</h1>
-          <p class="field-hint">本地保险库已启用 AES-256-GCM 加密保护。</p>
+          <h1 id="lockDialogTitle" data-i18n="lock.title">解锁 2FA Vault</h1>
+          <p class="field-hint" data-i18n="lock.subtitle">本地保险库已启用 AES-256-GCM 加密保护。</p>
         </div>
         <div id="lockReasonNotice" class="inline-alert is-warn" role="status" hidden></div>
         <div class="field">
-          <label for="unlockPwdInput">主密码</label>
+          <label for="unlockPwdInput" data-i18n="lock.pwdLabel">主密码</label>
           <div class="input-with-action">
             <input
               id="unlockPwdInput"
@@ -3448,26 +3479,27 @@
               required
               autofocus
               autocomplete="current-password"
+              data-i18n-placeholder="lock.pwdPlaceholder"
               placeholder="请输入主密码"
               data-error="unlockErr"
             >
-            <button id="toggleUnlockPwdBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" aria-label="显示密码" title="显示">
+            <button id="toggleUnlockPwdBtn" type="button" class="icon-btn input-pwd-toggle" aria-pressed="false" data-i18n-aria-label="lock.pwdToggleAria" aria-label="显示密码" title="显示">
               <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
           </div>
-          <div id="unlockErr" class="error-msg"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span id="unlockErrText">密码错误，请重试。</span></div>
+          <div id="unlockErr" class="error-msg"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span id="unlockErrText" data-i18n="lock.wrongPwd">密码错误，请重试。</span></div>
         </div>
       </div>
       <div id="lockedDraftActions" class="dialog-body" hidden>
-        <p class="field-hint">还有未保存的内容，已临时加密保留。可先导出，再处理当前保险库。</p>
-        <button id="exportLockedDraftBtn" class="btn" type="button">导出未保存内容</button>
-        <button id="discardLockedDraftBtn" class="btn btn-ghost" type="button">放弃未保存内容</button>
+        <p class="field-hint" data-i18n="lock.draftHint">还有未保存的内容，已临时加密保留。可先导出，再处理当前保险库。</p>
+        <button id="exportLockedDraftBtn" class="btn" type="button" data-i18n="lock.exportDraft">导出未保存内容</button>
+        <button id="discardLockedDraftBtn" class="btn btn-ghost" type="button" data-i18n="lock.discardDraft">放弃未保存内容</button>
       </div>
       <div class="dialog-footer dialog-footer-split">
-        <button id="forgotResetBtn" type="button" class="btn btn-ghost btn-danger-ghost">忘记密码并重置</button>
+        <button id="forgotResetBtn" type="button" class="btn btn-ghost btn-danger-ghost" data-i18n="lock.forgotReset">忘记密码并重置</button>
         <div class="action-row">
-          <button id="reloadFromLockBtn" type="button" class="btn" hidden>刷新页面</button>
-          <button type="submit" class="btn btn-primary">解锁</button>
+          <button id="reloadFromLockBtn" type="button" class="btn" hidden data-i18n="lock.reloadPage">刷新页面</button>
+          <button type="submit" class="btn btn-primary" data-i18n="lock.unlockBtn">解锁</button>
         </div>
       </div>
     </form>
@@ -15912,6 +15944,7 @@ var qrcode = function() {
       const KEYS = {
         VAULT: 'vault2fa_v1_vault',
         THEME: 'vault2fa_v1_theme',
+        LANG: 'vault2fa_v1_lang',
         VIEW: 'vault2fa_v1_view',
         SORT: 'vault2fa_v1_sort',
         AUTOLOCK: 'vault2fa_v1_autolock_min',
@@ -15920,12 +15953,909 @@ var qrcode = function() {
       let startupStorageError = null;
       const preferences = {};
       try {
-        for (const name of ['THEME', 'VIEW', 'SORT', 'AUTOLOCK', 'PWD_HINT']) preferences[name] = localStorage.getItem(KEYS[name]);
+        for (const name of ['THEME', 'LANG', 'VIEW', 'SORT', 'AUTOLOCK', 'PWD_HINT']) preferences[name] = localStorage.getItem(KEYS[name]);
       } catch (error) {
         if (!(error instanceof DOMException) || !['SecurityError', 'InvalidStateError'].includes(error.name)) throw error;
         startupStorageError = error;
       }
-      const DEFAULT_GROUPS = ['工作', '个人', '金融', '服务器', '开发'];
+
+      // ================= INTERNATIONALIZATION (zh-CN / en) =================
+      const I18N = {
+        'zh-CN': {
+          'common.closeWindow': '关闭窗口',
+          'common.cancel': '取消',
+          'common.confirm': '确认',
+          'common.done': '完成',
+          'common.show': '显示',
+          'common.hide': '隐藏',
+          'common.unnamed': '未命名平台',
+          'common.accountFallback': '账号',
+          'common.noAccountName': '（无账号名称）',
+          'common.invalid': '无效',
+          'common.expand': '展开',
+          'common.collapse': '收起',
+
+          'topbar.lock': '锁定',
+          'topbar.lock.aria': '立即锁定保险库',
+          'topbar.lock.title': '立即锁定',
+          'topbar.theme.aria': '切换外观主题',
+          'topbar.backup': '备份',
+          'topbar.settings': '设置',
+          'topbar.add': '添加账号',
+          'status.encrypted': '已加密',
+          'status.locked': '已锁定',
+
+          'storage.recover': '从备份恢复',
+          'storage.retry': '重试保存',
+          'storage.exportCurrent': '导出当前内容',
+          'storage.exportRaw': '导出原始数据',
+          'storage.reload': '重新加载',
+          'storage.readError.title': '未能读取已保存的数据',
+          'storage.readError.desc': '原始数据仍然保留。请先导出原始数据，或选择备份进行覆盖恢复。',
+          'storage.unavailable.title': '浏览器无法使用本地存储',
+          'storage.unavailable.desc': '当前内容只在这次打开期间保留。请导出备份，或更换允许保存数据的浏览器。',
+          'storage.writeError.title': '当前改动尚未保存',
+          'storage.writeError.desc': '输入内容仍在页面中。可以重试保存，或先导出当前内容。',
+          'storage.conflict.title': '另一个页面已更新保险库',
+          'storage.conflict.desc': '已暂停此页面写入，避免覆盖新数据。请先导出待保存内容，再重新加载最新数据。',
+
+          'controls.aria': '筛选与视图控制',
+          'search.label': '搜索平台、账号、备注或分组',
+          'search.placeholder': '搜索账号或平台',
+          'search.clear.aria': '清除搜索关键词',
+          'search.count': '{count} 个',
+          'search.enterHint': ' · 回车复制第一个',
+          'sort.label': '排序方式',
+          'sort.custom': '置顶与自定义',
+          'sort.name': '名称 A–Z',
+          'sort.recent': '最近更新',
+          'view.aria': '视图模式',
+          'view.grid': '卡片',
+          'view.list': '列表',
+          'filter.aria': '分组筛选',
+          'filter.all': '全部',
+          'filter.pinned': '已置顶',
+
+          'demo.bannerPrefix': '当前为示例账号，可上传二维码导入。',
+          'demo.bannerDesktopBefore': '也可按 ',
+          'demo.bannerDesktopAfter': ' 粘贴截图。',
+          'demo.clear': '清空示例',
+          'demo.tag': '示例',
+          'demo.cleared': '已清空示例账号',
+          'demo.exists': '示例账号已存在于列表中',
+          'demo.added': '已添加示例账号',
+          'demo.addedUnsaved': '示例账号已在页面展示，但未能写入本地存储',
+          'demo.github.note': '示例账号（测试密钥）：点击验证码可复制；可在详情中记录备注、恢复提示或账号用途。',
+          'demo.github.group': '开发',
+          'demo.cloudflare.note': '示例账号：剩余时间少于 5 秒时变色提醒；点击“下期”可复制下一周期验证码。',
+          'demo.cloudflare.group': '服务器',
+
+          'empty.addFirst': '添加第一个账号',
+          'empty.tryDemo': '体验示例',
+          'empty.resetFilters': '清除搜索和筛选',
+          'empty.noMatch.title': '没有匹配的账号',
+          'empty.noMatch.desc': '换个关键词，或清除搜索和筛选后查看全部账号。',
+          'empty.vault.title': '让你的验证码，有个固定的位置',
+          'empty.vault.desc': '添加第一个账号，或从加密备份恢复。数据保存在当前浏览器，支持离线取码。',
+
+          'manualCopy.title': '手动复制',
+          'manualCopy.textAria': '待复制内容',
+          'manualCopy.selectAll': '选中全部文本',
+          'manualCopy.genericDesc': '浏览器未允许直接复制，请选中文本后复制。',
+          'manualCopy.uriDesc': '浏览器未允许直接复制，请选中链接后复制。',
+          'manualCopy.otpDesc': '{name} {cycle}验证码。选中后复制；当前码会按周期更新。',
+          'manualCopy.cycleCurrent': '当前',
+          'manualCopy.cycleNext': '下一周期',
+
+          'undo.btn': '撤销删除',
+          'undo.deleted': '已删除 {name}',
+          'undo.countdown': '{sec} 秒',
+          'undo.expired': '撤销时间已结束',
+          'undo.restored': '已恢复账号',
+
+          'card.digitsShort': '{digits}位',
+          'card.digitsBadge': '{digits} 位',
+          'card.copyAccountAria': '复制账号 {account}',
+          'card.copyAccountTitle': '{account} · 点击复制',
+          'card.copiedAccount': '已复制 {name} 账号',
+          'card.copyPwdAria': '复制 {name} 登录密码',
+          'card.copyPwdTitle': '点击复制登录密码',
+          'card.copyPwdBtnAria': '一键复制 {name} 登录密码',
+          'card.copyPwdBtnTitle': '一键复制密码',
+          'card.showPwdAria': '显示 {name} 密码',
+          'card.hidePwdAria': '隐藏 {name} 密码',
+          'card.showPwdTitle': '显示密码',
+          'card.hidePwdTitle': '隐藏密码',
+          'card.copiedPwd': '已复制 {name} 登录密码',
+          'card.copyOtpAria': '复制 {name} 当前验证码',
+          'card.copyNextAria': '复制 {name} 下一周期验证码',
+          'card.clickToCopy': '点击复制',
+          'card.copied': '✓ 已复制',
+          'card.copiedNext': '✓ 已复制下期',
+          'card.nextLabel': '下期',
+          'card.copiedOtpToast': '已复制 {name} 验证码',
+          'card.copiedNextOtpToast': '已复制 {name} 下一周期 验证码',
+          'card.pinAria': '置顶 {name}',
+          'card.unpinAria': '取消置顶 {name}',
+          'card.qrAria': '导出 {name} 二维码',
+          'card.editAria': '编辑 {name}',
+          'card.deleteAria': '删除 {name}',
+          'card.secretError': '密钥异常',
+
+          'account.addTitle': '添加 2FA 账号',
+          'account.editTitle': '编辑 2FA 账号与备注',
+          'account.save': '保存账号',
+          'account.saveAdd': '添加到本地',
+          'account.saveEdit': '保存修改',
+          'account.continueImport': '确认导入内容',
+          'account.stepsAria': '添加步骤',
+          'account.step1': '1 导入',
+          'account.step2': '2 确认账号',
+          'account.smartImport.label': '粘贴账号信息、密钥或认证链接',
+          'account.smartImport.hint': '支持直接粘贴“账号---密码---密钥”（兼容 | / : / , / 空格 等分隔符）、密钥、otpauth:// 链接、批量迁移码，或在下方上传/粘贴二维码截图。',
+          'account.smartImport.placeholder': '如 user@example.com---密码---密钥，或 otpauth://...',
+          'account.dropzone.aria': '点击选择二维码图片，或拖拽、粘贴截图到此处',
+          'account.dropzone.title': '选择二维码图片，或拖拽 / 粘贴截图',
+          'account.dropzone.hint': '图片仅在当前设备中识别，不会上传。',
+          'account.manualEntry': '没有二维码？手动输入密钥',
+          'account.backToImport': '← 返回导入',
+          'account.presets.label': '常用平台预设（点击快速填入并匹配图标）',
+          'account.presets.aria': '常用平台快捷选择',
+          'account.issuer.label': '平台 / 服务名称 *',
+          'account.issuer.placeholder': '如 Google、ChatGPT',
+          'account.issuer.error': '请填写平台或服务名称。',
+          'account.issuer.required': '请填写平台或服务名称',
+          'account.name.label': '账号 / 邮箱',
+          'account.name.placeholder': '如 name@example.com',
+          'account.password.label': '登录密码（可选，随保险库保存）',
+          'account.password.placeholder': '可选：保存此账号对应的登录密码',
+          'account.password.toggleAria': '显示登录密码',
+          'account.secret.label': 'Base32 密钥 *',
+          'account.secret.hint': '自动去除空格与短横线并转为大写（至少 2 位 A-Z 或 2-7）。',
+          'account.secret.toggleAria': '显示密钥',
+          'account.secret.error': '请输入有效的 Base32 密钥（仅含字母 A-Z 与数字 2-7）。',
+          'account.secret.emptyErr': '请输入 Base32 密钥。',
+          'account.secret.emptyValidity': '请输入 Base32 密钥',
+          'account.secret.invalidErr': '密钥格式无效，仅允许 Base32 字符（A-Z 与 2-7）。',
+          'account.secret.invalidValidity': '密钥格式无效',
+          'account.livePreview.label': '实时校验',
+          'account.livePreview.updating': '实时校验 · {sec} 秒后更新',
+          'account.livePreview.meta': '{period}s · {digits} 位 · {algo}',
+          'account.supplement.summary': '补充信息 · 备注、分组与置顶',
+          'account.note.label': '账号备注（用途、关联信息、恢复提示等）',
+          'account.note.placeholder': '例如：主号，绑定 138****0000；备用恢复码已存于密码本…',
+          'account.group.label': '分组标签',
+          'account.group.aria': '常用分组快捷选择',
+          'account.group.placeholder': '输入或点击上方标签（留空则不分组）',
+          'account.pinned.label': '置顶此账号（始终显示在列表最前方）',
+          'account.advanced.summary': '高级 TOTP 参数（算法 / 位数 / 刷新周期）',
+          'account.algo.label': '哈希算法',
+          'account.algo.sha1': 'SHA-1（通用默认）',
+          'account.digits.label': '验证码位数',
+          'account.digits.6': '6 位（默认）',
+          'account.digits.8': '8 位',
+          'account.period.label': '周期（秒）',
+          'account.import.emptyErr': '请选择二维码图片，或粘贴“账号---密码---密钥”、密钥或认证链接。',
+          'account.import.invalidErr': '未识别到有效的密钥、认证链接或“账号---密码---密钥”格式。',
+          'account.import.multiLineErr': '识别到 {count} 个账号。一次只能添加一个，请每次只复制一行。',
+          'account.import.otpauthOk': '已解析链接，请确认平台和账号后保存',
+          'account.import.base32Ok': '已规范化 Base32 密钥',
+          'account.import.qrInvalid': '识别到二维码内容，但不是有效的 2FA 密钥或认证内容：{snippet}',
+          'account.import.fieldIssuer': '平台',
+          'account.import.fieldAccount': '账号',
+          'account.import.fieldPassword': '密码',
+          'account.import.fieldSecret': '密钥',
+          'account.import.fieldNote': '备注',
+          'account.import.delimitedOk': '已一键识别{fields}，{tail}',
+          'account.import.tailConfirm': '请确认信息后保存',
+          'account.import.tailNeedIssuer': '请选择或填写平台名称后保存',
+          'account.duplicate.title': '此验证码密钥已存在',
+          'account.duplicate.msg': '已保存在“{issuer}”{accPart}。可以查看并编辑已有账号。',
+          'account.duplicate.ok': '查看已有账号',
+          'account.saveErr': '内容仍在页面中，尚未保存。可再次提交；也可关闭窗口后重试或导出。',
+          'account.saved': '账号已保存',
+          'account.savedFirst': '已保存第一个账号，建议现在导出加密备份',
+          'account.savedPwdHint': '已保存。登录密码目前没有加密，建议在“设置”里开启主密码锁',
+
+          'migration.title': '批量导入迁移账号',
+          'migration.summary': '共解析到 {total} 个账号，其中 {supported} 个为可导入的 TOTP 账号。',
+          'migration.groupLabel': '统一设置导入分组（可选）',
+          'migration.groupPlaceholder': '如：迁移导入 / 个人 / 工作',
+          'migration.selectHint': '勾选需要导入的账号：',
+          'migration.selectAll': '全选',
+          'migration.deselectAll': '全不选',
+          'migration.confirm': '导入选中账号',
+          'migration.itemMeta': '{digits} 位 · {algo}',
+          'migration.itemUnsupported': '不可导入：{reason}',
+          'migration.selectNoneErr': '请至少选择一个账号',
+          'migration.unsavedToast': '导入内容已暂留页面，但未能写入本地存储，请查看顶部提示',
+          'migration.imported': '已成功导入 {added} 个账号',
+          'migration.importedSkipped': '已导入 {added} 个账号（跳过 {skipped} 个重复密钥）',
+          'migration.reasonHotp': 'HOTP 暂不支持',
+          'migration.reasonMd5': 'MD5 算法不支持',
+          'migration.reasonNoSecret': '无密钥',
+
+          'qr.title': '导出账号二维码',
+          'qr.frameAria': 'TOTP 二维码图像',
+          'qr.warning': '二维码包含完整 2FA 私钥，可使用手机认证器 App 扫描迁移，请勿截图分享给他人。',
+          'qr.uriLabel': 'otpauth:// 链接',
+          'qr.showUri': '显示完整链接',
+          'qr.hideUri': '隐藏链接',
+          'qr.copyUri': '复制链接',
+          'qr.copiedUriBtn': '✓ 已复制',
+          'qr.copiedUriStatus': '已复制 otpauth:// 链接',
+          'qr.hiddenPreview': 'otpauth://totp/{issuer}...（默认隐藏明文密钥）',
+
+          'backup.title': '备份与恢复',
+          'backup.export.legend': '导出备份文件',
+          'backup.export.desc': '包含全部验证码密钥、已保存的登录密码、分组和备注。建议定期导出保存到安全位置（如加密网盘或 U 盘），防止清理浏览器缓存导致丢失。',
+          'backup.export.pwdLabel': '备份加密密码（至少 8 位）',
+          'backup.export.pwdPlaceholder': '输入至少 8 位密码以加密备份',
+          'backup.export.pwdToggleAria': '显示备份加密密码',
+          'backup.export.confirmLabel': '再次输入备份密码',
+          'backup.export.confirmPlaceholder': '再输一次，防止输错后备份解不开',
+          'backup.export.encryptedBtn': '导出加密备份（.2favault.json）',
+          'backup.export.plainBtn': '导出明文 JSON',
+          'backup.export.pwdShortErr': '请设置至少 8 位的备份密码',
+          'backup.export.pwdMismatchErr': '两次输入的备份密码不一致',
+          'backup.export.encryptedOk': '已生成加密备份文件，请保管好文件和密码',
+          'backup.export.plainConfirmTitle': '导出明文备份',
+          'backup.export.plainConfirmMsg': '明文文件包含完整验证码密钥及已保存的登录密码。获得文件的人可以使用这些内容。确认导出？',
+          'backup.export.plainConfirmOk': '导出明文',
+          'backup.export.plainOk': '已生成明文备份文件',
+          'backup.summary.noReal': '使用加密备份迁移账号',
+          'backup.summary.never': '尚未导出备份 · 建议现在导出',
+          'backup.summary.lastChanged': '上次导出 {when} · 此后有改动',
+          'backup.summary.lastCurrent': '上次导出 {when} · 当前内容已导出',
+          'backup.import.legend': '从备份文件恢复',
+          'backup.import.fileLabel': '选择备份文件（.json / .2favault.json）',
+          'backup.import.chooseBtn': '选择文件',
+          'backup.import.filePlaceholder': '选择或拖拽备份文件',
+          'backup.import.pwdLabel': '此备份已加密，请输入备份密码',
+          'backup.import.pwdPlaceholder': '输入导出时设置的加密密码',
+          'backup.import.pwdToggleAria': '显示备份解密密码',
+          'backup.import.modeLabel': '导入方式',
+          'backup.import.merge': '合并（跳过重复密钥）',
+          'backup.import.replace': '覆盖现有列表',
+          'backup.import.previewBtn': '校验并预览',
+          'backup.import.runBtn': '开始恢复导入',
+          'backup.import.allowPartial': '已查看无效记录，仅导入有效项',
+          'backup.import.readErr': '无法读取备份：{msg}',
+          'backup.import.rowDup': '{name} — 重复，保留现有记录',
+          'backup.import.rowValid': '{name} — 可导入',
+          'backup.import.rowInvalid': '第 {index} 项 — 无效：{msg}',
+          'backup.import.summary': '{valid} 项可导入 · {dup} 项重复 · {invalid} 项无效',
+          'backup.import.replaceTitle': '覆盖当前账号列表',
+          'backup.import.replaceMsg': '使用校验后的 {valid} 个账号替换当前列表。{invalidNote}如需保留当前内容，请先导出备份。',
+          'backup.import.replaceInvalidNote': ' {invalid} 个无效项不会导入。',
+          'backup.import.replaceOk': '确认覆盖',
+          'backup.import.unsavedErr': '导入内容仍在页面中，尚未写入。请关闭窗口，处理顶部提示后重试或导出。',
+          'backup.import.doneToast': '已导入 {imported} 个账号，跳过 {dup} 个重复、{invalid} 个无效项',
+
+          'settings.title': '外观与安全设置',
+          'settings.theme.legend': '主题外观',
+          'settings.theme.aria': '选择主题外观',
+          'settings.theme.system': '跟随系统（{state}）',
+          'settings.theme.systemShort': '跟随系统',
+          'settings.theme.light': '浅色模式',
+          'settings.theme.dark': '深色模式',
+          'settings.theme.stateLight': '浅色',
+          'settings.theme.stateDark': '深色',
+          'settings.theme.stateCurLight': '当前浅色',
+          'settings.theme.stateCurDark': '当前深色',
+          'settings.theme.quickSystem': '外观：跟随系统（{state}）',
+          'settings.theme.quickLight': '外观：浅色模式',
+          'settings.theme.quickDark': '外观：深色模式',
+          'settings.theme.quickAria': '{label}，点击切换',
+          'settings.theme.quickTitle': '{label}（点击切换）',
+          'settings.theme.toast': '外观主题：{name}',
+          'settings.lang.legend': '界面语言',
+          'settings.lang.aria': '选择界面语言',
+          'settings.lang.auto': '跟随系统（{lang}）',
+          'settings.lang.shortZh': '中文',
+          'settings.lang.shortEn': 'English',
+          'settings.lang.switched': '已切换为简体中文',
+          'settings.lang.switchedAuto': '已切换为跟随系统语言（中文）',
+          'settings.lock.legend': '主密码锁（本地 AES-256-GCM 加密存储）',
+          'settings.lock.descEnabled': '已开启主密码保护：浏览器本地存储中的所有密钥与备注均以 AES-256-GCM 密文存储。',
+          'settings.lock.descDisabled': '当前未开启主密码锁，打开网页即可直接查看验证码；开启后将自动把本地存储加密为密文。',
+          'settings.lock.autoLockLabel': '无操作自动锁定时间',
+          'settings.lock.autoLock0': '不自动锁定（仅关闭标签页或手动锁定）',
+          'settings.lock.autoLock5': '5 分钟',
+          'settings.lock.autoLock15': '15 分钟',
+          'settings.lock.autoLock30': '30 分钟',
+          'settings.lock.autoLockUpdated': '已更新自动锁定设置',
+          'settings.lock.changeBtn': '修改主密码',
+          'settings.lock.disableBtn': '关闭主密码锁',
+          'settings.lock.currentLabel': '当前主密码',
+          'settings.lock.currentToggleAria': '显示当前主密码',
+          'settings.lock.setupLabel': '设置主密码（至少 8 位）',
+          'settings.lock.newLabel': '新主密码（至少 8 位）',
+          'settings.lock.newPlaceholder': '设置解锁密码',
+          'settings.lock.newToggleAria': '显示新主密码',
+          'settings.lock.confirmLabel': '确认主密码',
+          'settings.lock.confirmPlaceholder': '再次输入主密码',
+          'settings.lock.enableBtn': '开启主密码锁',
+          'settings.lock.saveNewBtn': '保存新主密码',
+          'settings.lock.confirmDisableBtn': '确认关闭主密码锁',
+          'settings.lock.needCurrentErr': '请先输入当前主密码',
+          'settings.lock.shortErr': '新主密码至少需要 8 位，建议使用较长口令',
+          'settings.lock.mismatchErr': '两次输入的密码不一致',
+          'settings.lock.saveFailErr': '主密码变更未写入，原有保护方式保持有效。请处理保存提示后重试。',
+          'settings.lock.enabledOk': '主密码已生效，本地内容已加密',
+          'settings.lock.disableFailErr': '变更尚未写入，原有加密仍然有效。',
+          'settings.lock.disabledWarn': '已关闭主密码锁，当前数据未加密',
+          'settings.data.legend': '数据管理',
+          'settings.data.addDemo': '添加示例演示账号',
+          'settings.data.wipeAll': '清空账号数据',
+          'settings.data.wipeTitle': '清空全部本地数据',
+          'settings.data.wipeMsg': '此操作将永久清除当前浏览器保存的所有 2FA 账号、备注和加密设置且不可撤销！确定继续吗？',
+          'settings.data.wipeOk': '确认清空',
+          'settings.data.wipeUnsaved': '列表已在页面清空，但未能写入本地存储，请查看顶部提示',
+          'settings.data.wipeOkToast': '已清空所有本地数据',
+
+          'confirm.defaultTitle': '确认操作',
+          'delete.title': '删除账号',
+          'delete.msg': '删除“{name}”{accPart}？删除后 10 秒内可以撤销。',
+          'delete.ok': '删除账号',
+          'delete.unsavedToast': '账号已在页面移除，但未能保存到本地存储，请查看顶部提示',
+
+          'lock.title': '解锁 2FA Vault',
+          'lock.subtitle': '本地保险库已启用 AES-256-GCM 加密保护。',
+          'lock.pwdLabel': '主密码',
+          'lock.pwdPlaceholder': '请输入主密码',
+          'lock.pwdToggleAria': '显示密码',
+          'lock.wrongPwd': '密码错误，请重试。',
+          'lock.draftHint': '还有未保存的内容，已临时加密保留。可先导出，再处理当前保险库。',
+          'lock.exportDraft': '导出未保存内容',
+          'lock.discardDraft': '放弃未保存内容',
+          'lock.forgotReset': '忘记密码并重置',
+          'lock.reloadPage': '刷新页面',
+          'lock.unlockBtn': '解锁',
+          'lock.reason.autoLock': '超时无操作，保险库已自动锁定',
+          'lock.err.removed': '本地保险库已被其他页面移除，请刷新此页面',
+          'lock.err.disabledElsewhere': '另一个页面已关闭主密码锁，请刷新此页面',
+          'lock.err.draftUndecryptable': '密码正确，但锁屏前未保存的改动解不开（可能在别的页面改过主密码）。可先“导出未保存内容”留一份，再点“放弃未保存内容”后解锁。',
+          'lock.err.storageRead': '浏览器暂时无法读取保存的数据，请检查存储权限。',
+          'lock.reset.title': '清空加密保险库？',
+          'lock.reset.msg': '重置会删除当前浏览器的所有加密账号。请确认已有可用备份；重置无法找回忘记的密码。',
+          'lock.reset.ok': '清空并重置',
+          'lock.reset.fail': '重置未完成：数据已变化或浏览器未允许删除。请重新加载后处理。',
+          'lock.reset.okToast': '已重置为空保险库',
+          'lock.discard.title': '放弃未保存内容？',
+          'lock.discard.msg': '此操作仅放弃临时保留的改动，已保存的数据会继续保留。需要这些改动时，请先导出。',
+          'lock.discard.ok': '放弃改动',
+
+          'reload.title': '重新加载保存的数据',
+          'reload.msg': '重新加载会放弃此页面尚未保存的内容。需要保留时，请先导出当前内容。',
+          'reload.ok': '重新加载',
+          'toast.savedCurrent': '当前内容已保存',
+          'toast.prefSessionOnly': '偏好仅在本次打开期间生效：浏览器未能保存设置',
+          'toast.handleBannerFirst': '请先处理页面顶部的数据提示',
+          'toast.handleBannerInDialog': '数据有异常，请先关闭窗口，处理页面顶部的提示',
+          'toast.otpGenErr': '密钥格式异常，无法生成验证码',
+          'toast.sortDragHint': '切换到“置顶与自定义”排序后，可长按拖动调整顺序',
+
+          'err.base32Invalid': '无效的 Base32 密钥格式',
+          'err.secretShort': '密钥长度不足',
+          'err.ciphertextCorrupt': '密文格式损坏',
+          'err.decryptFailed': '密码错误或数据校验失败',
+          'err.decryptCorrupt': '密码错误或数据已损坏',
+          'err.otpauthProtocol': '不是有效的 otpauth:// 链接',
+          'err.hotpUnsupported': '检测到 HOTP 计数器令牌，当前仅支持基于时间的 TOTP 令牌',
+          'err.otpTypeUnsupported': '不支持的令牌类型：{type}',
+          'err.otpauthEncoding': '认证链接编码无效',
+          'err.otpauthSecret': 'otpauth 链接中未包含有效的 Base32 密钥',
+          'err.otpauthAlgo': '认证链接中的算法不受支持',
+          'err.otpauthDigits': '认证链接的验证码位数必须为 6 或 8',
+          'err.otpauthPeriod': '认证链接中的刷新周期无效',
+          'err.migProtobufBad': '迁移二维码 Protobuf 数据异常',
+          'err.migProtobufTrunc': '迁移二维码 Protobuf 数据不完整',
+          'err.migFormatUnknown': '迁移二维码格式未知',
+          'err.migNoData': '迁移链接中未找到 data 参数',
+          'err.migBase64': '迁移链接的 Base64 数据格式无效',
+          'err.migEmpty': '未在迁移二维码中找到任何账号',
+          'err.qrModuleMissing': '离线二维码解码模块不可用',
+          'err.qrNotFound': '未在图片中识别到清晰的二维码，请尝试截取更清晰的二维码区域',
+          'err.imgReadFail': '图片读取失败，请确认文件格式有效',
+          'err.accNotObject': '账号记录必须是对象',
+          'err.accSecretInvalid': '密钥不是有效的 Base32 文本',
+          'err.accFieldString': '{field} 必须是文本',
+          'err.accAlgoUnsupported': '不支持的验证码算法',
+          'err.accDigitsInvalid': '验证码位数必须为 6 或 8',
+          'err.accPeriodInvalid': '刷新周期必须为 5–300 秒',
+          'err.accFieldNumber': '{field} 必须是有限数字',
+          'err.accFieldBool': '{field} 必须是布尔值',
+          'err.envFormat': '不支持的加密备份格式',
+          'err.envIterations': '备份的密码派生参数无效或超出支持范围',
+          'err.envIncomplete': '加密数据结构不完整',
+          'err.envLength': '加密数据长度无效',
+          'err.payloadAccounts': '数据中缺少账号列表',
+          'err.payloadVersion': '不支持此备份版本',
+          'err.payloadDupId': '账号标识重复，请从备份恢复',
+          'err.backupAccounts': '备份中缺少账号列表',
+          'err.backupAccountsOrVer': '备份缺少账号列表或版本不受支持',
+          'err.conflictElsewhere': '其他页面已修改保险库',
+          'err.vaultStruct': '保险库结构无效',
+        },
+        en: {
+          'common.closeWindow': 'Close dialog',
+          'common.cancel': 'Cancel',
+          'common.confirm': 'Confirm',
+          'common.done': 'Done',
+          'common.show': 'Show',
+          'common.hide': 'Hide',
+          'common.unnamed': 'Untitled Service',
+          'common.accountFallback': 'Account',
+          'common.noAccountName': '(No account name)',
+          'common.invalid': 'Invalid',
+          'common.expand': 'More',
+          'common.collapse': 'Less',
+
+          'topbar.lock': 'Lock',
+          'topbar.lock.aria': 'Lock vault now',
+          'topbar.lock.title': 'Lock now',
+          'topbar.theme.aria': 'Switch appearance theme',
+          'topbar.backup': 'Backup',
+          'topbar.settings': 'Settings',
+          'topbar.add': 'Add Account',
+          'status.encrypted': 'Encrypted',
+          'status.locked': 'Locked',
+
+          'storage.recover': 'Restore Backup',
+          'storage.retry': 'Retry Save',
+          'storage.exportCurrent': 'Export Current',
+          'storage.exportRaw': 'Export Raw Data',
+          'storage.reload': 'Reload',
+          'storage.readError.title': 'Unable to read saved data',
+          'storage.readError.desc': 'Original data is preserved. Export raw data first, or restore from a backup.',
+          'storage.unavailable.title': 'Browser storage is unavailable',
+          'storage.unavailable.desc': 'Changes only stay for this session. Export a backup or use a browser that allows local storage.',
+          'storage.writeError.title': 'Changes have not been saved',
+          'storage.writeError.desc': 'Your edits are still on this page. Retry saving or export your current data.',
+          'storage.conflict.title': 'Vault updated in another tab',
+          'storage.conflict.desc': 'Saving is paused here to avoid overwriting newer data. Export pending changes, then reload.',
+
+          'controls.aria': 'Filter and view controls',
+          'search.label': 'Search service, account, note, or group',
+          'search.placeholder': 'Search accounts or services',
+          'search.clear.aria': 'Clear search query',
+          'search.count': '{count} found',
+          'search.enterHint': ' · Enter copies first',
+          'sort.label': 'Sort order',
+          'sort.custom': 'Pinned & Custom',
+          'sort.name': 'Name A–Z',
+          'sort.recent': 'Recently Updated',
+          'view.aria': 'View mode',
+          'view.grid': 'Grid',
+          'view.list': 'List',
+          'filter.aria': 'Filter by platform or group',
+          'filter.all': 'All',
+          'filter.pinned': 'Pinned',
+
+          'demo.bannerPrefix': 'Showing demo accounts. Upload a QR code to import.',
+          'demo.bannerDesktopBefore': ' Or press ',
+          'demo.bannerDesktopAfter': ' to paste a screenshot.',
+          'demo.clear': 'Clear Demos',
+          'demo.tag': 'Demo',
+          'demo.cleared': 'Demo accounts cleared',
+          'demo.exists': 'Demo accounts are already in your list',
+          'demo.added': 'Demo accounts added',
+          'demo.addedUnsaved': 'Demo accounts shown on page, but could not be saved to local storage',
+          'demo.github.note': 'Demo account (test secret): click the code to copy; store notes or recovery tips in details.',
+          'demo.github.group': 'Dev',
+          'demo.cloudflare.note': 'Demo account: turns amber under 5s left; click "Next" to copy the upcoming code.',
+          'demo.cloudflare.group': 'Servers',
+
+          'empty.addFirst': 'Add First Account',
+          'empty.tryDemo': 'Try Demo',
+          'empty.resetFilters': 'Clear Search & Filters',
+          'empty.noMatch.title': 'No matching accounts',
+          'empty.noMatch.desc': 'Try another keyword, or clear search and filters to view all accounts.',
+          'empty.vault.title': 'A quiet home for your 2FA codes',
+          'empty.vault.desc': 'Add your first account or restore an encrypted backup. Stored locally in your browser for offline use.',
+
+          'manualCopy.title': 'Manual Copy',
+          'manualCopy.textAria': 'Content to copy',
+          'manualCopy.selectAll': 'Select All Text',
+          'manualCopy.genericDesc': 'Direct clipboard access was blocked. Select the text below and copy manually.',
+          'manualCopy.uriDesc': 'Direct clipboard access was blocked. Select the URI below and copy manually.',
+          'manualCopy.otpDesc': '{cycle} code for {name}. Select and copy; the current code refreshes each period.',
+          'manualCopy.cycleCurrent': 'Current',
+          'manualCopy.cycleNext': 'Next',
+
+          'undo.btn': 'Undo',
+          'undo.deleted': 'Deleted {name}',
+          'undo.countdown': '{sec}s',
+          'undo.expired': 'Undo window expired',
+          'undo.restored': 'Account restored',
+
+          'card.digitsShort': '{digits}-digit',
+          'card.digitsBadge': '{digits}-digit',
+          'card.copyAccountAria': 'Copy account {account}',
+          'card.copyAccountTitle': '{account} · Click to copy',
+          'card.copiedAccount': 'Copied {name} account',
+          'card.copyPwdAria': 'Copy {name} password',
+          'card.copyPwdTitle': 'Click to copy login password',
+          'card.copyPwdBtnAria': 'Copy {name} login password',
+          'card.copyPwdBtnTitle': 'Copy password',
+          'card.showPwdAria': 'Show {name} password',
+          'card.hidePwdAria': 'Hide {name} password',
+          'card.showPwdTitle': 'Show password',
+          'card.hidePwdTitle': 'Hide password',
+          'card.copiedPwd': 'Copied {name} password',
+          'card.copyOtpAria': 'Copy current code for {name}',
+          'card.copyNextAria': 'Copy next code for {name}',
+          'card.clickToCopy': 'Click to copy',
+          'card.copied': '✓ Copied',
+          'card.copiedNext': '✓ Copied next',
+          'card.nextLabel': 'Next',
+          'card.copiedOtpToast': 'Copied {name} code',
+          'card.copiedNextOtpToast': 'Copied next {name} code',
+          'card.pinAria': 'Pin {name}',
+          'card.unpinAria': 'Unpin {name}',
+          'card.qrAria': 'Export QR code for {name}',
+          'card.editAria': 'Edit {name}',
+          'card.deleteAria': 'Delete {name}',
+          'card.secretError': 'Bad secret',
+
+          'account.addTitle': 'Add 2FA Account',
+          'account.editTitle': 'Edit 2FA Account',
+          'account.save': 'Save Account',
+          'account.saveAdd': 'Add to Vault',
+          'account.saveEdit': 'Save Changes',
+          'account.continueImport': 'Continue',
+          'account.stepsAria': 'Setup steps',
+          'account.step1': '1 Import',
+          'account.step2': '2 Confirm',
+          'account.smartImport.label': 'Paste account details, secret key, or otpauth URI',
+          'account.smartImport.hint': 'Supports "account---password---secret" (with | / : / , / space delimiters), Base32 keys, otpauth:// URIs, migration codes, or QR screenshots below.',
+          'account.smartImport.placeholder': 'e.g. user@example.com---pass---SECRET, or otpauth://...',
+          'account.dropzone.aria': 'Choose a QR code image, or drag and paste a screenshot here',
+          'account.dropzone.title': 'Choose QR image, or drag / paste screenshot',
+          'account.dropzone.hint': 'Decoded locally on this device; images are never uploaded.',
+          'account.manualEntry': 'No QR code? Enter secret key manually',
+          'account.backToImport': '← Back to Import',
+          'account.presets.label': 'Quick Platform Presets (click to fill name & icon)',
+          'account.presets.aria': 'Quick platform presets',
+          'account.issuer.label': 'Service / Platform *',
+          'account.issuer.placeholder': 'e.g. Google, ChatGPT',
+          'account.issuer.error': 'Please enter a service or platform name.',
+          'account.issuer.required': 'Please enter a service or platform name',
+          'account.name.label': 'Account / Email',
+          'account.name.placeholder': 'e.g. name@example.com',
+          'account.password.label': 'Login Password (optional, saved in vault)',
+          'account.password.placeholder': 'Optional: save login password for this account',
+          'account.password.toggleAria': 'Show login password',
+          'account.secret.label': 'Base32 Secret Key *',
+          'account.secret.hint': 'Spaces and hyphens are stripped automatically (at least 2 chars, A-Z or 2-7).',
+          'account.secret.toggleAria': 'Show secret key',
+          'account.secret.error': 'Enter a valid Base32 secret (letters A-Z and digits 2-7 only).',
+          'account.secret.emptyErr': 'Please enter a Base32 secret key.',
+          'account.secret.emptyValidity': 'Please enter a Base32 secret key',
+          'account.secret.invalidErr': 'Invalid secret format. Only Base32 characters (A-Z and 2-7) are allowed.',
+          'account.secret.invalidValidity': 'Invalid secret format',
+          'account.livePreview.label': 'Live preview',
+          'account.livePreview.updating': 'Live preview · {sec}s left',
+          'account.livePreview.meta': '{period}s · {digits}-digit · {algo}',
+          'account.supplement.summary': 'Optional · Note, Group & Pin',
+          'account.note.label': 'Account Note (purpose, recovery hints, etc.)',
+          'account.note.placeholder': 'e.g. Primary account; backup recovery codes stored offline…',
+          'account.group.label': 'Group Tag',
+          'account.group.aria': 'Quick group tags',
+          'account.group.placeholder': 'Type or pick a tag above (leave blank for none)',
+          'account.pinned.label': 'Pin this account (always keep at the top)',
+          'account.advanced.summary': 'Advanced TOTP Parameters (Algorithm / Digits / Period)',
+          'account.algo.label': 'Hash Algorithm',
+          'account.algo.sha1': 'SHA-1 (Default)',
+          'account.digits.label': 'Code Digits',
+          'account.digits.6': '6 digits (Default)',
+          'account.digits.8': '8 digits',
+          'account.period.label': 'Period (sec)',
+          'account.import.emptyErr': 'Choose a QR image, or paste "account---password---secret", a key, or an otpauth URI.',
+          'account.import.invalidErr': 'Could not recognize a valid secret key, otpauth URI, or "account---password---secret" format.',
+          'account.import.multiLineErr': 'Detected {count} accounts. Only one account can be added at a time — paste one line per import.',
+          'account.import.otpauthOk': 'URI parsed — confirm service & account details to save',
+          'account.import.base32Ok': 'Base32 secret normalized',
+          'account.import.qrInvalid': 'QR decoded, but content is not a valid 2FA secret or URI: {snippet}',
+          'account.import.fieldIssuer': 'service',
+          'account.import.fieldAccount': 'account',
+          'account.import.fieldPassword': 'password',
+          'account.import.fieldSecret': 'secret',
+          'account.import.fieldNote': 'note',
+          'account.import.delimitedOk': 'Parsed {fields}. {tail}',
+          'account.import.tailConfirm': 'Review details and save',
+          'account.import.tailNeedIssuer': 'Select or enter a service name to save',
+          'account.duplicate.title': 'Secret Key Already Exists',
+          'account.duplicate.msg': 'Already saved under "{issuer}"{accPart}. You can open and edit the existing entry.',
+          'account.duplicate.ok': 'View Existing',
+          'account.saveErr': 'Changes remain on this page but were not saved. Try submitting again, or close and retry/export.',
+          'account.saved': 'Account saved',
+          'account.savedFirst': 'First account saved — export an encrypted backup now',
+          'account.savedPwdHint': 'Saved. Login passwords are not encrypted yet — enable Master Password Lock in Settings.',
+
+          'migration.title': 'Import Migrated Accounts',
+          'migration.summary': 'Found {total} accounts in migration code ({supported} importable TOTP accounts).',
+          'migration.groupLabel': 'Assign Group to All Imported Accounts (optional)',
+          'migration.groupPlaceholder': 'e.g. Migrated / Personal / Work',
+          'migration.selectHint': 'Select accounts to import:',
+          'migration.selectAll': 'Select All',
+          'migration.deselectAll': 'Select None',
+          'migration.confirm': 'Import Selected',
+          'migration.itemMeta': '{digits}-digit · {algo}',
+          'migration.itemUnsupported': 'Unsupported: {reason}',
+          'migration.selectNoneErr': 'Select at least one account to import',
+          'migration.unsavedToast': 'Imported accounts are on this page but could not be saved — check the banner above',
+          'migration.imported': 'Imported {added} account(s)',
+          'migration.importedSkipped': 'Imported {added} account(s) (skipped {skipped} duplicate)',
+          'migration.reasonHotp': 'HOTP unsupported',
+          'migration.reasonMd5': 'MD5 unsupported',
+          'migration.reasonNoSecret': 'No secret',
+
+          'qr.title': 'Export Account QR Code',
+          'qr.frameAria': 'TOTP QR code image',
+          'qr.warning': 'This QR code contains your full 2FA secret key for migrating to a mobile authenticator. Do not share screenshots.',
+          'qr.uriLabel': 'otpauth:// URI',
+          'qr.showUri': 'Show Full URI',
+          'qr.hideUri': 'Hide URI',
+          'qr.copyUri': 'Copy URI',
+          'qr.copiedUriBtn': '✓ Copied',
+          'qr.copiedUriStatus': 'Copied otpauth:// URI',
+          'qr.hiddenPreview': 'otpauth://totp/{issuer}... (secret hidden)',
+
+          'backup.title': 'Backup & Restore',
+          'backup.export.legend': 'Export Backup File',
+          'backup.export.desc': 'Includes all 2FA secrets, saved login passwords, groups, and notes. Export periodically to safe offline storage in case browser data is cleared.',
+          'backup.export.pwdLabel': 'Backup Encryption Password (min 8 chars)',
+          'backup.export.pwdPlaceholder': 'Enter at least 8 characters to encrypt backup',
+          'backup.export.pwdToggleAria': 'Show backup encryption password',
+          'backup.export.confirmLabel': 'Confirm Backup Password',
+          'backup.export.confirmPlaceholder': 'Re-enter password to prevent typos',
+          'backup.export.encryptedBtn': 'Export Encrypted (.2favault.json)',
+          'backup.export.plainBtn': 'Export Plain JSON',
+          'backup.export.pwdShortErr': 'Backup password must be at least 8 characters',
+          'backup.export.pwdMismatchErr': 'Backup passwords do not match',
+          'backup.export.encryptedOk': 'Encrypted backup created — store both the file and password safely',
+          'backup.export.plainConfirmTitle': 'Export Unencrypted Backup',
+          'backup.export.plainConfirmMsg': 'Plain JSON contains all 2FA secrets and saved login passwords in cleartext. Anyone with this file can access them. Continue?',
+          'backup.export.plainConfirmOk': 'Export Plain JSON',
+          'backup.export.plainOk': 'Plain JSON backup created',
+          'backup.summary.noReal': 'Use encrypted backups to migrate accounts',
+          'backup.summary.never': 'Not exported yet · Export recommended',
+          'backup.summary.lastChanged': 'Last exported {when} · Unexported changes',
+          'backup.summary.lastCurrent': 'Last exported {when} · Up to date',
+          'backup.import.legend': 'Restore from Backup',
+          'backup.import.fileLabel': 'Select Backup File (.json / .2favault.json)',
+          'backup.import.chooseBtn': 'Choose File',
+          'backup.import.filePlaceholder': 'Choose or drop backup file',
+          'backup.import.pwdLabel': 'Encrypted backup — enter backup password',
+          'backup.import.pwdPlaceholder': 'Password used when exporting',
+          'backup.import.pwdToggleAria': 'Show backup decryption password',
+          'backup.import.modeLabel': 'Import Mode',
+          'backup.import.merge': 'Merge (skip duplicates)',
+          'backup.import.replace': 'Replace current list',
+          'backup.import.previewBtn': 'Validate & Preview',
+          'backup.import.runBtn': 'Restore Backup',
+          'backup.import.allowPartial': 'I reviewed invalid entries — import valid items only',
+          'backup.import.readErr': 'Failed to read backup: {msg}',
+          'backup.import.rowDup': '{name} — Duplicate, keeping existing',
+          'backup.import.rowValid': '{name} — Ready to import',
+          'backup.import.rowInvalid': 'Item #{index} — Invalid: {msg}',
+          'backup.import.summary': '{valid} ready · {dup} duplicate · {invalid} invalid',
+          'backup.import.replaceTitle': 'Replace Current Accounts',
+          'backup.import.replaceMsg': 'Replace your current list with {valid} validated account(s).{invalidNote} Export a backup first if you want to keep existing items.',
+          'backup.import.replaceInvalidNote': ' {invalid} invalid item(s) will be skipped.',
+          'backup.import.replaceOk': 'Replace List',
+          'backup.import.unsavedErr': 'Imported items are on this page but not yet saved. Close this dialog and use the banner to retry or export.',
+          'backup.import.doneToast': 'Imported {imported} account(s), skipped {dup} duplicate and {invalid} invalid',
+
+          'settings.title': 'Appearance & Security',
+          'settings.theme.legend': 'Appearance',
+          'settings.theme.aria': 'Select appearance theme',
+          'settings.theme.system': 'Auto ({state})',
+          'settings.theme.systemShort': 'Auto',
+          'settings.theme.light': 'Light',
+          'settings.theme.dark': 'Dark',
+          'settings.theme.stateLight': 'Light',
+          'settings.theme.stateDark': 'Dark',
+          'settings.theme.stateCurLight': 'Light',
+          'settings.theme.stateCurDark': 'Dark',
+          'settings.theme.quickSystem': 'Theme: Auto ({state})',
+          'settings.theme.quickLight': 'Theme: Light',
+          'settings.theme.quickDark': 'Theme: Dark',
+          'settings.theme.quickAria': '{label}, click to switch',
+          'settings.theme.quickTitle': '{label} (click to switch)',
+          'settings.theme.toast': 'Theme: {name}',
+          'settings.lang.legend': 'Language',
+          'settings.lang.aria': 'Select interface language',
+          'settings.lang.auto': 'Auto ({lang})',
+          'settings.lang.shortZh': '中文',
+          'settings.lang.shortEn': 'EN',
+          'settings.lang.switched': 'Language switched to English',
+          'settings.lang.switchedAuto': 'Switched to Auto (English)',
+          'settings.lock.legend': 'Master Password Lock (Local AES-256-GCM)',
+          'settings.lock.descEnabled': 'Master password enabled: all secrets, passwords, and notes are encrypted with AES-256-GCM in browser local storage.',
+          'settings.lock.descDisabled': 'Master password is off. Opening this page shows codes immediately; enable to encrypt local storage.',
+          'settings.lock.autoLockLabel': 'Auto-Lock After Inactivity',
+          'settings.lock.autoLock0': 'Never (lock manually or when tab closes)',
+          'settings.lock.autoLock5': '5 minutes',
+          'settings.lock.autoLock15': '15 minutes',
+          'settings.lock.autoLock30': '30 minutes',
+          'settings.lock.autoLockUpdated': 'Auto-lock setting updated',
+          'settings.lock.changeBtn': 'Change Password',
+          'settings.lock.disableBtn': 'Disable Lock',
+          'settings.lock.currentLabel': 'Current Master Password',
+          'settings.lock.currentToggleAria': 'Show current master password',
+          'settings.lock.setupLabel': 'Set Master Password (min 8 chars)',
+          'settings.lock.newLabel': 'New Master Password (min 8 chars)',
+          'settings.lock.newPlaceholder': 'Enter unlock password',
+          'settings.lock.newToggleAria': 'Show new master password',
+          'settings.lock.confirmLabel': 'Confirm Master Password',
+          'settings.lock.confirmPlaceholder': 'Re-enter master password',
+          'settings.lock.enableBtn': 'Enable Master Password',
+          'settings.lock.saveNewBtn': 'Save New Password',
+          'settings.lock.confirmDisableBtn': 'Confirm Disable Lock',
+          'settings.lock.needCurrentErr': 'Please enter your current master password',
+          'settings.lock.shortErr': 'Master password must be at least 8 characters',
+          'settings.lock.mismatchErr': 'Passwords do not match',
+          'settings.lock.saveFailErr': 'Password change was not saved; previous protection remains active. Resolve the storage banner and retry.',
+          'settings.lock.enabledOk': 'Master password saved — local vault is now encrypted',
+          'settings.lock.disableFailErr': 'Change was not saved; existing encryption remains active.',
+          'settings.lock.disabledWarn': 'Master password disabled — local data is now unencrypted',
+          'settings.data.legend': 'Data Management',
+          'settings.data.addDemo': 'Add Demo Accounts',
+          'settings.data.wipeAll': 'Clear All Data',
+          'settings.data.wipeTitle': 'Clear All Local Data',
+          'settings.data.wipeMsg': 'This permanently deletes all 2FA accounts, notes, and encryption settings stored in this browser and cannot be undone. Continue?',
+          'settings.data.wipeOk': 'Clear All',
+          'settings.data.wipeUnsaved': 'Cleared on page, but could not write to local storage — check the banner above',
+          'settings.data.wipeOkToast': 'All local data cleared',
+
+          'confirm.defaultTitle': 'Confirm Action',
+          'delete.title': 'Delete Account',
+          'delete.msg': 'Delete "{name}"{accPart}? You can undo within 10 seconds.',
+          'delete.ok': 'Delete Account',
+          'delete.unsavedToast': 'Removed from page, but could not save to local storage — check the banner above',
+
+          'lock.title': 'Unlock 2FA Vault',
+          'lock.subtitle': 'Local vault is protected with AES-256-GCM encryption.',
+          'lock.pwdLabel': 'Master Password',
+          'lock.pwdPlaceholder': 'Enter master password',
+          'lock.pwdToggleAria': 'Show password',
+          'lock.wrongPwd': 'Incorrect password. Please try again.',
+          'lock.draftHint': 'Unsaved changes are temporarily encrypted in memory. Export them before reloading or resetting.',
+          'lock.exportDraft': 'Export Unsaved Changes',
+          'lock.discardDraft': 'Discard Unsaved Changes',
+          'lock.forgotReset': 'Forgot Password & Reset',
+          'lock.reloadPage': 'Reload Page',
+          'lock.unlockBtn': 'Unlock',
+          'lock.reason.autoLock': 'Vault automatically locked due to inactivity',
+          'lock.err.removed': 'Vault was removed in another tab — please reload this page',
+          'lock.err.disabledElsewhere': 'Master password was disabled in another tab — please reload this page',
+          'lock.err.draftUndecryptable': 'Password is correct, but unsaved changes from before locking could not be decrypted (the password may have changed in another tab). Export unsaved changes first, then discard them to unlock.',
+          'lock.err.storageRead': 'Unable to read saved data from browser storage. Check storage permissions.',
+          'lock.reset.title': 'Reset Encrypted Vault?',
+          'lock.reset.msg': 'Resetting deletes all encrypted accounts in this browser. Make sure you have a backup; forgotten passwords cannot be recovered.',
+          'lock.reset.ok': 'Clear & Reset',
+          'lock.reset.fail': 'Reset failed: data changed elsewhere or storage denied deletion. Reload and try again.',
+          'lock.reset.okToast': 'Vault reset to empty',
+          'lock.discard.title': 'Discard Unsaved Changes?',
+          'lock.discard.msg': 'Only temporary unsaved edits will be discarded; saved vault data remains intact. Export first if you need them.',
+          'lock.discard.ok': 'Discard Changes',
+
+          'reload.title': 'Reload Saved Data',
+          'reload.msg': 'Reloading discards unsaved changes on this page. Export current data first if you want to keep them.',
+          'reload.ok': 'Reload',
+          'toast.savedCurrent': 'Current data saved',
+          'toast.prefSessionOnly': 'Preference applies for this session only: browser blocked saving settings',
+          'toast.handleBannerFirst': 'Please resolve the storage banner at the top first',
+          'toast.handleBannerInDialog': 'Storage issue detected — close this dialog and resolve the banner at the top',
+          'toast.otpGenErr': 'Invalid secret format — unable to generate code',
+          'toast.sortDragHint': 'Switch sort order to "Pinned & Custom" to drag and reorder accounts',
+
+          'err.base32Invalid': 'Invalid Base32 secret format',
+          'err.secretShort': 'Secret key is too short',
+          'err.ciphertextCorrupt': 'Encrypted payload is corrupted',
+          'err.decryptFailed': 'Incorrect password or data verification failed',
+          'err.decryptCorrupt': 'Incorrect password or corrupted data',
+          'err.otpauthProtocol': 'Not a valid otpauth:// URI',
+          'err.hotpUnsupported': 'HOTP counter token detected — only time-based TOTP tokens are supported',
+          'err.otpTypeUnsupported': 'Unsupported token type: {type}',
+          'err.otpauthEncoding': 'Invalid URI encoding',
+          'err.otpauthSecret': 'No valid Base32 secret found in otpauth URI',
+          'err.otpauthAlgo': 'Unsupported algorithm in otpauth URI',
+          'err.otpauthDigits': 'Code digits in otpauth URI must be 6 or 8',
+          'err.otpauthPeriod': 'Invalid refresh period in otpauth URI',
+          'err.migProtobufBad': 'Malformed migration Protobuf data',
+          'err.migProtobufTrunc': 'Incomplete migration Protobuf data',
+          'err.migFormatUnknown': 'Unknown migration QR format',
+          'err.migNoData': 'Missing data parameter in migration URI',
+          'err.migBase64': 'Invalid Base64 data in migration URI',
+          'err.migEmpty': 'No accounts found in migration QR code',
+          'err.qrModuleMissing': 'Offline QR decoder module unavailable',
+          'err.qrNotFound': 'No clear QR code detected in image — try cropping closer to the QR code',
+          'err.imgReadFail': 'Failed to read image — check that the file format is valid',
+          'err.accNotObject': 'Account record must be an object',
+          'err.accSecretInvalid': 'Secret is not valid Base32 text',
+          'err.accFieldString': '{field} must be text',
+          'err.accAlgoUnsupported': 'Unsupported TOTP algorithm',
+          'err.accDigitsInvalid': 'Digits must be 6 or 8',
+          'err.accPeriodInvalid': 'Period must be 5–300 seconds',
+          'err.accFieldNumber': '{field} must be a finite number',
+          'err.accFieldBool': '{field} must be a boolean',
+          'err.envFormat': 'Unsupported encrypted backup format',
+          'err.envIterations': 'Invalid or unsupported KDF iteration count',
+          'err.envIncomplete': 'Incomplete encrypted payload structure',
+          'err.envLength': 'Invalid encrypted data length',
+          'err.payloadAccounts': 'Missing accounts list in data',
+          'err.payloadVersion': 'Unsupported backup version',
+          'err.payloadDupId': 'Duplicate account IDs — restore from backup',
+          'err.backupAccounts': 'Missing accounts list in backup',
+          'err.backupAccountsOrVer': 'Missing accounts list or unsupported backup version',
+          'err.conflictElsewhere': 'Vault modified in another tab',
+          'err.vaultStruct': 'Invalid vault structure',
+        },
+      };
+
+      function detectBrowserLocale() {
+        const nav = (navigator.languages && navigator.languages[0]) || navigator.language || 'zh-CN';
+        return String(nav).toLowerCase().startsWith('zh') ? 'zh-CN' : 'en';
+      }
+
+      function getStoredLang() {
+        const value = preferences.LANG ?? null;
+        return (value === 'zh-CN' || value === 'en') ? value : 'auto';
+      }
+
+      function getActiveLocale() {
+        const stored = getStoredLang();
+        return stored === 'auto' ? detectBrowserLocale() : stored;
+      }
+
+      function t(key, vars) {
+        const loc = getActiveLocale();
+        let str = I18N[loc]?.[key] ?? I18N['zh-CN']?.[key] ?? key;
+        if (vars) {
+          str = str.replace(/\{(\w+)\}/g, (_, k) => (vars[k] !== undefined ? String(vars[k]) : ''));
+        }
+        return str;
+      }
+
+      function getDefaultGroups() {
+        return getActiveLocale() === 'en'
+          ? ['Work', 'Personal', 'Finance', 'Servers', 'Dev']
+          : ['工作', '个人', '金融', '服务器', '开发'];
+      }
+
+      function formatAccountParen(account) {
+        if (!account) return '';
+        return getActiveLocale() === 'en' ? ` (${account})` : `（${account}）`;
+      }
+
+      function applyStaticTranslations() {
+        document.documentElement.lang = getActiveLocale();
+        document.querySelectorAll('[data-i18n]').forEach((el) => {
+          el.textContent = t(el.dataset.i18n);
+        });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+          el.placeholder = t(el.dataset.i18nPlaceholder);
+        });
+        document.querySelectorAll('[data-i18n-aria-label]').forEach((el) => {
+          el.setAttribute('aria-label', t(el.dataset.i18nAriaLabel));
+        });
+        document.querySelectorAll('[data-i18n-title]').forEach((el) => {
+          el.title = t(el.dataset.i18nTitle);
+        });
+        const demoText = document.getElementById('demoBannerText');
+        if (demoText) {
+          const hint = document.createElement('span');
+          hint.className = 'desktop-import-hint';
+          const kbd = document.createElement('kbd');
+          kbd.textContent = 'Cmd+V / Ctrl+V';
+          hint.append(t('demo.bannerDesktopBefore'), kbd, t('demo.bannerDesktopAfter'));
+          demoText.replaceChildren(t('demo.bannerPrefix'), hint);
+        }
+      }
       const AUTO_PALETTE = ['#3f3f46', '#2f75c3', '#6366f1', '#3d7a2a', '#b45309', '#0369a1', '#6b629f', '#52525b'];
       const PLATFORM_PRESETS = [
         {
@@ -16049,7 +16979,7 @@ var qrcode = function() {
       function base32Decode(input) {
         const clean = normalizeBase32(input);
         if (!clean || !/^[A-Z2-7]+$/.test(clean)) {
-          throw new Error('无效的 Base32 密钥格式');
+          throw new Error(t('err.base32Invalid'));
         }
         const out = [];
         let buffer = 0;
@@ -16062,7 +16992,7 @@ var qrcode = function() {
             out.push((buffer >>> bits) & 0xff);
           }
         }
-        if (out.length === 0) throw new Error('密钥长度不足');
+        if (out.length === 0) throw new Error(t('err.secretShort'));
         return new Uint8Array(out);
       }
 
@@ -16443,7 +17373,7 @@ var qrcode = function() {
       }
 
       function aes256GcmDecryptJs(keyBytes, iv12, ctWithTag) {
-        if (ctWithTag.length < 16) throw new Error('密文格式损坏');
+        if (ctWithTag.length < 16) throw new Error(t('err.ciphertextCorrupt'));
         const ct = ctWithTag.subarray(0, ctWithTag.length - 16);
         const tag = ctWithTag.subarray(ctWithTag.length - 16);
         const rk = aes256ExpandKey(keyBytes);
@@ -16454,7 +17384,7 @@ var qrcode = function() {
         const tagMask = aes256EncryptBlock(rk, j0);
         let diff = 0;
         for (let i = 0; i < 16; i++) diff |= (expectedTag[i] ^ tagMask[i] ^ tag[i]);
-        if (diff !== 0) throw new Error('密码错误或数据校验失败');
+        if (diff !== 0) throw new Error(t('err.decryptFailed'));
         const pt = new Uint8Array(ct.length);
         let ctr = inc32(j0);
         for (let off = 0; off < ct.length; off += 16) {
@@ -16567,7 +17497,7 @@ var qrcode = function() {
             const aesKey = await crypto.subtle.importKey('raw', keyBytes, 'AES-GCM', false, ['decrypt']);
             ptBytes = new Uint8Array(await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, aesKey, ct));
           } catch (err) {
-            if (err?.name === 'OperationError') throw new Error('密码错误或数据已损坏');
+            if (err?.name === 'OperationError') throw new Error(t('err.decryptCorrupt'));
             ptBytes = aes256GcmDecryptJs(keyBytes, iv, ct);
           }
         } else {
@@ -16601,16 +17531,16 @@ var qrcode = function() {
 
       function parseOtpAuthUri(raw) {
         const url = new URL(raw.trim());
-        if (url.protocol !== 'otpauth:') throw new Error('不是有效的 otpauth:// 链接');
+        if (url.protocol !== 'otpauth:') throw new Error(t('err.otpauthProtocol'));
         const otpType = (url.host || url.pathname.replace(/^\/+/, '').split('/')[0]).toLowerCase();
-        if (otpType === 'hotp') throw new Error('检测到 HOTP 计数器令牌，当前仅支持基于时间的 TOTP 令牌');
-        if (otpType !== 'totp') throw new Error(`不支持的令牌类型：${otpType}`);
+        if (otpType === 'hotp') throw new Error(t('err.hotpUnsupported'));
+        if (otpType !== 'totp') throw new Error(t('err.otpTypeUnsupported', { type: otpType }));
 
         let labelPath;
         try {
           labelPath = decodeURIComponent(url.pathname.replace(/^\/+/, ''));
         } catch {
-          throw new VaultDataError('认证链接编码无效');
+          throw new VaultDataError(t('err.otpauthEncoding'));
         }
         if (!url.host && labelPath.toLowerCase().startsWith(`${otpType}/`)) {
           labelPath = labelPath.slice(otpType.length + 1);
@@ -16624,15 +17554,15 @@ var qrcode = function() {
         }
         const params = url.searchParams;
         const secret = normalizeBase32(params.get('secret') || '');
-        if (!isValidBase32(secret)) throw new Error('otpauth 链接中未包含有效的 Base32 密钥');
+        if (!isValidBase32(secret)) throw new Error(t('err.otpauthSecret'));
         const issuer = (params.get('issuer') || labelIssuer || '').trim();
         const algoRaw = (params.get('algorithm') || 'SHA1').toUpperCase().replace(/[^A-Z0-9]/g, '');
-        if (!['SHA1', 'SHA256', 'SHA512'].includes(algoRaw)) throw new VaultDataError('认证链接中的算法不受支持');
+        if (!['SHA1', 'SHA256', 'SHA512'].includes(algoRaw)) throw new VaultDataError(t('err.otpauthAlgo'));
         const algorithm = algoRaw;
         const digits = params.has('digits') ? Number(params.get('digits')) : 6;
-        if (![6, 8].includes(digits)) throw new VaultDataError('认证链接的验证码位数必须为 6 或 8');
+        if (![6, 8].includes(digits)) throw new VaultDataError(t('err.otpauthDigits'));
         const periodNum = Number(params.get('period') || 30);
-        if (!Number.isInteger(periodNum) || periodNum < 5 || periodNum > 300) throw new VaultDataError('认证链接中的刷新周期无效');
+        if (!Number.isInteger(periodNum) || periodNum < 5 || periodNum > 300) throw new VaultDataError(t('err.otpauthPeriod'));
         const period = periodNum;
         return { issuer, account: labelAccount.trim(), secret, algorithm, digits, period };
       }
@@ -16641,19 +17571,19 @@ var qrcode = function() {
         let result = 0n;
         let shift = 0n;
         while (state.pos < bytes.length) {
-          if (shift > 63n) throw new Error('迁移二维码 Protobuf 数据异常');
+          if (shift > 63n) throw new Error(t('err.migProtobufBad'));
           const b = bytes[state.pos++];
           result |= BigInt(b & 0x7f) << shift;
           if ((b & 0x80) === 0) return result;
           shift += 7n;
         }
-        throw new Error('迁移二维码 Protobuf 数据不完整');
+        throw new Error(t('err.migProtobufTrunc'));
       }
 
       function readLengthBytes(bytes, state) {
         const lenBig = readVarint(bytes, state);
         if (lenBig > BigInt(bytes.length - state.pos)) {
-          throw new Error('迁移二维码 Protobuf 数据不完整');
+          throw new Error(t('err.migProtobufTrunc'));
         }
         const len = Number(lenBig);
         const slice = bytes.subarray(state.pos, state.pos + len);
@@ -16664,14 +17594,14 @@ var qrcode = function() {
       function skipField(bytes, state, wireType) {
         if (wireType === 0) readVarint(bytes, state);
         else if (wireType === 1) {
-          if (state.pos + 8 > bytes.length) throw new Error('迁移二维码 Protobuf 数据不完整');
+          if (state.pos + 8 > bytes.length) throw new Error(t('err.migProtobufTrunc'));
           state.pos += 8;
         } else if (wireType === 2) {
           readLengthBytes(bytes, state);
         } else if (wireType === 5) {
-          if (state.pos + 4 > bytes.length) throw new Error('迁移二维码 Protobuf 数据不完整');
+          if (state.pos + 4 > bytes.length) throw new Error(t('err.migProtobufTrunc'));
           state.pos += 4;
-        } else throw new Error('迁移二维码格式未知');
+        } else throw new Error(t('err.migFormatUnknown'));
       }
 
       function parseOtpParams(bytes) {
@@ -16717,9 +17647,9 @@ var qrcode = function() {
         const algorithm = algoMap[algoCode] || 'SHA1';
         const digits = digitCode === 2 ? 8 : 6;
         const supported = (typeCode === 0 || typeCode === 2) && algorithm !== 'MD5' && secretBytes.length > 0;
-        const reason = typeCode === 1 ? 'HOTP 暂不支持' : algorithm === 'MD5' ? 'MD5 算法不支持' : !secretBytes.length ? '无密钥' : '';
+        const reason = typeCode === 1 ? t('migration.reasonHotp') : algorithm === 'MD5' ? t('migration.reasonMd5') : !secretBytes.length ? t('migration.reasonNoSecret') : '';
         return {
-          issuer: parsedIssuer || '未命名平台',
+          issuer: parsedIssuer || t('common.unnamed'),
           account: parsedAccount,
           secret: secretBytes.length ? base32Encode(secretBytes) : '',
           algorithm: algorithm === 'MD5' ? 'SHA1' : algorithm,
@@ -16732,14 +17662,14 @@ var qrcode = function() {
 
       function parseGoogleMigrationUri(raw) {
         const m = raw.trim().match(/[?&]data=([^&#]+)/i);
-        if (!m) throw new Error('迁移链接中未找到 data 参数');
+        if (!m) throw new Error(t('err.migNoData'));
         let bytes;
         try {
           let b64 = decodeURIComponent(m[1]).replace(/\s+/g, '+').replace(/-/g, '+').replace(/_/g, '/');
           while (b64.length % 4) b64 += '=';
           bytes = b64ToBytes(b64);
         } catch {
-          throw new Error('迁移链接的 Base64 数据格式无效');
+          throw new Error(t('err.migBase64'));
         }
         const state = { pos: 0 };
         const items = [];
@@ -16753,7 +17683,7 @@ var qrcode = function() {
             skipField(bytes, state, wire);
           }
         }
-        if (!items.length) throw new Error('未在迁移二维码中找到任何账号');
+        if (!items.length) throw new Error(t('err.migEmpty'));
         return items;
       }
 
@@ -17022,7 +17952,7 @@ var qrcode = function() {
             try {
               URL.revokeObjectURL(url);
               if (typeof globalThis.jsQR !== 'function') {
-                reject(new Error('离线二维码解码模块不可用'));
+                reject(new Error(t('err.qrModuleMissing')));
                 return;
               }
               const maxSide = 1400;
@@ -17061,14 +17991,14 @@ var qrcode = function() {
                   return;
                 }
               }
-              reject(new Error('未在图片中识别到清晰的二维码，请尝试截取更清晰的二维码区域'));
+              reject(new Error(t('err.qrNotFound')));
             } catch (err) {
               reject(err);
             }
           };
           img.onerror = () => {
             URL.revokeObjectURL(url);
-            reject(new Error('图片读取失败，请确认文件格式有效'));
+            reject(new Error(t('err.imgReadFail')));
           };
           img.src = url;
         });
@@ -17260,7 +18190,7 @@ var qrcode = function() {
 
       function setPasswordToggleUi(btn, show) {
         btn.setAttribute('aria-pressed', String(show));
-        btn.title = show ? '隐藏' : '显示';
+        btn.title = show ? t('common.hide') : t('common.show');
         btn.replaceChildren(svgIcon(show ? eyeHideSpec() : eyeShowSpec(), 16, 1.75));
       }
 
@@ -17381,7 +18311,7 @@ var qrcode = function() {
           else localStorage.setItem(KEYS[name], value);
         } catch (error) {
           if (!isStorageError(error)) throw error;
-          showToast('偏好仅在本次打开期间生效：浏览器未能保存设置');
+          showToast(t('toast.prefSessionOnly'));
         }
       }
       function getStoredTheme() {
@@ -17394,19 +18324,73 @@ var qrcode = function() {
         syncThemeControls();
       }
 
+      function syncLanguageControls() {
+        const stored = getStoredLang();
+        const browserLang = detectBrowserLocale();
+        const autoName = browserLang === 'zh-CN' ? t('settings.lang.shortZh') : t('settings.lang.shortEn');
+        const labelEl = $('langSystemLabel');
+        if (labelEl) labelEl.textContent = t('settings.lang.auto', { lang: autoName });
+        document.querySelectorAll('input[name="langChoice"]').forEach((r) => {
+          r.checked = r.value === stored;
+        });
+      }
+
+      function refreshDemoAccountLocale() {
+        const ghNotes = [I18N['zh-CN']['demo.github.note'], I18N.en['demo.github.note']];
+        const ghGroups = [I18N['zh-CN']['demo.github.group'], I18N.en['demo.github.group']];
+        const cfNotes = [I18N['zh-CN']['demo.cloudflare.note'], I18N.en['demo.cloudflare.note']];
+        const cfGroups = [I18N['zh-CN']['demo.cloudflare.group'], I18N.en['demo.cloudflare.group']];
+        for (const acc of appState.accounts) {
+          if (!acc.isDemo) continue;
+          if (ghNotes.includes(acc.note)) acc.note = t('demo.github.note');
+          if (ghGroups.includes(acc.group)) acc.group = t('demo.github.group');
+          if (cfNotes.includes(acc.note)) acc.note = t('demo.cloudflare.note');
+          if (cfGroups.includes(acc.group)) acc.group = t('demo.cloudflare.group');
+        }
+      }
+
+      function applyLanguage(choice, { notify = false } = {}) {
+        const next = (choice === 'zh-CN' || choice === 'en') ? choice : 'auto';
+        writePreference('LANG', next === 'auto' ? null : next);
+        refreshDemoAccountLocale();
+        applyStaticTranslations();
+        document.querySelectorAll('.input-pwd-toggle').forEach((btn) => {
+          btn.title = btn.getAttribute('aria-pressed') === 'true' ? t('common.hide') : t('common.show');
+        });
+        syncLanguageControls();
+        syncThemeControls();
+        updateHeaderStatus();
+        renderStorageStatus();
+        if ($('settingsDialog')?.open) {
+          const prevMode = masterPwdPanelMode;
+          syncSettingsModalUi({ preserveStatus: true });
+          if (appState.encryptedMode && (prevMode === 'change' || prevMode === 'disable')) {
+            setMasterPwdPanelMode(prevMode);
+          }
+          if (notify) {
+            setInlineAlert($('settingsStatus'), next === 'auto' ? t('settings.lang.switchedAuto') : t('settings.lang.switched'), 'success');
+          }
+        }
+        renderAll();
+      }
+
       function syncThemeControls() {
         const stored = getStoredTheme();
-        const sysShort = darkMedia.matches ? '深色' : '浅色';
-        const sysState = darkMedia.matches ? '当前深色' : '当前浅色';
-        $('themeSystemLabel').textContent = `跟随系统（${sysShort}）`;
+        const sysShort = darkMedia.matches ? t('settings.theme.stateDark') : t('settings.theme.stateLight');
+        const sysState = darkMedia.matches ? t('settings.theme.stateCurDark') : t('settings.theme.stateCurLight');
+        $('themeSystemLabel').textContent = t('settings.theme.system', { state: sysShort });
         document.querySelectorAll('input[name="themeChoice"]').forEach((r) => {
           r.checked = r.value === stored;
         });
         const qBtn = $('quickThemeBtn');
         if (qBtn) {
-          const labels = { system: `外观：跟随系统（${sysState}）`, light: '外观：浅色模式', dark: '外观：深色模式' };
-          qBtn.setAttribute('aria-label', `${labels[stored]}，点击切换`);
-          qBtn.title = `${labels[stored]}（点击切换）`;
+          const labels = {
+            system: t('settings.theme.quickSystem', { state: sysState }),
+            light: t('settings.theme.quickLight'),
+            dark: t('settings.theme.quickDark'),
+          };
+          qBtn.setAttribute('aria-label', t('settings.theme.quickAria', { label: labels[stored] }));
+          qBtn.title = t('settings.theme.quickTitle', { label: labels[stored] });
           const isDark = stored === 'dark' || (stored === 'system' && darkMedia.matches);
           const icon = stored === 'system'
             ? svgIcon([
@@ -17454,7 +18438,7 @@ var qrcode = function() {
         });
       });
 
-      function showConfirm({ title, message, okText = '确认', isDanger = true }) {
+      function showConfirm({ title, message, okText = t('common.confirm'), isDanger = true }) {
         return new Promise((resolve) => {
           const dlg = $('confirmDialog');
           $('confirmTitle').textContent = title;
@@ -17549,8 +18533,8 @@ var qrcode = function() {
             issuer: 'GitHub',
             account: 'demo-dev@example.com',
             secret: 'JBSWY3DPEHPK3PXP',
-            note: '示例账号（测试密钥）：点击验证码可复制；可在详情中记录备注、恢复提示或账号用途。',
-            group: '开发',
+            note: t('demo.github.note'),
+            group: t('demo.github.group'),
             pinned: true,
             algorithm: 'SHA1',
             digits: 6,
@@ -17566,8 +18550,8 @@ var qrcode = function() {
             issuer: 'Cloudflare',
             account: 'ops@example.com',
             secret: 'GEZDGNBVGY3TQOJQ',
-            note: '示例账号：剩余时间少于 5 秒时变色提醒；点击“下期”可复制下一周期验证码。',
-            group: '服务器',
+            note: t('demo.cloudflare.note'),
+            group: t('demo.cloudflare.group'),
             pinned: false,
             algorithm: 'SHA1',
             digits: 6,
@@ -17587,25 +18571,25 @@ var qrcode = function() {
         return error instanceof DOMException && ['SecurityError', 'QuotaExceededError', 'InvalidStateError', 'NS_ERROR_DOM_QUOTA_REACHED'].includes(error.name);
       }
       function validateAccount(value, index) {
-        if (!value || typeof value !== 'object' || Array.isArray(value)) throw new VaultDataError('账号记录必须是对象');
-        if (typeof value.secret !== 'string' || !isValidBase32(value.secret)) throw new VaultDataError('密钥不是有效的 Base32 文本');
+        if (!value || typeof value !== 'object' || Array.isArray(value)) throw new VaultDataError(t('err.accNotObject'));
+        if (typeof value.secret !== 'string' || !isValidBase32(value.secret)) throw new VaultDataError(t('err.accSecretInvalid'));
         for (const field of ['issuer', 'account', 'password', 'note', 'group', 'icon', 'color', 'id']) {
-          if (value[field] !== undefined && value[field] !== null && typeof value[field] !== 'string') throw new VaultDataError(`${field} 必须是文本`);
+          if (value[field] !== undefined && value[field] !== null && typeof value[field] !== 'string') throw new VaultDataError(t('err.accFieldString', { field }));
         }
         const algorithm = value.algorithm === undefined ? 'SHA1' : value.algorithm;
         const digits = value.digits === undefined ? 6 : value.digits;
         const period = value.period === undefined ? 30 : value.period;
-        if (!['SHA1', 'SHA256', 'SHA512'].includes(algorithm)) throw new VaultDataError('不支持的验证码算法');
-        if (![6, 8].includes(digits)) throw new VaultDataError('验证码位数必须为 6 或 8');
-        if (!Number.isInteger(period) || period < 5 || period > 300) throw new VaultDataError('刷新周期必须为 5–300 秒');
+        if (!['SHA1', 'SHA256', 'SHA512'].includes(algorithm)) throw new VaultDataError(t('err.accAlgoUnsupported'));
+        if (![6, 8].includes(digits)) throw new VaultDataError(t('err.accDigitsInvalid'));
+        if (!Number.isInteger(period) || period < 5 || period > 300) throw new VaultDataError(t('err.accPeriodInvalid'));
         for (const field of ['order', 'createdAt', 'updatedAt']) {
-          if (value[field] !== undefined && (typeof value[field] !== 'number' || !Number.isFinite(value[field]))) throw new VaultDataError(`${field} 必须是有限数字`);
+          if (value[field] !== undefined && (typeof value[field] !== 'number' || !Number.isFinite(value[field]))) throw new VaultDataError(t('err.accFieldNumber', { field }));
         }
         for (const field of ['pinned', 'isDemo']) {
-          if (value[field] !== undefined && typeof value[field] !== 'boolean') throw new VaultDataError(`${field} 必须是布尔值`);
+          if (value[field] !== undefined && typeof value[field] !== 'boolean') throw new VaultDataError(t('err.accFieldBool', { field }));
         }
         return { ...value, id: value.id || uid(), secret: normalizeBase32(value.secret), algorithm, digits, period,
-          issuer: (typeof value.issuer === 'string' && value.issuer.trim()) ? value.issuer.trim() : '未命名平台',
+          issuer: (typeof value.issuer === 'string' && value.issuer.trim()) ? value.issuer.trim() : t('common.unnamed'),
           account: value.account || '',
           password: value.password || '',
           note: value.note || '',
@@ -17615,20 +18599,20 @@ var qrcode = function() {
           order: value.order === undefined ? index : value.order };
       }
       function validateEnvelope(value) {
-        if (!value || value.version !== 1 || value.encrypted !== true || value.kdf !== 'PBKDF2-SHA256') throw new VaultDataError('不支持的加密备份格式');
+        if (!value || value.version !== 1 || value.encrypted !== true || value.kdf !== 'PBKDF2-SHA256') throw new VaultDataError(t('err.envFormat'));
         // A backup controls this cost; reject oversized values before a local PBKDF2 job can freeze the page.
-        if (!Number.isInteger(value.iterations) || value.iterations < 1 || value.iterations > 2_000_000) throw new VaultDataError('备份的密码派生参数无效或超出支持范围');
+        if (!Number.isInteger(value.iterations) || value.iterations < 1 || value.iterations > 2_000_000) throw new VaultDataError(t('err.envIterations'));
         for (const field of ['salt', 'iv', 'ciphertext']) {
-          if (typeof value[field] !== 'string' || !/^[A-Za-z0-9+/]+={0,2}$/.test(value[field])) throw new VaultDataError('加密数据结构不完整');
+          if (typeof value[field] !== 'string' || !/^[A-Za-z0-9+/]+={0,2}$/.test(value[field])) throw new VaultDataError(t('err.envIncomplete'));
         }
-        if (b64ToBytes(value.salt).length !== 16 || b64ToBytes(value.iv).length !== 12 || b64ToBytes(value.ciphertext).length < 16) throw new VaultDataError('加密数据长度无效');
+        if (b64ToBytes(value.salt).length !== 16 || b64ToBytes(value.iv).length !== 12 || b64ToBytes(value.ciphertext).length < 16) throw new VaultDataError(t('err.envLength'));
         return value;
       }
       function validatePayload(value) {
-        if (!value || typeof value !== 'object' || !Array.isArray(value.accounts)) throw new VaultDataError('数据中缺少账号列表');
-        if (value.version !== undefined && value.version !== 1) throw new VaultDataError('不支持此备份版本');
+        if (!value || typeof value !== 'object' || !Array.isArray(value.accounts)) throw new VaultDataError(t('err.payloadAccounts'));
+        if (value.version !== undefined && value.version !== 1) throw new VaultDataError(t('err.payloadVersion'));
         const accounts = value.accounts.map(validateAccount);
-        if (new Set(accounts.map(a => a.id)).size !== accounts.length) throw new VaultDataError('账号标识重复，请从备份恢复');
+        if (new Set(accounts.map(a => a.id)).size !== accounts.length) throw new VaultDataError(t('err.payloadDupId'));
         return { ...value, accounts };
       }
       function applyPayload(payload) {
@@ -17639,19 +18623,19 @@ var qrcode = function() {
         appState.savedContent = JSON.stringify({ accounts: payload.accounts, demoDismissed: appState.demoDismissed });
       }
       function backupDescription() {
-        if (!appState.accounts.some(a => !a.isDemo)) return '使用加密备份迁移账号';
-        if (!appState.lastExport) return '尚未导出备份 · 建议现在导出';
-        const when = new Date(appState.lastExport.at).toLocaleString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        if (!appState.accounts.some(a => !a.isDemo)) return t('backup.summary.noReal');
+        if (!appState.lastExport) return t('backup.summary.never');
+        const when = new Date(appState.lastExport.at).toLocaleString(getActiveLocale(), { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
         const changed = appState.dirty || appState.contentRevision !== appState.lastExport.contentRevision;
-        return `上次导出 ${when}${changed ? ' · 此后有改动' : ' · 当前内容已导出'}`;
+        return t(changed ? 'backup.summary.lastChanged' : 'backup.summary.lastCurrent', { when });
       }
       function renderStorageStatus() {
         const state = appState.storageState;
         const descriptions = {
-          'read-error': ['未能读取已保存的数据', '原始数据仍然保留。请先导出原始数据，或选择备份进行覆盖恢复。'],
-          unavailable: ['浏览器无法使用本地存储', '当前内容只在这次打开期间保留。请导出备份，或更换允许保存数据的浏览器。'],
-          'write-error': ['当前改动尚未保存', '输入内容仍在页面中。可以重试保存，或先导出当前内容。'],
-          conflict: ['另一个页面已更新保险库', '已暂停此页面写入，避免覆盖新数据。请先导出待保存内容，再重新加载最新数据。'],
+          'read-error': [t('storage.readError.title'), t('storage.readError.desc')],
+          unavailable: [t('storage.unavailable.title'), t('storage.unavailable.desc')],
+          'write-error': [t('storage.writeError.title'), t('storage.writeError.desc')],
+          conflict: [t('storage.conflict.title'), t('storage.conflict.desc')],
         };
         $('storageBanner').hidden = !descriptions[state];
         if (descriptions[state]) {
@@ -17673,7 +18657,7 @@ var qrcode = function() {
       }
       async function writeSnapshot(raw, expectedRaw) {
         const write = () => {
-          if (localStorage.getItem(KEYS.VAULT) !== expectedRaw) throw new VaultConflictError('其他页面已修改保险库');
+          if (localStorage.getItem(KEYS.VAULT) !== expectedRaw) throw new VaultConflictError(t('err.conflictElsewhere'));
           if (raw === null) localStorage.removeItem(KEYS.VAULT);
           else localStorage.setItem(KEYS.VAULT, raw);
         };
@@ -17753,7 +18737,7 @@ var qrcode = function() {
         let parsed;
         try {
           parsed = JSON.parse(raw);
-          if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new VaultDataError('保险库结构无效');
+          if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new VaultDataError(t('err.vaultStruct'));
           if (parsed.encrypted === true) validateEnvelope(parsed);
           else parsed = validatePayload(parsed);
         } catch (error) {
@@ -17845,7 +18829,7 @@ var qrcode = function() {
         if (preset) {
           return { key: `platform:preset:${preset.id}`, label: preset.name, preset };
         }
-        const clean = String(acc.issuer || '未命名平台').trim();
+        const clean = String(acc.issuer || t('common.unnamed')).trim();
         return { key: `platform:name:${clean.toLowerCase()}`, label: clean, preset: null };
       }
 
@@ -17900,7 +18884,7 @@ var qrcode = function() {
         const lockBtn = $('lockNowBtn');
         if (appState.encryptedMode) {
           pill.hidden = false;
-          text.textContent = appState.locked ? '已锁定' : '已加密';
+          text.textContent = appState.locked ? t('status.locked') : t('status.encrypted');
           lockBtn.hidden = appState.locked;
         } else {
           pill.hidden = true;
@@ -17920,8 +18904,8 @@ var qrcode = function() {
         const focusKey = document.activeElement?.dataset.filterKey;
         const pinnedCount = appState.accounts.filter((a) => a.pinned).length;
 
-        const corePills = [{ key: 'all', label: '全部', count: appState.accounts.length }];
-        if (pinnedCount > 0) corePills.push({ key: 'pinned', label: '已置顶', count: pinnedCount, isStar: true });
+        const corePills = [{ key: 'all', label: t('filter.all'), count: appState.accounts.length }];
+        if (pinnedCount > 0) corePills.push({ key: 'pinned', label: t('filter.pinned'), count: pinnedCount, isStar: true });
 
         // 只有一个平台时，平台药丸和“全部”重复，不显示
         const platforms = getAvailablePlatforms();
@@ -18039,7 +19023,7 @@ var qrcode = function() {
         li.className = `account-card${acc.pinned ? ' is-pinned' : ''}`;
         li.dataset.id = acc.id;
 
-        const displayName = acc.issuer || acc.account || '账号';
+        const displayName = acc.issuer || acc.account || t('common.accountFallback');
 
         // Left Column: Identity + Optional Password + Note + Tags/Reorder
         const cardMain = document.createElement('div');
@@ -18063,20 +19047,20 @@ var qrcode = function() {
         issuerRow.className = 'issuer-row';
         const title = document.createElement('h2');
         title.className = 'issuer-name';
-        title.textContent = acc.issuer || '未命名平台';
+        title.textContent = acc.issuer || t('common.unnamed');
         issuerRow.appendChild(title);
 
         if (acc.isDemo) {
           const demoTag = document.createElement('span');
           demoTag.className = 'demo-tag';
-          demoTag.textContent = '示例';
+          demoTag.textContent = t('demo.tag');
           issuerRow.appendChild(demoTag);
         }
         // 列表视图不显示卡片底栏，分组和非默认参数改放在平台名后面（卡片视图里隐藏）
         const listMetaParts = [];
         if (acc.group) listMetaParts.push(`# ${acc.group}`);
         if (acc.period && acc.period !== 30) listMetaParts.push(`${acc.period}s`);
-        if (acc.digits && acc.digits !== 6) listMetaParts.push(`${acc.digits}位`);
+        if (acc.digits && acc.digits !== 6) listMetaParts.push(t('card.digitsShort', { digits: acc.digits }));
         if (acc.algorithm && acc.algorithm !== 'SHA1') listMetaParts.push(acc.algorithm);
         if (listMetaParts.length) {
           const listMeta = document.createElement('span');
@@ -18098,8 +19082,8 @@ var qrcode = function() {
           const accBtn = document.createElement('button');
           accBtn.type = 'button';
           accBtn.className = 'account-copy-btn';
-          accBtn.setAttribute('aria-label', `复制账号 ${acc.account}`);
-          accBtn.title = `${acc.account} · 点击复制`;
+          accBtn.setAttribute('aria-label', t('card.copyAccountAria', { account: acc.account }));
+          accBtn.title = t('card.copyAccountTitle', { account: acc.account });
 
           const sub = document.createElement('span');
           sub.className = 'account-label';
@@ -18117,14 +19101,14 @@ var qrcode = function() {
           accBtn.addEventListener('click', async () => {
             const ok = await copyText(acc.account);
             if (!ok) {
-              showManualCopy(acc.account, '浏览器未允许直接复制，请选中文本后复制。');
+              showManualCopy(acc.account, t('manualCopy.genericDesc'));
               return;
             }
             accBtn.classList.add('is-copied');
             const chk = svgIcon(checkIcoSpec(), 13, 2);
             chk.classList.add('inline-copy-ico');
             accCopySlot.replaceChildren(chk);
-            showToast(`已复制 ${displayName} 账号`);
+            showToast(t('card.copiedAccount', { name: displayName }));
             clearTimeout(accCopyTimer);
             accCopyTimer = setTimeout(() => {
               accBtn.classList.remove('is-copied');
@@ -18147,8 +19131,8 @@ var qrcode = function() {
           const pwdValBtn = document.createElement('button');
           pwdValBtn.type = 'button';
           pwdValBtn.className = 'pwd-value-btn';
-          pwdValBtn.setAttribute('aria-label', `复制 ${displayName} 登录密码`);
-          pwdValBtn.title = '点击复制登录密码';
+          pwdValBtn.setAttribute('aria-label', t('card.copyPwdAria', { name: displayName }));
+          pwdValBtn.title = t('card.copyPwdTitle');
 
           const keyIco = svgIcon([
             { tag: 'path', attrs: { d: 'M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4' } },
@@ -18160,7 +19144,7 @@ var qrcode = function() {
             const revealed = appState.revealedPasswords.has(acc.id);
             pwdText.className = `pwd-mask${revealed ? ' is-revealed' : ''}`;
             pwdText.textContent = revealed ? acc.password : '••••••••';
-            pwdValBtn.title = revealed ? acc.password : '点击复制登录密码';
+            pwdValBtn.title = revealed ? acc.password : t('card.copyPwdTitle');
           };
           syncPwdMask();
           pwdValBtn.append(keyIco, pwdText);
@@ -18171,8 +19155,8 @@ var qrcode = function() {
           const syncPwdToggleBtn = () => {
             const revealed = appState.revealedPasswords.has(acc.id);
             pwdToggleBtn.setAttribute('aria-pressed', String(revealed));
-            pwdToggleBtn.setAttribute('aria-label', revealed ? `隐藏 ${displayName} 密码` : `显示 ${displayName} 密码`);
-            pwdToggleBtn.title = revealed ? '隐藏密码' : '显示密码';
+            pwdToggleBtn.setAttribute('aria-label', t(revealed ? 'card.hidePwdAria' : 'card.showPwdAria', { name: displayName }));
+            pwdToggleBtn.title = t(revealed ? 'card.hidePwdTitle' : 'card.showPwdTitle');
             pwdToggleBtn.replaceChildren(svgIcon(revealed ? eyeHideSpec() : eyeShowSpec(), 13, 1.75));
           };
           syncPwdToggleBtn();
@@ -18188,20 +19172,20 @@ var qrcode = function() {
           const pwdCopyBtn = document.createElement('button');
           pwdCopyBtn.type = 'button';
           pwdCopyBtn.className = 'icon-btn pwd-copy-btn';
-          pwdCopyBtn.setAttribute('aria-label', `一键复制 ${displayName} 登录密码`);
-          pwdCopyBtn.title = '一键复制密码';
+          pwdCopyBtn.setAttribute('aria-label', t('card.copyPwdBtnAria', { name: displayName }));
+          pwdCopyBtn.title = t('card.copyPwdBtnTitle');
           pwdCopyBtn.replaceChildren(svgIcon(copyIcoSpec(), 13, 1.75));
 
           let pwdCopyTimer = null;
           const doCopyPwd = async () => {
             const ok = await copyText(acc.password);
             if (!ok) {
-              showManualCopy(acc.password, '浏览器未允许直接复制，请选中文本后复制。');
+              showManualCopy(acc.password, t('manualCopy.genericDesc'));
               return;
             }
             pwdRow.classList.add('is-copied');
             pwdCopyBtn.replaceChildren(svgIcon(checkIcoSpec(), 13, 2));
-            showToast(`已复制 ${displayName} 登录密码`);
+            showToast(t('card.copiedPwd', { name: displayName }));
             clearTimeout(pwdCopyTimer);
             pwdCopyTimer = setTimeout(() => {
               pwdRow.classList.remove('is-copied');
@@ -18235,7 +19219,7 @@ var qrcode = function() {
             const expBtn = document.createElement('button');
             expBtn.type = 'button';
             expBtn.className = 'note-expand-btn';
-            expBtn.textContent = expanded ? '收起' : '展开';
+            expBtn.textContent = expanded ? t('common.collapse') : t('common.expand');
             expBtn.addEventListener('click', () => {
               if (appState.expandedNotes.has(acc.id)) appState.expandedNotes.delete(acc.id);
               else appState.expandedNotes.add(acc.id);
@@ -18267,7 +19251,7 @@ var qrcode = function() {
 
         const nonDefaultParts = [];
         if (acc.period && acc.period !== 30) nonDefaultParts.push(`${acc.period}s`);
-        if (acc.digits && acc.digits !== 6) nonDefaultParts.push(`${acc.digits}位`);
+        if (acc.digits && acc.digits !== 6) nonDefaultParts.push(t('card.digitsShort', { digits: acc.digits }));
         if (acc.algorithm && acc.algorithm !== 'SHA1') nonDefaultParts.push(acc.algorithm);
         if (nonDefaultParts.length) {
           const meta = document.createElement('span');
@@ -18292,7 +19276,7 @@ var qrcode = function() {
         const codeBtn = document.createElement('button');
         codeBtn.type = 'button';
         codeBtn.className = 'code-copy-btn';
-        codeBtn.setAttribute('aria-label', `复制 ${displayName} 当前验证码`);
+        codeBtn.setAttribute('aria-label', t('card.copyOtpAria', { name: displayName }));
 
         const digitsEl = document.createElement('span');
         digitsEl.className = 'otp-digits';
@@ -18300,7 +19284,7 @@ var qrcode = function() {
 
         const copyHint = document.createElement('span');
         copyHint.className = 'copy-hint';
-        copyHint.textContent = '点击复制';
+        copyHint.textContent = t('card.clickToCopy');
         codeBtn.append(digitsEl, copyHint);
 
         // Countdown ring (38x38, r=15)
@@ -18335,13 +19319,13 @@ var qrcode = function() {
         const nextBtn = document.createElement('button');
         nextBtn.type = 'button';
         nextBtn.className = 'next-preview-btn';
-        nextBtn.setAttribute('aria-label', `复制 ${displayName} 下一周期验证码`);
+        nextBtn.setAttribute('aria-label', t('card.copyNextAria', { name: displayName }));
         const expDot = document.createElement('span');
         expDot.className = 'expiry-dot';
         expDot.setAttribute('aria-hidden', 'true');
         const nextLbl = document.createElement('span');
         nextLbl.className = 'next-preview-label';
-        nextLbl.textContent = '下期';
+        nextLbl.textContent = t('card.nextLabel');
         const nextDigits = document.createElement('span');
         nextDigits.className = 'next-preview-code';
         nextDigits.textContent = '--- ---';
@@ -18350,13 +19334,13 @@ var qrcode = function() {
         subline.append(nextBtn);
         const actions = document.createElement('div');
         actions.className = 'card-actions';
-        const pinBtn = makeIconButton(acc.pinned ? `取消置顶 ${displayName}` : `置顶 ${displayName}`, ACTION_ICONS.pin(acc.pinned), () => togglePin(acc.id));
+        const pinBtn = makeIconButton(t(acc.pinned ? 'card.unpinAria' : 'card.pinAria', { name: displayName }), ACTION_ICONS.pin(acc.pinned), () => togglePin(acc.id));
         pinBtn.setAttribute('aria-pressed', String(Boolean(acc.pinned)));
         actions.append(
           pinBtn,
-          makeIconButton(`导出 ${displayName} 二维码`, ACTION_ICONS.qr(), () => openQrDialog(acc)),
-          makeIconButton(`编辑 ${displayName}`, ACTION_ICONS.edit(), () => openAccountDialog(acc)),
-          makeIconButton(`删除 ${displayName}`, ACTION_ICONS.trash(), () => deleteAccount(acc)),
+          makeIconButton(t('card.qrAria', { name: displayName }), ACTION_ICONS.qr(), () => openQrDialog(acc)),
+          makeIconButton(t('card.editAria', { name: displayName }), ACTION_ICONS.edit(), () => openAccountDialog(acc)),
+          makeIconButton(t('card.deleteAria', { name: displayName }), ACTION_ICONS.trash(), () => deleteAccount(acc)),
         );
         zone.append(actions, codeHero, subline);
         li.append(cardMain, zone);
@@ -18398,19 +19382,19 @@ var qrcode = function() {
       }
       function continueImport() {
         const text = $('smartImportInput').value.trim();
-        if (!text) { setErrorBox($('qrParseMsg'), '请选择二维码图片，或粘贴“账号---密码---密钥”、密钥或认证链接。'); return; }
+        if (!text) { setErrorBox($('qrParseMsg'), t('account.import.emptyErr')); return; }
         const kind = applyParsedTextToForm(text);
         if (kind === 'migration' || kind === 'otpauth' || kind === 'delimited' || kind === 'error') return;
         if (kind === 'base32') { showAccountStep(true); $('accIssuer').focus(); }
-        else setErrorBox($('qrParseMsg'), '未识别到有效的密钥、认证链接或“账号---密码---密钥”格式。');
+        else setErrorBox($('qrParseMsg'), t('account.import.invalidErr'));
       }
       function mutable() {
         if (['conflict', 'read-error'].includes(appState.storageState)) {
           // 对话框开着时底部提示不会显示，改在对话框里提醒
-          const msg = '数据有异常，请先关闭窗口，处理页面顶部的提示';
+          const msg = t('toast.handleBannerInDialog');
           if ($('settingsDialog').open) setInlineAlert($('settingsStatus'), msg, 'warn');
           else if ($('migrationDialog').open) setErrorBox($('migrationErrorBox'), msg);
-          else showToast('请先处理页面顶部的数据提示');
+          else showToast(t('toast.handleBannerFirst'));
           return false;
         }
         return !appState.locked;
@@ -18420,52 +19404,52 @@ var qrcode = function() {
         try {
           rawCode = generateTOTP({ ...acc, period: Math.max(5, Number(acc.period) || 30), timestampMs: Date.now(), stepOffset: isNext ? 1 : 0 });
         } catch {
-          showToast('密钥格式异常，无法生成验证码');
+          showToast(t('toast.otpGenErr'));
           return;
         }
         if (!await copyText(rawCode)) {
-          showManualCopy(rawCode, `${acc.issuer || '账号'}${isNext ? ' 下一周期' : ' 当前'}验证码。选中后复制；当前码会按周期更新。`);
+          showManualCopy(rawCode, t('manualCopy.otpDesc', { name: acc.issuer || t('common.accountFallback'), cycle: t(isNext ? 'manualCopy.cycleNext' : 'manualCopy.cycleCurrent') }));
           return;
         }
         const entry = appState.cardNodes.get(acc.id);
         if (entry) {
           entry.zoneEl.classList.add('is-copied');
-          entry.copyHint.textContent = isNext ? '✓ 已复制下期' : '✓ 已复制';
+          entry.copyHint.textContent = t(isNext ? 'card.copiedNext' : 'card.copied');
           clearTimeout(appState.copiedStates.get(acc.id));
           appState.copiedStates.set(acc.id, setTimeout(() => {
-            entry.zoneEl.classList.remove('is-copied'); entry.copyHint.textContent = '点击复制';
+            entry.zoneEl.classList.remove('is-copied'); entry.copyHint.textContent = t('card.clickToCopy');
           }, 1800));
         }
-        showToast(`已复制 ${acc.issuer || '账号'}${isNext ? ' 下一周期' : ''} 验证码`);
+        showToast(t(isNext ? 'card.copiedNextOtpToast' : 'card.copiedOtpToast', { name: acc.issuer || t('common.accountFallback') }));
       }
       async function deleteAccount(acc) {
         if (!mutable()) return;
-        const ok = await showConfirm({ title: '删除账号', message: `删除“${acc.issuer || '账号'}”${acc.account ? `（${acc.account}）` : ''}？删除后 10 秒内可以撤销。`, okText: '删除账号', isDanger: true });
+        const ok = await showConfirm({ title: t('delete.title'), message: t('delete.msg', { name: acc.issuer || t('common.accountFallback'), accPart: formatAccountParen(acc.account) }), okText: t('delete.ok'), isDanger: true });
         if (!ok || !mutable()) return;
         const index = appState.accounts.findIndex(a => a.id === acc.id);
         appState.accounts = appState.accounts.filter(a => a.id !== acc.id);
         const saved = await saveVault();
-        if (!saved) showToast('账号已在页面移除，但未能保存到本地存储，请查看顶部提示');
+        if (!saved) showToast(t('delete.unsavedToast'));
         clearUndo();
         const deletion = { acc, index, until: Date.now() + 10_000, timer: null };
         appState.undoDeletion = deletion;
-        $('undoMessage').textContent = `已删除 ${acc.issuer || '账号'}`;
+        $('undoMessage').textContent = t('undo.deleted', { name: acc.issuer || t('common.accountFallback') });
         $('undoBar').hidden = false;
         const tick = () => {
           const left = Math.max(0, Math.ceil((deletion.until - Date.now()) / 1000));
-          $('undoCountdown').textContent = `${left} 秒`;
+          $('undoCountdown').textContent = t('undo.countdown', { sec: left });
           if (!left) clearUndo();
         };
         deletion.timer = setInterval(tick, 250); tick(); renderAll();
       }
       async function undoDelete() {
         if (!appState.undoDeletion || !mutable()) return;
-        if (Date.now() >= appState.undoDeletion.until) { clearUndo(); showToast('撤销时间已结束'); return; }
+        if (Date.now() >= appState.undoDeletion.until) { clearUndo(); showToast(t('undo.expired')); return; }
         const { acc, index } = appState.undoDeletion;
         clearUndo();
         appState.accounts.splice(index, 0, acc);
         if (!await saveVault()) { renderAll(); return; }
-        renderAll(); showToast('已恢复账号');
+        renderAll(); showToast(t('undo.restored'));
       }
       function setExportFeedback(msg, isSuccess = false) {
         const el = $('exportFeedback');
@@ -18504,7 +19488,7 @@ var qrcode = function() {
         if (!data) return;
         try {
           const payload = data.encrypted === true ? (await decryptEnvelope(validateEnvelope(data), $('importPwdInput').value)).data : data;
-          if (!payload || !Array.isArray(payload.accounts) || (payload.version !== undefined && payload.version !== 1)) throw new VaultDataError('备份缺少账号列表或版本不受支持');
+          if (!payload || !Array.isArray(payload.accounts) || (payload.version !== undefined && payload.version !== 1)) throw new VaultDataError(t('err.backupAccountsOrVer'));
           const mode = document.querySelector('input[name="importMode"]:checked').value;
           const seen = new Set(mode === 'merge' ? appState.accounts.map(tokenIdentity) : []);
           const valid = [], rows = [];
@@ -18513,15 +19497,15 @@ var qrcode = function() {
             try {
               const account = validateAccount(value, index), identity = tokenIdentity(account);
               const name = account.issuer + (account.account ? ` · ${account.account}` : '');
-              if (seen.has(identity)) { duplicate++; rows.push(`${name} — 重复，保留现有记录`); }
-              else { seen.add(identity); valid.push(account); rows.push(`${name} — 可导入`); }
+              if (seen.has(identity)) { duplicate++; rows.push(t('backup.import.rowDup', { name })); }
+              else { seen.add(identity); valid.push(account); rows.push(t('backup.import.rowValid', { name })); }
             } catch (error) {
               if (!(error instanceof VaultDataError)) throw error;
-              invalid++; rows.push(`第 ${index + 1} 项 — 无效：${error.message}`);
+              invalid++; rows.push(t('backup.import.rowInvalid', { index: index + 1, msg: error.message }));
             }
           });
           appState.importPreview = { valid, duplicate, invalid, mode };
-          $('importSummary').textContent = `${valid.length} 项可导入 · ${duplicate} 项重复 · ${invalid} 项无效`;
+          $('importSummary').textContent = t('backup.import.summary', { valid: valid.length, dup: duplicate, invalid });
           $('importRows').replaceChildren(...rows.map(text => { const li = document.createElement('li'); li.textContent = text; return li; }));
           $('allowPartialWrap').hidden = invalid === 0;
           $('importPreview').hidden = false;
@@ -18535,7 +19519,7 @@ var qrcode = function() {
         const preview = appState.importPreview;
         if (!preview || (preview.invalid && (preview.valid.length === 0 || !$('allowPartialImport').checked))) return;
         if (preview.mode === 'replace') {
-          if (!await showConfirm({ title: '覆盖当前账号列表', message: `使用校验后的 ${preview.valid.length} 个账号替换当前列表。${preview.invalid ? ` ${preview.invalid} 个无效项不会导入。` : ''}如需保留当前内容，请先导出备份。`, okText: '确认覆盖', isDanger: true })) return;
+          if (!await showConfirm({ title: t('backup.import.replaceTitle'), message: t('backup.import.replaceMsg', { valid: preview.valid.length, invalidNote: preview.invalid ? t('backup.import.replaceInvalidNote', { invalid: preview.invalid }) : '' }), okText: t('backup.import.replaceOk'), isDanger: true })) return;
         }
         const usedIds = new Set(preview.mode === 'merge' ? appState.accounts.map(a => a.id) : []);
         const imported = preview.valid.map(account => {
@@ -18546,9 +19530,9 @@ var qrcode = function() {
         if (appState.accounts.some(a => !a.isDemo)) appState.demoDismissed = true;
         const saved = await saveVault({ recovery: appState.storageState === 'read-error' });
         renderAll();
-        if (!saved) { setErrorBox($('importErrorBox'), '导入内容仍在页面中，尚未写入。请关闭窗口，处理顶部提示后重试或导出。'); return; }
+        if (!saved) { setErrorBox($('importErrorBox'), t('backup.import.unsavedErr')); return; }
         $('backupDialog').close();
-        showToast(`已导入 ${imported.length} 个账号，跳过 ${preview.duplicate} 个重复、${preview.invalid} 个无效项`);
+        showToast(t('backup.import.doneToast', { imported: imported.length, dup: preview.duplicate, invalid: preview.invalid }));
       }
 
       function renderAccounts() {
@@ -18572,10 +19556,10 @@ var qrcode = function() {
         $('searchCount').hidden = !searching;
         $('searchInput').classList.toggle('has-count', searching);
         if (searching) {
-          $('searchCount').replaceChildren(`${visible.length} 个`);
+          $('searchCount').replaceChildren(t('search.count', { count: visible.length }));
           const hint = document.createElement('span');
           hint.className = 'search-count-hint';
-          hint.textContent = ' · 回车复制第一个';
+          hint.textContent = t('search.enterHint');
           $('searchCount').appendChild(hint);
         }
 
@@ -18596,8 +19580,8 @@ var qrcode = function() {
                 { tag: 'line', attrs: { x1: '20', y1: '20', x2: '16.65', y2: '16.65' } },
               ], 22, 1.65));
             }
-            $('emptyTitle').textContent = '没有匹配的账号';
-            $('emptyDesc').textContent = '换个关键词，或清除搜索和筛选后查看全部账号。';
+            $('emptyTitle').textContent = t('empty.noMatch.title');
+            $('emptyDesc').textContent = t('empty.noMatch.desc');
             $('emptyAddBtn').hidden = true;
             $('emptyRestoreBtn').hidden = true; $('emptyDemoBtn').hidden = true;
             $('emptyResetBtn').hidden = false;
@@ -18608,8 +19592,8 @@ var qrcode = function() {
                 { tag: 'path', attrs: { d: 'M7 11V7a5 5 0 0 1 10 0v4' } },
               ], 22, 1.65));
             }
-            $('emptyTitle').textContent = '让你的验证码，有个固定的位置';
-            $('emptyDesc').textContent = '添加第一个账号，或从加密备份恢复。数据保存在当前浏览器，支持离线取码。';
+            $('emptyTitle').textContent = t('empty.vault.title');
+            $('emptyDesc').textContent = t('empty.vault.desc');
             $('emptyAddBtn').hidden = false;
             $('emptyRestoreBtn').hidden = false; $('emptyDemoBtn').hidden = false;
             $('emptyResetBtn').hidden = true;
@@ -18662,7 +19646,7 @@ var qrcode = function() {
               nextDigits.textContent = formatOtpCode(nxt);
             } catch {
               codeBtn.dataset.rawCode = '';
-              digitsEl.textContent = '密钥异常';
+              digitsEl.textContent = t('card.secretError');
               nextDigits.textContent = '---';
             }
           }
@@ -18686,7 +19670,7 @@ var qrcode = function() {
       setInterval(() => {
         if (appState.encryptedMode && !appState.locked && appState.autoLockMin > 0) {
           if (Date.now() - appState.lastActivityAt >= appState.autoLockMin * 60_000) {
-            openLockScreen({ reason: '超时无操作，保险库已自动锁定' });
+            openLockScreen({ reason: t('lock.reason.autoLock') });
           }
         }
       }, 15_000);
@@ -18696,7 +19680,7 @@ var qrcode = function() {
         if (document.visibilityState === 'visible') {
           if (appState.encryptedMode && !appState.locked && appState.autoLockMin > 0) {
             if (Date.now() - appState.lastActivityAt >= appState.autoLockMin * 60_000) {
-              openLockScreen({ reason: '超时无操作，保险库已自动锁定' });
+              openLockScreen({ reason: t('lock.reason.autoLock') });
               return;
             }
           }
@@ -18721,7 +19705,7 @@ var qrcode = function() {
         appState.demoDismissed = true;
         if (!await saveVault()) { renderAll(); return; }
         renderAll();
-        showToast('已清空示例账号');
+        showToast(t('demo.cleared'));
       }
 
       // ================= ADD / EDIT DIALOG =================
@@ -18762,7 +19746,7 @@ var qrcode = function() {
       }
 
       function renderGroupQuickChips() {
-        const existing = new Set([...DEFAULT_GROUPS]);
+        const existing = new Set([...getDefaultGroups()]);
         appState.accounts.forEach((a) => { if (a.group) existing.add(a.group); });
         const cur = $('accGroup').value.trim();
         const nodes = [...existing].map((grp) => {
@@ -18793,9 +19777,9 @@ var qrcode = function() {
         try {
           const code = generateTOTP({ secret, algorithm: algo, digits, period });
           $('livePreviewCode').textContent = formatOtpCode(code);
-          $('livePreviewMeta').textContent = `${period}s · ${digits} 位 · ${algo}`;
+          $('livePreviewMeta').textContent = t('account.livePreview.meta', { period, digits, algo });
           const left = period - (Math.floor(Date.now() / 1000) % period);
-          $('livePreviewLabel').textContent = `实时校验 · ${left} 秒后更新`;
+          $('livePreviewLabel').textContent = t('account.livePreview.updating', { sec: left });
           box.hidden = false;
         } catch {
           box.hidden = true;
@@ -18815,8 +19799,8 @@ var qrcode = function() {
         $('qrParseMsg').textContent = '';
 
         if (acc) {
-          $('accountDialogTitle').textContent = '编辑 2FA 账号与备注';
-          $('saveAccountBtn').textContent = '保存修改';
+          $('accountDialogTitle').textContent = t('account.editTitle');
+          $('saveAccountBtn').textContent = t('account.saveEdit');
           $('quickImportBlock').hidden = true;
           $('accIssuer').value = acc.issuer || '';
           $('accName').value = acc.account || '';
@@ -18830,8 +19814,8 @@ var qrcode = function() {
           $('accPeriod').value = String(acc.period || 30);
           appState.selectedIcon = acc.icon || 'auto';
         } else {
-          $('accountDialogTitle').textContent = '添加 2FA 账号';
-          $('saveAccountBtn').textContent = '添加到本地';
+          $('accountDialogTitle').textContent = t('account.addTitle');
+          $('saveAccountBtn').textContent = t('account.saveAdd');
           $('quickImportBlock').hidden = false;
           $('accAlgo').value = 'SHA1';
           $('accDigits').value = '6';
@@ -18902,7 +19886,7 @@ var qrcode = function() {
           try {
             const parsed = parseOtpAuthUri(text);
             if (!$('accountDialog').open) openAccountDialog(null);
-            $('accIssuer').value = parsed.issuer || '未命名平台';
+            $('accIssuer').value = parsed.issuer || t('common.unnamed');
             $('accName').value = parsed.account || '';
             if (!appState.editingId) $('accPassword').value = '';
             $('accSecret').value = parsed.secret;
@@ -18915,7 +19899,7 @@ var qrcode = function() {
             renderPlatformQuickChips();
             updateIssuerIconPreview();
             updateAccountLivePreview();
-            setInlineAlert($('accountInlineStatus'), '已解析链接，请确认平台和账号后保存', 'success');
+            setInlineAlert($('accountInlineStatus'), t('account.import.otpauthOk'), 'success');
             showAccountStep(true);
             $('accIssuer').focus();
             return 'otpauth';
@@ -18948,15 +19932,20 @@ var qrcode = function() {
           updateIssuerIconPreview();
           updateAccountLivePreview();
           const importedFields = [];
-          if (delimited.issuer) importedFields.push('平台');
-          if (delimited.account) importedFields.push('账号');
-          if (delimited.password) importedFields.push('密码');
-          importedFields.push('密钥');
-          if (delimited.note) importedFields.push('备注');
+          if (delimited.issuer) importedFields.push(t('account.import.fieldIssuer'));
+          if (delimited.account) importedFields.push(t('account.import.fieldAccount'));
+          if (delimited.password) importedFields.push(t('account.import.fieldPassword'));
+          importedFields.push(t('account.import.fieldSecret'));
+          if (delimited.note) importedFields.push(t('account.import.fieldNote'));
           const lastField = importedFields.pop();
-          const summaryText = importedFields.length ? `${importedFields.join('、')}与${lastField}` : lastField;
-          const tailHint = delimited.issuer ? '请确认信息后保存' : '请选择或填写平台名称后保存';
-          setInlineAlert($('accountInlineStatus'), `已一键识别${summaryText}，${tailHint}`, 'success');
+          const isEn = getActiveLocale() === 'en';
+          const summaryText = importedFields.length
+            ? (isEn
+                ? (importedFields.length === 1 ? `${importedFields[0]} and ${lastField}` : `${importedFields.join(', ')}, and ${lastField}`)
+                : `${importedFields.join('、')}与${lastField}`)
+            : lastField;
+          const tailHint = delimited.issuer ? t('account.import.tailConfirm') : t('account.import.tailNeedIssuer');
+          setInlineAlert($('accountInlineStatus'), t('account.import.delimitedOk', { fields: summaryText, tail: tailHint }), 'success');
           showAccountStep(true);
           $('accIssuer').focus();
           return 'delimited';
@@ -18975,7 +19964,7 @@ var qrcode = function() {
           $('accSecret').setCustomValidity('');
           syncAria($('accSecret'));
           updateAccountLivePreview();
-          if (!quietBase32) setInlineAlert($('accountInlineStatus'), '已规范化 Base32 密钥', 'success');
+          if (!quietBase32) setInlineAlert($('accountInlineStatus'), t('account.import.base32Ok'), 'success');
           return 'base32';
         }
 
@@ -18995,7 +19984,7 @@ var qrcode = function() {
             showAccountStep(true);
             $('accIssuer').focus();
           } else if (!kind) {
-            setErrorBox(msgBox, `识别到二维码内容，但不是有效的 2FA 密钥或认证内容：${text.slice(0, 80)}`);
+            setErrorBox(msgBox, t('account.import.qrInvalid', { snippet: text.slice(0, 80) }));
           }
         } catch (err) {
           if (!$('accountDialog').open) openAccountDialog(null);
@@ -19007,7 +19996,7 @@ var qrcode = function() {
       function openMigrationDialog(items) {
         appState.pendingMigrationItems = items;
         const supportedCount = items.filter((i) => i.supported).length;
-        $('migrationSummary').textContent = `共解析到 ${items.length} 个账号，其中 ${supportedCount} 个为可导入的 TOTP 账号。`;
+        $('migrationSummary').textContent = t('migration.summary', { total: items.length, supported: supportedCount });
         $('migrationDefaultGroup').value = '';
         setErrorBox($('migrationErrorBox'), '');
 
@@ -19034,7 +20023,7 @@ var qrcode = function() {
           info.className = 'migration-item-info';
           const nameLine = document.createElement('div');
           nameLine.className = 'migration-issuer';
-          nameLine.textContent = item.issuer || '未命名平台';
+          nameLine.textContent = item.issuer || t('common.unnamed');
           info.appendChild(nameLine);
           if (item.account) {
             const accLine = document.createElement('div');
@@ -19044,7 +20033,7 @@ var qrcode = function() {
           }
           const subLine = document.createElement('div');
           subLine.className = 'field-hint';
-          subLine.textContent = item.supported ? `${item.digits} 位 · ${item.algorithm}` : `不可导入：${item.reason}`;
+          subLine.textContent = item.supported ? t('migration.itemMeta', { digits: item.digits, algo: item.algorithm }) : t('migration.itemUnsupported', { reason: item.reason });
           info.appendChild(subLine);
           left.append(cb, badge, info);
 
@@ -19054,7 +20043,7 @@ var qrcode = function() {
             try {
               codeBadge.textContent = formatOtpCode(generateTOTP(item));
             } catch {
-              codeBadge.textContent = '无效';
+              codeBadge.textContent = t('common.invalid');
             }
           } else {
             codeBadge.textContent = item.reason;
@@ -19073,7 +20062,7 @@ var qrcode = function() {
         appState.currentQrUri = buildOtpAuthUri(acc);
         appState.qrUriRevealed = false;
         clearTimeout(qrCopyTimer);
-        $('copyQrUriBtn').textContent = '复制链接';
+        $('copyQrUriBtn').textContent = t('qr.copyUri');
         $('qrCopyStatus').textContent = '';
         const info = $('qrTargetInfo');
         const badge = document.createElement('div');
@@ -19083,17 +20072,17 @@ var qrcode = function() {
         const textWrap = document.createElement('div');
         textWrap.className = 'qr-target-text';
         const h = document.createElement('strong');
-        h.textContent = acc.issuer || '未命名平台';
+        h.textContent = acc.issuer || t('common.unnamed');
         const sub = document.createElement('div');
         sub.className = 'field-hint';
-        sub.textContent = acc.account || '（无账号名称）';
+        sub.textContent = acc.account || t('common.noAccountName');
         textWrap.append(h, sub);
         info.replaceChildren(badge, textWrap);
 
         $('qrFrame').replaceChildren(createQrSvgElement(appState.currentQrUri));
         $('toggleQrUriBtn').setAttribute('aria-pressed', 'false');
-        $('toggleQrUriBtn').textContent = '显示完整链接';
-        $('qrUriText').textContent = `otpauth://totp/${acc.issuer || ''}...（默认隐藏明文密钥）`;
+        $('toggleQrUriBtn').textContent = t('qr.showUri');
+        $('qrUriText').textContent = t('qr.hiddenPreview', { issuer: acc.issuer || '' });
         $('qrDialog').showModal();
       }
 
@@ -19294,7 +20283,7 @@ var qrcode = function() {
           // 按名称/最近更新排序时长按，提示怎样才能拖动
           if (touch && appState.sortBy !== 'custom' && list.children.length > 1) {
             sortDrag = { hintOnly: true, pointerId: event.pointerId, startX: event.clientX, startY: event.clientY, active: false, raf: 0,
-              timer: setTimeout(() => { sortDrag = null; showToast('切换到“置顶与自定义”排序后，可长按拖动调整顺序'); }, 500) };
+              timer: setTimeout(() => { sortDrag = null; showToast(t('toast.sortDragHint')); }, 500) };
           }
           return;
         }
@@ -19413,8 +20402,8 @@ var qrcode = function() {
         const cur = getStoredTheme();
         const next = order[(order.indexOf(cur) + 1) % order.length];
         applyTheme(next);
-        const names = { system: '跟随系统', light: '浅色模式', dark: '深色模式' };
-        showToast(`外观主题：${names[next]}`);
+        const names = { system: t('settings.theme.systemShort'), light: t('settings.theme.light'), dark: t('settings.theme.dark') };
+        showToast(t('settings.theme.toast', { name: names[next] }));
       });
 
       // Account Form Events
@@ -19436,7 +20425,7 @@ var qrcode = function() {
         return hits >= 2 ? hits : 0;
       }
       function rejectMultiAccount(count) {
-        setErrorBox($('qrParseMsg'), `识别到 ${count} 个账号。一次只能添加一个，请每次只复制一行。`);
+        setErrorBox($('qrParseMsg'), t('account.import.multiLineErr', { count }));
       }
       function handleImportTransfer(event, text) {
         if (!$('accountDialog').open || appState.importStage) return;
@@ -19487,11 +20476,11 @@ var qrcode = function() {
       $('accSecret').addEventListener('input', () => {
         const val = $('accSecret').value.trim();
         if (!val) {
-          $('accSecretErrText').textContent = '请输入 Base32 密钥。';
+          $('accSecretErrText').textContent = t('account.secret.emptyErr');
           $('accSecret').setCustomValidity('');
         } else if (!isValidBase32(val)) {
-          $('accSecretErrText').textContent = '密钥格式无效，仅允许 Base32 字符（A-Z 与 2-7）。';
-          $('accSecret').setCustomValidity('密钥格式无效');
+          $('accSecretErrText').textContent = t('account.secret.invalidErr');
+          $('accSecret').setCustomValidity(t('account.secret.invalidValidity'));
         } else {
           $('accSecret').setCustomValidity('');
         }
@@ -19537,13 +20526,13 @@ var qrcode = function() {
         const secretEl = $('accSecret');
         const periodEl = $('accPeriod');
 
-        issuerEl.setCustomValidity(issuerEl.value.trim() ? '' : '请填写平台或服务名称');
+        issuerEl.setCustomValidity(issuerEl.value.trim() ? '' : t('account.issuer.required'));
         if (!secretEl.value.trim()) {
-          $('accSecretErrText').textContent = '请输入 Base32 密钥。';
-          secretEl.setCustomValidity('请输入 Base32 密钥');
+          $('accSecretErrText').textContent = t('account.secret.emptyErr');
+          secretEl.setCustomValidity(t('account.secret.emptyValidity'));
         } else if (!isValidBase32(secretEl.value)) {
-          $('accSecretErrText').textContent = '密钥格式无效，仅允许 Base32 字符（A-Z 与 2-7）。';
-          secretEl.setCustomValidity('密钥格式无效');
+          $('accSecretErrText').textContent = t('account.secret.invalidErr');
+          secretEl.setCustomValidity(t('account.secret.invalidValidity'));
         } else {
           secretEl.setCustomValidity('');
         }
@@ -19587,7 +20576,7 @@ var qrcode = function() {
 
         const duplicate = appState.accounts.find(a => a.id !== record.id && tokenIdentity(a) === tokenIdentity(record));
         if (duplicate) {
-          const open = await showConfirm({ title: '此验证码密钥已存在', message: `已保存在“${duplicate.issuer}”${duplicate.account ? `（${duplicate.account}）` : ''}。可以查看并编辑已有账号。`, okText: '查看已有账号', isDanger: false });
+          const open = await showConfirm({ title: t('account.duplicate.title'), message: t('account.duplicate.msg', { issuer: duplicate.issuer, accPart: formatAccountParen(duplicate.account) }), okText: t('account.duplicate.ok'), isDanger: false });
           if (open) { $('accountDialog').close(); openAccountDialog(duplicate); }
           return;
         }
@@ -19607,14 +20596,14 @@ var qrcode = function() {
           appState.editingId = record.id;
           showAccountStep(true);
           renderAll();
-          setErrorBox($('accountSaveError'), '内容仍在页面中，尚未保存。可再次提交；也可关闭窗口后重试或导出。');
+          setErrorBox($('accountSaveError'), t('account.saveErr'));
           return;
         }
         $('accountDialog').close('save');
         renderAll();
-        let savedMsg = firstRealAccount ? '已保存第一个账号，建议现在导出加密备份' : '账号已保存';
+        let savedMsg = firstRealAccount ? t('account.savedFirst') : t('account.saved');
         if (record.password && !appState.encryptedMode && !readPreference('PWD_HINT')) {
-          savedMsg = '已保存。登录密码目前没有加密，建议在“设置”里开启主密码锁';
+          savedMsg = t('account.savedPwdHint');
           writePreference('PWD_HINT', '1');
         }
         showToast(savedMsg);
@@ -19637,7 +20626,7 @@ var qrcode = function() {
         const defaultGrp = $('migrationDefaultGroup').value.trim();
         const checkedIdxs = [...$('migrationList').querySelectorAll('input[type="checkbox"]:checked')].map((c) => Number(c.dataset.migIdx));
         if (!checkedIdxs.length) {
-          setErrorBox($('migrationErrorBox'), '请至少选择一个账号');
+          setErrorBox($('migrationErrorBox'), t('migration.selectNoneErr'));
           return;
         }
         const existingSecrets = new Set(appState.accounts.map(tokenIdentity));
@@ -19673,32 +20662,32 @@ var qrcode = function() {
         if (!await saveVault()) {
           $('migrationDialog').close();
           renderAll();
-          showToast('导入内容已暂留页面，但未能写入本地存储，请查看顶部提示');
+          showToast(t('migration.unsavedToast'));
           return;
         }
         $('migrationDialog').close('import');
         renderAll();
-        showToast(skipped ? `已导入 ${added} 个账号（跳过 ${skipped} 个重复密钥）` : `已成功导入 ${added} 个账号`);
+        showToast(skipped ? t('migration.importedSkipped', { added, skipped }) : t('migration.imported', { added }));
       });
 
       // QR Dialog Buttons
       $('toggleQrUriBtn').addEventListener('click', () => {
         appState.qrUriRevealed = !appState.qrUriRevealed;
         $('toggleQrUriBtn').setAttribute('aria-pressed', String(appState.qrUriRevealed));
-        $('toggleQrUriBtn').textContent = appState.qrUriRevealed ? '隐藏链接' : '显示完整链接';
+        $('toggleQrUriBtn').textContent = appState.qrUriRevealed ? t('qr.hideUri') : t('qr.showUri');
         $('qrUriText').textContent = appState.qrUriRevealed ? appState.currentQrUri : 'otpauth://totp/...（默认隐藏明文密钥）';
       });
       $('copyQrUriBtn').addEventListener('click', async () => {
         const ok = await copyText(appState.currentQrUri);
         if (!ok) {
-          showManualCopy(appState.currentQrUri, '浏览器未允许直接复制，请选中链接后复制。');
+          showManualCopy(appState.currentQrUri, t('manualCopy.uriDesc'));
           return;
         }
-        $('copyQrUriBtn').textContent = '✓ 已复制';
-        $('qrCopyStatus').textContent = '已复制 otpauth:// 链接';
+        $('copyQrUriBtn').textContent = t('qr.copiedUriBtn');
+        $('qrCopyStatus').textContent = t('qr.copiedUriStatus');
         clearTimeout(qrCopyTimer);
         qrCopyTimer = setTimeout(() => {
-          $('copyQrUriBtn').textContent = '复制链接';
+          $('copyQrUriBtn').textContent = t('qr.copyUri');
           $('qrCopyStatus').textContent = '';
         }, 1800);
       });
@@ -19731,24 +20720,24 @@ var qrcode = function() {
       $('exportEncryptedBtn').addEventListener('click', busyGuard(() => $('exportEncryptedBtn'), async () => {
         setExportFeedback('');
         const password = $('exportPwdInput').value;
-        if (password.length < 8) { setExportFeedback('请设置至少 8 位的备份密码'); $('exportPwdInput').focus(); return; }
-        if (password !== $('exportPwdConfirm').value) { setExportFeedback('两次输入的备份密码不一致'); $('exportPwdConfirm').focus(); return; }
+        if (password.length < 8) { setExportFeedback(t('backup.export.pwdShortErr')); $('exportPwdInput').focus(); return; }
+        if (password !== $('exportPwdConfirm').value) { setExportFeedback(t('backup.export.pwdMismatchErr')); $('exportPwdConfirm').focus(); return; }
         const at = new Date().toISOString();
         const payload = { version: 1, exportedAt: at, accounts: structuredClone(appState.accounts), demoDismissed: appState.demoDismissed };
         const { envelope } = await encryptEnvelope(payload, password);
         downloadJson({ app: '2fa-vault', ...envelope }, `2fa-vault-backup-${at.slice(0, 10)}.2favault.json`);
         if (appState.storageState === 'ready' && !appState.dirty) await saveVault({ exportAt: at });
         $('backupSummary').textContent = backupDescription();
-        setExportFeedback('已生成加密备份文件，请保管好文件和密码', true);
+        setExportFeedback(t('backup.export.encryptedOk'), true);
       }));
       $('exportPlainBtn').addEventListener('click', async () => {
         setExportFeedback('');
-        if (!await showConfirm({ title: '导出明文备份', message: '明文文件包含完整验证码密钥及已保存的登录密码。获得文件的人可以使用这些内容。确认导出？', okText: '导出明文', isDanger: true })) return;
+        if (!await showConfirm({ title: t('backup.export.plainConfirmTitle'), message: t('backup.export.plainConfirmMsg'), okText: t('backup.export.plainConfirmOk'), isDanger: true })) return;
         const at = new Date().toISOString();
         downloadJson({ app: '2fa-vault', version: 1, encrypted: false, exportedAt: at, accounts: structuredClone(appState.accounts), demoDismissed: appState.demoDismissed }, `2fa-vault-plain-${at.slice(0, 10)}.json`);
         if (appState.storageState === 'ready' && !appState.dirty) await saveVault({ exportAt: at });
         $('backupSummary').textContent = backupDescription();
-        setExportFeedback('已生成明文备份文件', true);
+        setExportFeedback(t('backup.export.plainOk'), true);
       });
       function resetImportFile() {
         $('importFileInput').value = '';
@@ -19756,7 +20745,7 @@ var qrcode = function() {
       }
       function syncImportFileName() {
         const file = $('importFileInput').files[0];
-        $('importFileName').textContent = file ? file.name : '选择或拖拽备份文件';
+        $('importFileName').textContent = file ? file.name : t('backup.import.filePlaceholder');
         $('importFilePicker').classList.toggle('has-file', Boolean(file));
       }
       const filePicker = $('importFilePicker');
@@ -19778,7 +20767,7 @@ var qrcode = function() {
         if (!file) return;
         try {
           const data = JSON.parse(await file.text());
-          if (!data || typeof data !== 'object' || (!Array.isArray(data.accounts) && data.encrypted !== true)) throw new VaultDataError('备份中缺少账号列表');
+          if (!data || typeof data !== 'object' || (!Array.isArray(data.accounts) && data.encrypted !== true)) throw new VaultDataError(t('err.backupAccounts'));
           appState.pendingImportData = data;
           $('importDecryptField').hidden = data.encrypted !== true;
           $('previewImportBtn').disabled = false;
@@ -19786,7 +20775,7 @@ var qrcode = function() {
           else await previewImport();
         } catch (error) {
           if (!(error instanceof SyntaxError || error instanceof VaultDataError || error instanceof DOMException)) throw error;
-          setErrorBox($('importErrorBox'), `无法读取备份：${error.message}`);
+          setErrorBox($('importErrorBox'), t('backup.import.readErr', { msg: error.message }));
         }
       });
       $('importPwdInput').addEventListener('input', invalidateImport);
@@ -19833,18 +20822,18 @@ var qrcode = function() {
           $('currentPwdWrap').hidden = true;
           $('newPwdWrap').hidden = false;
           $('confirmPwdWrap').hidden = false;
-          $('newMasterPwdLabel').textContent = '设置主密码（至少 8 位）';
+          $('newMasterPwdLabel').textContent = t('settings.lock.setupLabel');
           $('saveMasterPwdBtn').hidden = false;
-          $('saveMasterPwdBtn').textContent = '开启主密码锁';
+          $('saveMasterPwdBtn').textContent = t('settings.lock.enableBtn');
           $('disableMasterPwdBtn').hidden = true;
           $('cancelMasterPwdBtn').hidden = true;
         } else if (mode === 'change') {
           $('currentPwdWrap').hidden = false;
           $('newPwdWrap').hidden = false;
           $('confirmPwdWrap').hidden = false;
-          $('newMasterPwdLabel').textContent = '新主密码（至少 8 位）';
+          $('newMasterPwdLabel').textContent = t('settings.lock.newLabel');
           $('saveMasterPwdBtn').hidden = false;
-          $('saveMasterPwdBtn').textContent = '保存新主密码';
+          $('saveMasterPwdBtn').textContent = t('settings.lock.saveNewBtn');
           $('disableMasterPwdBtn').hidden = true;
           $('cancelMasterPwdBtn').hidden = false;
           if (focus) $('currentMasterPwd').focus();
@@ -19861,14 +20850,15 @@ var qrcode = function() {
 
       function syncSettingsModalUi({ preserveStatus = false } = {}) {
         syncThemeControls();
+        syncLanguageControls();
         if (!preserveStatus) setInlineAlert($('settingsStatus'), '');
         $('autoLockSelect').value = String(appState.autoLockMin);
         if (appState.encryptedMode) {
-          $('lockFeatureDesc').textContent = '已开启主密码保护：浏览器本地存储中的所有密钥与备注均以 AES-256-GCM 密文存储。';
+          $('lockFeatureDesc').textContent = t('settings.lock.descEnabled');
           $('autoLockWrap').hidden = false;
           setMasterPwdPanelMode('collapsed');
         } else {
-          $('lockFeatureDesc').textContent = '当前未开启主密码锁，打开网页即可直接查看验证码；开启后将自动把本地存储加密为密文。';
+          $('lockFeatureDesc').textContent = t('settings.lock.descDisabled');
           $('autoLockWrap').hidden = true;
           setMasterPwdPanelMode('setup');
         }
@@ -19899,10 +20889,16 @@ var qrcode = function() {
         });
       });
 
+      document.querySelectorAll('input[name="langChoice"]').forEach((r) => {
+        r.addEventListener('change', () => {
+          if (r.checked) applyLanguage(r.value, { notify: true });
+        });
+      });
+
       $('autoLockSelect').addEventListener('change', (e) => {
         appState.autoLockMin = Number(e.target.value) || 0;
         writePreference('AUTOLOCK', String(appState.autoLockMin));
-        setInlineAlert($('settingsStatus'), '已更新自动锁定设置', 'success');
+        setInlineAlert($('settingsStatus'), t('settings.lock.autoLockUpdated'), 'success');
       });
 
       $('masterPwdForm').addEventListener('submit', busyGuard(() => $('saveMasterPwdBtn'), async event => {
@@ -19913,20 +20909,20 @@ var qrcode = function() {
         const password = $('newMasterPwd').value;
         try {
           if (appState.encryptedMode) {
-            if (!$('currentMasterPwd').value) throw new VaultDataError('请先输入当前主密码');
+            if (!$('currentMasterPwd').value) throw new VaultDataError(t('settings.lock.needCurrentErr'));
             await decryptEnvelope(JSON.parse(appState.baseRaw), $('currentMasterPwd').value);
           }
-          if (password.length < 8) throw new VaultDataError('新主密码至少需要 8 位，建议使用较长口令');
-          if (password !== $('confirmMasterPwd').value) throw new VaultDataError('两次输入的密码不一致');
+          if (password.length < 8) throw new VaultDataError(t('settings.lock.shortErr'));
+          if (password !== $('confirmMasterPwd').value) throw new VaultDataError(t('settings.lock.mismatchErr'));
           const { keyBytes, salt, iterations } = await encryptEnvelope({}, password);
           if (!await saveVault({ encryption: { keyBytes, salt, iterations } })) {
-            setErrorBox($('masterPwdError'), '主密码变更未写入，原有保护方式保持有效。请处理保存提示后重试。'); return;
+            setErrorBox($('masterPwdError'), t('settings.lock.saveFailErr')); return;
           }
           if (readPreference('AUTOLOCK') === null) {
             appState.autoLockMin = 5; writePreference('AUTOLOCK', '5');
           }
           syncSettingsModalUi({ preserveStatus: true });
-          setInlineAlert($('settingsStatus'), '主密码已生效，本地内容已加密', 'success');
+          setInlineAlert($('settingsStatus'), t('settings.lock.enabledOk'), 'success');
         } catch (error) {
           if (!(error instanceof Error)) throw error;
           setErrorBox($('masterPwdError'), error.message);
@@ -19936,11 +20932,11 @@ var qrcode = function() {
         if (!mutable()) return;
         setErrorBox($('masterPwdError'), ''); setInlineAlert($('settingsStatus'), '');
         try {
-          if (!$('currentMasterPwd').value) throw new VaultDataError('请先输入当前主密码');
+          if (!$('currentMasterPwd').value) throw new VaultDataError(t('settings.lock.needCurrentErr'));
           await decryptEnvelope(JSON.parse(appState.baseRaw), $('currentMasterPwd').value);
-          if (!await saveVault({ encryption: null })) { setErrorBox($('masterPwdError'), '变更尚未写入，原有加密仍然有效。'); return; }
+          if (!await saveVault({ encryption: null })) { setErrorBox($('masterPwdError'), t('settings.lock.disableFailErr')); return; }
           syncSettingsModalUi({ preserveStatus: true });
-          setInlineAlert($('settingsStatus'), '已关闭主密码锁，当前数据未加密', 'warn');
+          setInlineAlert($('settingsStatus'), t('settings.lock.disabledWarn'), 'warn');
         } catch (error) {
           if (!(error instanceof Error)) throw error;
           setErrorBox($('masterPwdError'), error.message);
@@ -19953,28 +20949,28 @@ var qrcode = function() {
         const existingSecrets = new Set(appState.accounts.map((a) => normalizeBase32(a.secret)));
         const toAdd = demos.filter((d) => !existingSecrets.has(d.secret));
         if (!toAdd.length) {
-          if ($('settingsDialog').open) setInlineAlert($('settingsStatus'), '示例账号已存在于列表中', 'warn');
-          else showToast('示例账号已存在于列表中');
+          if ($('settingsDialog').open) setInlineAlert($('settingsStatus'), t('demo.exists'), 'warn');
+          else showToast(t('demo.exists'));
           return;
         }
         appState.accounts = [...appState.accounts, ...toAdd];
         if (!await saveVault()) {
           if ($('settingsDialog').open) $('settingsDialog').close();
           renderAll();
-          showToast('示例账号已在页面展示，但未能写入本地存储');
+          showToast(t('demo.addedUnsaved'));
           return;
         }
         renderAll();
-        if ($('settingsDialog').open) setInlineAlert($('settingsStatus'), '已添加示例账号', 'success');
-        else showToast('已添加示例账号');
+        if ($('settingsDialog').open) setInlineAlert($('settingsStatus'), t('demo.added'), 'success');
+        else showToast(t('demo.added'));
       });
 
       $('wipeAllBtn').addEventListener('click', async () => {
         if (!mutable()) return;
         const ok = await showConfirm({
-          title: '清空全部本地数据',
-          message: '此操作将永久清除当前浏览器保存的所有 2FA 账号、备注和加密设置且不可撤销！确定继续吗？',
-          okText: '确认清空',
+          title: t('settings.data.wipeTitle'),
+          message: t('settings.data.wipeMsg'),
+          okText: t('settings.data.wipeOk'),
           isDanger: true,
         });
         if (!ok) return;
@@ -19985,12 +20981,12 @@ var qrcode = function() {
         if (!await saveVault({ encryption: null })) {
           $('settingsDialog').close('wiped');
           renderAll();
-          showToast('列表已在页面清空，但未能写入本地存储，请查看顶部提示');
+          showToast(t('settings.data.wipeUnsaved'));
           return;
         }
         $('settingsDialog').close('wiped');
         renderAll();
-        showToast('已清空所有本地数据');
+        showToast(t('settings.data.wipeOkToast'));
       });
 
       // Unlock Screen Events
@@ -20000,12 +20996,12 @@ var qrcode = function() {
           const raw = localStorage.getItem(KEYS.VAULT);
           if (raw === null) {
             $('reloadFromLockBtn').hidden = false;
-            throw new VaultDataError('本地保险库已被其他页面移除，请刷新此页面');
+            throw new VaultDataError(t('lock.err.removed'));
           }
           const parsedRaw = JSON.parse(raw);
           if (parsedRaw && parsedRaw.encrypted === false) {
             $('reloadFromLockBtn').hidden = false;
-            throw new VaultDataError('另一个页面已关闭主密码锁，请刷新此页面');
+            throw new VaultDataError(t('lock.err.disabledElsewhere'));
           }
           const result = await decryptEnvelope(validateEnvelope(parsedRaw), $('unlockPwdInput').value);
           const saved = validatePayload(result.data);
@@ -20016,7 +21012,7 @@ var qrcode = function() {
             } catch {
               // 主密码可能已在别的页面改过：未保存的改动用旧密码加密，新密码解不开。
               // 不直接丢弃，留在锁屏，让用户先导出（之后可用旧密码从备份恢复）或明确放弃。
-              throw new VaultDataError('密码正确，但锁屏前未保存的改动解不开（可能在别的页面改过主密码）。可先“导出未保存内容”留一份，再点“放弃未保存内容”后解锁。');
+              throw new VaultDataError(t('lock.err.draftUndecryptable'));
             }
           }
           // 锁定期间别的页面改过数据：未保存的改动不能直接写回，否则会覆盖那边的修改
@@ -20036,7 +21032,7 @@ var qrcode = function() {
           $('unlockPwdInput').value = ''; renderAll();
         } catch (error) {
           if (!(error instanceof Error)) throw error;
-          $('unlockErrText').textContent = isStorageError(error) ? '浏览器暂时无法读取保存的数据，请检查存储权限。' : error.message;
+          $('unlockErrText').textContent = isStorageError(error) ? t('lock.err.storageRead') : error.message;
           $('unlockErr').classList.add('is-visible'); $('unlockPwdInput').select();
         }
       }));
@@ -20048,17 +21044,17 @@ var qrcode = function() {
         await loadVaultOnBoot();
       });
       $('forgotResetBtn').addEventListener('click', async () => {
-        if (!await showConfirm({ title: '清空加密保险库？', message: '重置会删除当前浏览器的所有加密账号。请确认已有可用备份；重置无法找回忘记的密码。', okText: '清空并重置', isDanger: true })) return;
+        if (!await showConfirm({ title: t('lock.reset.title'), message: t('lock.reset.msg'), okText: t('lock.reset.ok'), isDanger: true })) return;
         try {
           await writeSnapshot(null, appState.baseRaw);
         } catch (error) {
           if (!(error instanceof VaultConflictError) && !isStorageError(error)) throw error;
-          $('unlockErrText').textContent = '重置未完成：数据已变化或浏览器未允许删除。请重新加载后处理。'; $('unlockErr').classList.add('is-visible'); return;
+          $('unlockErrText').textContent = t('lock.reset.fail'); $('unlockErr').classList.add('is-visible'); return;
         }
         clearUndo(); appState.lockedDraft = null; appState.encryptedMode = false; appState.locked = false;
         appState.sessionKeyBytes = null; appState.sessionSalt = null;
         $('appRoot').removeAttribute('inert'); $('lockDialog').close();
-        await loadVaultOnBoot(); showToast('已重置为空保险库');
+        await loadVaultOnBoot(); showToast(t('lock.reset.okToast'));
       });
 
       $('emptyRestoreBtn').addEventListener('click', () => { openBackup(); $('importFileInput').focus(); });
@@ -20071,14 +21067,14 @@ var qrcode = function() {
       $('undoDeleteBtn').addEventListener('click', undoDelete);
       $('selectCopyTextBtn').addEventListener('click', () => { $('manualCopyText').focus(); $('manualCopyText').select(); });
       $('manualCopyDialog').addEventListener('close', () => { $('manualCopyText').value = ''; });
-      $('retrySaveBtn').addEventListener('click', async () => { if (await saveVault()) { renderAll(); showToast('当前内容已保存'); } });
+      $('retrySaveBtn').addEventListener('click', async () => { if (await saveVault()) { renderAll(); showToast(t('toast.savedCurrent')); } });
       $('downloadRawBtn').addEventListener('click', () => {
         const blob = new Blob([appState.rawRecovery], { type: 'application/json' });
         const url = URL.createObjectURL(blob), anchor = document.createElement('a');
         anchor.href = url; anchor.download = '2fa-vault-recovery.json'; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
       });
       $('reloadVaultBtn').addEventListener('click', async () => {
-        if (appState.dirty && !await showConfirm({ title: '重新加载保存的数据', message: '重新加载会放弃此页面尚未保存的内容。需要保留时，请先导出当前内容。', okText: '重新加载', isDanger: true })) return;
+        if (appState.dirty && !await showConfirm({ title: t('reload.title'), message: t('reload.msg'), okText: t('reload.ok'), isDanger: true })) return;
         clearUndo(); appState.sessionKeyBytes = null; appState.lockedDraft = null;
         await loadVaultOnBoot();
       });
@@ -20086,11 +21082,13 @@ var qrcode = function() {
         if (appState.lockedDraft) downloadJson({ app: '2fa-vault', ...appState.lockedDraft }, '2fa-vault-unsaved.2favault.json');
       });
       $('discardLockedDraftBtn').addEventListener('click', async () => {
-        if (!await showConfirm({ title: '放弃未保存内容？', message: '此操作仅放弃临时保留的改动，已保存的数据会继续保留。需要这些改动时，请先导出。', okText: '放弃改动', isDanger: true })) return;
+        if (!await showConfirm({ title: t('lock.discard.title'), message: t('lock.discard.msg'), okText: t('lock.discard.ok'), isDanger: true })) return;
         appState.lockedDraft = null; $('lockedDraftActions').hidden = true;
       });
 
       // ================= BOOTSTRAP =================
+      applyStaticTranslations();
+      syncLanguageControls();
       applyTheme(getStoredTheme());
       loadVaultOnBoot({ seedDemo: true });
     })();
